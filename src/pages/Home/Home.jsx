@@ -7,6 +7,7 @@ import BookFeatureSection from "./BookFeatureSection";
 import LetasCard from "./LetasCard";
 import MapNow from "./MapNow";
 import Cousebooksconires from "./Cousebooksconires";
+import Marqey from "./Marqey";
 // import { Typed } from 'react-typed';
 
 const Home = () => {
@@ -34,6 +35,9 @@ const Home = () => {
         </section>
         <section className=" w-10/12 mx-auto mt-30">
           <WhyChooseBook></WhyChooseBook>
+        </section>
+        <section className=" mt-30">
+          <Marqey></Marqey>
         </section>
       </div>
     </div>
