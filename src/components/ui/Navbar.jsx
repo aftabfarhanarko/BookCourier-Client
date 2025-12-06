@@ -14,7 +14,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className=" bg-base-100 shadow-sm">
+    <div className=" bg-base-100 shadow-sm  z-10">
       <div className="navbar  w-11/12 mx-auto">
         <div className="navbar-start flex gap-2 items-center">
            <FaBookReader className="h-6 w-6  text-primary" />

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import { GiSpellBook } from "react-icons/gi";
 import { GiBookAura } from "react-icons/gi";
+import CountUp from "react-countup";
 
 const BookFeatureSection = () => {
   return (
@@ -106,7 +107,9 @@ const BookFeatureSection = () => {
               </motion.div>
 
               <div>
-                <h3 className="text-3xl font-bold drop-shadow-md">9+</h3>
+                <h3 className=" text-3xl md:text-5xl font-bold drop-shadow-md">
+                  <CountUp start={0} end={11} duration={0} />+
+                </h3>
                 <p className="text-sm tracking-wide opacity-90">
                   Years of Discover
                 </p>
