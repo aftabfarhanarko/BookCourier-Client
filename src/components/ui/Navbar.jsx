@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FaBookReader } from "react-icons/fa";
 import { NavLink } from "react-router";
 
 const Navbar = () => {
@@ -15,8 +16,9 @@ const Navbar = () => {
   return (
     <div className=" bg-base-100 shadow-sm">
       <div className="navbar  w-11/12 mx-auto">
-        <div className="navbar-start">
-          <a className=" text-xl">BookCourier </a>
+        <div className="navbar-start flex gap-2 items-center">
+           <FaBookReader className="h-6 w-6  text-primary" />
+          <a className=" text-xl text-primary">BookCourier </a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className=" menu-horizontal px-1">
