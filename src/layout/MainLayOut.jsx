@@ -7,7 +7,7 @@ import Footer from "../components/ui/Footer";
 const MainLayOut = () => {
   return (
     <div className=" relative">
-      <nav className=" absolute  w-full fixed z-3">
+      <nav className=" absolute  w-full fixed z-30">
         <Navbar></Navbar>
       </nav>
       <div className=" h-[40px]"></div>
