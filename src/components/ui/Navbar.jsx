@@ -44,6 +44,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           <Link to="/auth/rigester" className=" btn">Rigester</Link>
+          <Link to="/auth/login" className=" btn">Rigester</Link>
           {/* {user.length===0 ? (
             " "
           ) : ( */}

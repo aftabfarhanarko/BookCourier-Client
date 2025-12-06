@@ -1,43 +1,113 @@
-import React from 'react';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { FaRegEyeSlash } from "react-icons/fa";
+import { HiOutlineMail } from "react-icons/hi";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const Login = () => {
+  const [show, setShow] = useState(false);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
+  const handelLogin = (data) => {
+    console.log(data);
+  };
   return (
-    <div className="flex justify-center items-center min-h-screen w-full">
-     <div className="grid gap-8">
+    <div className="flex justify-center items-center min-h-[80vh] w-full">
+      <div className="grid gap-8">
         <section
           id="back-div"
           className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl"
         >
           <div className="border-8 border-transparent rounded-xl bg-white dark:bg-gray-900 shadow-xl p-8 m-2">
             <h1 className="text-5xl font-bold text-center cursor-default dark:text-gray-300 text-gray-900">
-              Log in
+              LogIn Now
             </h1>
-            <form action="#" method="post" className="space-y-6">
-              <div>
-                <label htmlFor="email" className="block mb-2 text-lg dark:text-gray-300">
+            <form
+              onSubmit={handleSubmit(handelLogin)}
+              className="space-y-6 mt-6"
+            >
+            
+
+              <div className=" relative">
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-lg dark:text-gray-300"
+                >
                   Email
                 </label>
                 <input
-                  id="email"
-                  className="border p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-blue-500 transition transform hover:scale-105 duration-300"
+                  {...register("email", { required: true })}
+                  className="border p-3 pl-10 shadow-md dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 border-gray-300 rounded-lg w-full
+         focus:ring-2 focus:ring-blue-500 transition transform hover:scale-105 duration-300"
                   type="email"
                   placeholder="Email"
-                  required
                 />
+                {errors.email?.type === "required" && (
+                  <p className="text-red-500 text-xs font-semibold mt-2">
+                    Please Enter Your Valid Email
+                  </p>
+                )}
+                <HiOutlineMail className="absolute left-3 top-15 transform -translate-y-1/2 text-gray-400 dark:text-gray-300 pointer-events-none w-5 h-5" />
               </div>
-              <div>
-                <label htmlFor="password" className="block mb-2 text-lg dark:text-gray-300">
+
+              <div className="relative">
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-lg dark:text-gray-300"
+                >
                   Password
                 </label>
                 <input
-                  id="password"
-                  className="border p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-blue-500 transition transform hover:scale-105 duration-300"
-                  type="password"
+                  {...register("password", {
+                    required: true,
+                    minLength: 6,
+                    pattern:
+                      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/,
+                  })}
+                  className="border p-3 pl-10 shadow-md dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 border-gray-300 rounded-lg w-full
+         focus:ring-2 focus:ring-blue-500 transition transform hover:scale-105 duration-300"
+                  type={show ? "text" : "password"} // show true হলে text দেখাবে, false হলে password (তুমি আগে উল্টা ছিলে)
                   placeholder="Password"
-                  required
                 />
+                <RiLockPasswordLine className="absolute left-3 top-15 transform -translate-y-1/2 text-gray-400 dark:text-gray-300 w-5 h-5 pointer-events-none" />
+
+                <div
+                  onClick={() => setShow(!show)}
+                  className="absolute right-3 top-15 transform -translate-y-1/2 cursor-pointer z-10"
+                >
+                  {show ? (
+                    <MdOutlineRemoveRedEye className="text-gray-400 dark:text-gray-300 w-4 h-4" />
+                  ) : (
+                    <FaRegEyeSlash className="text-gray-400 dark:text-gray-300 w-4 h-4" />
+                  )}
+                </div>
+
+                {errors.password?.type === "required" && (
+                  <p className="text-red-500 text-xs font-semibold mt-1">
+                    Set Up Password
+                  </p>
+                )}
+                {errors.password?.type === "minLength" && (
+                  <p className="text-red-500 text-xs font-semibold mt-1">
+                    Password must be 6 characters or longer
+                  </p>
+                )}
+                {errors.password?.type === "pattern" && (
+                  <p className="text-red-500 text-xs font-semibold mt-1">
+                    Need uppercase, lowercase, digit & special character
+                  </p>
+                )}
               </div>
-              <a href="#" className="text-blue-400 text-sm transition hover:underline">
+
+              <a
+                href="#"
+                className="text-blue-400 text-sm transition hover:underline"
+              >
                 Forget your password?
               </a>
               <button
@@ -49,14 +119,38 @@ const Login = () => {
             </form>
             <div className="flex flex-col mt-4 text-sm text-center dark:text-gray-300">
               <p>
-                Don't have an account?{' '}
-                <a href="#" className="text-blue-400 transition hover:underline">
-                  Sign Up
+                Don't have an account?{" "}
+                <a
+                  href="#"
+                  className="text-blue-400 transition hover:underline"
+                >
+                  Sign Up Now
                 </a>
               </p>
             </div>
-            <div id="third-party-auth" className="flex justify-center gap-4 mt-5">
-              <button className="p-2 rounded-lg hover:scale-105 transition transform duration-300 shadow-lg">
+            <div
+              id="third-party-auth"
+              className="flex justify-center gap-4 mt-5"
+            >
+              <button
+                className="
+       p-2 rounded-lg 
+       shadow-lg 
+       transition 
+       transform 
+       duration-300 
+       hover:scale-105 
+       hover:shadow-xl 
+       hover:bg-gradient-to-r 
+       hover:from-blue-400 
+       hover:to-purple-600
+       focus:outline-none
+       focus:shadow-xl
+       focus:bg-gradient-to-r
+       focus:from-blue-200
+       focus:to-purple-300
+     "
+              >
                 <img
                   className="w-6 h-6"
                   loading="lazy"
@@ -64,15 +158,26 @@ const Login = () => {
                   alt="Google"
                 />
               </button>
-              <button className="p-2 rounded-lg hover:scale-105 transition transform duration-300 shadow-lg">
-                <img
-                  className="w-6 h-6"
-                  loading="lazy"
-                  src="https://ucarecdn.com/95eebb9c-85cf-4d12-942f-3c40d7044dc6/"
-                  alt="LinkedIn"
-                />
-              </button>
-              <button className="p-2 rounded-lg hover:scale-105 transition transform duration-300 shadow-lg">
+
+              <button
+                className="
+       p-2 rounded-lg 
+       shadow-lg 
+       transition 
+       transform 
+       duration-300 
+       hover:scale-105 
+       hover:shadow-xl 
+       hover:bg-gradient-to-r 
+       hover:from-blue-400 
+       hover:to-purple-600
+       focus:outline-none
+       focus:shadow-xl
+       focus:bg-gradient-to-r
+       focus:from-blue-200
+       focus:to-purple-300
+     "
+              >
                 <img
                   className="w-6 h-6 dark:invert"
                   loading="lazy"
@@ -80,39 +185,30 @@ const Login = () => {
                   alt="GitHub"
                 />
               </button>
-              <button className="p-2 rounded-lg hover:scale-105 transition transform duration-300 shadow-lg">
-                <img
-                  className="w-6 h-6"
-                  loading="lazy"
-                  src="https://ucarecdn.com/6f56c0f1-c9c0-4d72-b44d-51a79ff38ea9/"
-                  alt="Facebook"
-                />
-              </button>
-              <button className="p-2 rounded-lg hover:scale-105 transition transform duration-300 shadow-lg">
-                <img
-                  className="w-6 h-6"
-                  loading="lazy"
-                  src="https://ucarecdn.com/82d7ca0a-c380-44c4-ba24-658723e2ab07/"
-                  alt="Twitter"
-                />
-              </button>
-              <button className="p-2 rounded-lg hover:scale-105 transition transform duration-300 shadow-lg">
-                <img
-                  className="w-6 h-6"
-                  loading="lazy"
-                  src="https://ucarecdn.com/3277d952-8e21-4aad-a2b7-d484dad531fb/"
-                  alt="Apple"
-                />
-              </button>
+
+              {/* <button className="p-2 rounded-lg hover:scale-105 transition transform duration-300 shadow-lg">
+                   <img
+                     className="w-6 h-6 dark:invert"
+                     loading="lazy"
+                     src="https://ucarecdn.com/be5b0ffd-85e8-4639-83a6-5162dfa15a16/"
+                     alt="GitHub"
+                   />
+                 </button> */}
             </div>
             <div className="mt-4 text-center text-sm text-gray-500">
               <p>
-                By signing in, you agree to our{' '}
-                <a href="#" className="text-blue-400 transition hover:underline">
+                By signing in, you agree to our{" "}
+                <a
+                  href="#"
+                  className="text-blue-400 transition hover:underline"
+                >
                   Terms
-                </a>{' '}
-                and{' '}
-                <a href="#" className="text-blue-400 transition hover:underline">
+                </a>{" "}
+                and{" "}
+                <a
+                  href="#"
+                  className="text-blue-400 transition hover:underline"
+                >
                   Privacy Policy
                 </a>
                 .

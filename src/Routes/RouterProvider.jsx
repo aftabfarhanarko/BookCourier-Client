@@ -4,6 +4,7 @@ import Home from "../pages/Home/Home";
 import RenderOutlet from "../components/Auth/RenderOutlet";
 import { LogIn } from "lucide-react";
 import Rigester from "../components/Auth/Rigester";
+import Login from "../components/Auth/Login";
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ export const router = createBrowserRouter([
     children:[
       {
         path:"/auth/login",
-       element:<LogIn></LogIn>
+         element: <Login></Login>
       },
       {
         path:"/auth/rigester",
