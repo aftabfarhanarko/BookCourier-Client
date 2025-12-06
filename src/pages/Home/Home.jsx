@@ -6,6 +6,7 @@ import PremiumBook from "./PremiumBook";
 import BookFeatureSection from "./BookFeatureSection";
 import LetasCard from "./LetasCard";
 import MapNow from "./MapNow";
+import Cousebooksconires from "./Cousebooksconires";
 // import { Typed } from 'react-typed';
 
 const Home = () => {
@@ -25,13 +26,16 @@ const Home = () => {
         <section className=" mt-30">
           <BookFicher></BookFicher>
         </section>
+        <section className=" mt-30">
+          <MapNow></MapNow>
+        </section>
+        <section className=" mt-30">
+          <Cousebooksconires></Cousebooksconires>
+        </section>
+        <section className=" w-10/12 mx-auto mt-30">
+          <WhyChooseBook></WhyChooseBook>
+        </section>
       </div>
-      <section className=" mt-30">
-        <MapNow></MapNow>
-      </section>
-      <section className=" w-10/12 mx-auto mt-30">
-        <WhyChooseBook></WhyChooseBook>
-      </section>
     </div>
   );
 };

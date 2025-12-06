@@ -36,7 +36,7 @@ const HomeMap = () => {
           className="text-center mb-10"
         >
           <H1text className="text-white">
-            Bangladesh All Book Delivery Coverage
+            Bangladesh All Book Delivery Coverage Districts
           </H1text>
           <div className="mt-3">
             <Ptext>
@@ -70,7 +70,7 @@ const HomeMap = () => {
           <div className="h-[450px] md:h-[650px] ">
             <MapContainer
               center={centerBD}
-              zoom={7.5}
+              zoom={7}
               minZoom={6}
               scrollWheelZoom={false}
               className="h-full w-full"
