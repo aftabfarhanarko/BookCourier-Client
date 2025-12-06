@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import H1text from "../../utils/H1text";
 import Ptext from "../../utils/Ptext";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
+import CountUp from 'react-countup';
+
 
 import { GiBookmarklet } from "react-icons/gi";
 import { FaBookReader } from "react-icons/fa";
@@ -10,12 +12,12 @@ import { FaBookAtlas } from "react-icons/fa6";
 import { GiSpellBook } from "react-icons/gi";
 
 const PremiumBook = () => {
-    useEffect(() => {
-  AOS.init({
-    duration: 1000,
-    once: false, 
-  });
-}, []);
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: false,
+    });
+  }, []);
   return (
     <div>
       <H1text>Premium Book Collections</H1text>
@@ -28,10 +30,11 @@ const PremiumBook = () => {
       </div>
       {/* Primume Book Card Name */}
       <div className=" grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-10  mt-15">
-
-        <div 
-         data-aos="fade-up" data-aos-delay="200"
-        className="group relative overflow-hidden rounded-2xl border border-base-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <div
+          data-aos="fade-up"
+          data-aos-delay="200"
+          className="group relative overflow-hidden rounded-2xl border border-base-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+        >
           {/* Glow effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"></div>
 
@@ -43,7 +46,10 @@ const PremiumBook = () => {
             </div>
 
             {/* Number */}
-            <p className="mt-4 text-3xl font-extrabold text-primary">7000+</p>
+            <p className="mt-4 text-3xl font-extrabold text-primary">
+                  <CountUp start={0} end={7000} duration={5} />
+                +
+                </p>
 
             {/* Title */}
             <h3 className="mt-2 text-lg font-semibold text-heading">
@@ -58,9 +64,11 @@ const PremiumBook = () => {
           </div>
         </div>
 
-        <div 
-        data-aos="fade-up" data-aos-delay="400"
-        className="group relative overflow-hidden rounded-2xl border border-base-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <div
+          data-aos="fade-up"
+          data-aos-delay="400"
+          className="group relative overflow-hidden rounded-2xl border border-base-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+        >
           {/* Glow effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"></div>
 
@@ -72,7 +80,10 @@ const PremiumBook = () => {
             </div>
 
             {/* Number */}
-            <p className="mt-4 text-3xl font-extrabold text-primary">600+</p>
+            <p className="mt-4 text-3xl font-extrabold text-primary">
+                 <CountUp start={0} end={6068} duration={5} />
+                +
+                </p>
 
             {/* Title */}
             <h3 className="mt-2 text-lg font-semibold text-heading">
@@ -87,9 +98,11 @@ const PremiumBook = () => {
           </div>
         </div>
 
-        <div 
-        data-aos="fade-up" data-aos-delay="600"
-        className="group relative overflow-hidden rounded-2xl border border-base-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <div
+          data-aos="fade-up"
+          data-aos-delay="600"
+          className="group relative overflow-hidden rounded-2xl border border-base-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+        >
           {/* Glow effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"></div>
 
@@ -101,7 +114,10 @@ const PremiumBook = () => {
             </div>
 
             {/* Number */}
-            <p className="mt-4 text-3xl font-extrabold text-primary">900+</p>
+            <p className="mt-4 text-3xl font-extrabold text-primary">
+                 <CountUp start={0} end={998} duration={5} />
+                +
+                </p>
 
             {/* Title */}
             <h3 className="mt-2 text-lg font-semibold text-heading">
@@ -110,14 +126,18 @@ const PremiumBook = () => {
 
             {/* Description */}
             <p className="mt-3 text-sm leading-relaxed text-text">
-            Discover inspiring stories of extraordinary individuals whose  vision, and courage transformed societies, cultures, and the course of World.
+              Discover inspiring stories of extraordinary individuals whose
+              vision, and courage transformed societies, cultures, and the
+              course of World.
             </p>
           </div>
         </div>
 
-        <div 
-        data-aos="fade-up" data-aos-delay="800"
-        className="group relative overflow-hidden rounded-2xl border border-base-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <div
+          data-aos="fade-up"
+          data-aos-delay="800"
+          className="group relative overflow-hidden rounded-2xl border border-base-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+        >
           {/* Glow effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"></div>
 
@@ -129,7 +149,10 @@ const PremiumBook = () => {
             </div>
 
             {/* Number */}
-            <p className="mt-4 text-3xl font-extrabold text-primary">5060+</p>
+            <p className="mt-4 text-3xl font-extrabold text-primary">
+          <CountUp start={0} end={5368} duration={5} />
+                +
+                </p>
 
             {/* Title */}
             <h3 className="mt-2 text-lg font-semibold text-heading">
