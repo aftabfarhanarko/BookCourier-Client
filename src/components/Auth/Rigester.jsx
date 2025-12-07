@@ -1,4 +1,4 @@
-import React, { use, useContext, useState } from "react";
+import React, {  useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaUserAlt } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
@@ -34,6 +34,12 @@ const Rigester = () => {
 
   const handelGoogleRigester = () => {
     console.log("Google L:ogin Now");
+    googleLogin()
+    .then(res => {
+      updetUserInfo(res.photoURL, res.displayName)
+      console.log(res.user);
+      
+    })
     
   };
 
