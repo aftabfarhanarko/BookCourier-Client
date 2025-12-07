@@ -46,7 +46,7 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/" className="mr-5 text-lg font-semibold">
+              <NavLink to="/deshbord" className="mr-5 text-lg font-semibold">
                 Dashboard
               </NavLink>
             </li>

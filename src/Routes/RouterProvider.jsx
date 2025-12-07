@@ -5,6 +5,7 @@ import RenderOutlet from "../components/Auth/RenderOutlet";
 import { LogIn } from "lucide-react";
 import Rigester from "../components/Auth/Rigester";
 import Login from "../components/Auth/Login";
+import DashBordLayOut from "../layout/DashBordLayOut";
 
 export const router = createBrowserRouter([
   {
@@ -31,5 +32,15 @@ export const router = createBrowserRouter([
         element:<Rigester></Rigester>
       }
     ]
+  },
+  {
+    path:"/deshbord",
+    element: <DashBordLayOut></DashBordLayOut>,
+    children:[
+      {
+        
+      }
+    ]
+
   }
 ]);

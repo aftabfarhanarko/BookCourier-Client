@@ -26,6 +26,7 @@
     "lucide-react": "^0.556.0",
     "motion": "^12.23.25",
     "react": "^19.2.0",
+    "react-admin": "^5.13.3",
     "react-countup": "^6.5.3",
     "react-dom": "^19.2.0",
     "react-fast-marquee": "^1.6.5",
