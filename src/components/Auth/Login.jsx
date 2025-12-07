@@ -5,7 +5,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "sonner";
 
 const Login = () => {
@@ -17,12 +17,18 @@ const Login = () => {
   } = useForm();
   const { signUpUser, googleLogin } = useAuth();
 
+  const locations = useLocation();
+  const from = locations.state || "/";
+  const navigate = useNavigate();
+
   const handelLogin = (data) => {
     const email = data?.email;
     const password = data.password;
     signUpUser(email, password)
       .then((res) => {
         console.log(res);
+        toast.success("Login Successfully");
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         toast.warning(err.code);
@@ -31,7 +37,17 @@ const Login = () => {
     console.log(email, password);
   };
 
-  const handelGoogleLogin = () => {};
+  const handelGoogleLogin = () => {
+    googleLogin()
+      .then((res) => {
+        toast.success("Login Successfully");
+        navigate(from, { replace: true });
+        console.log(res.user);
+      })
+      .catch((err) => {
+        toast.warning(err.code);
+      });
+  };
   return (
     <div className="flex justify-center items-center min-h-screen w-full">
       <div className="grid gap-8">
