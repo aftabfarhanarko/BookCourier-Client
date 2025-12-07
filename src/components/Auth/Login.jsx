@@ -4,6 +4,9 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
+import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router";
+import { toast } from "sonner";
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -12,10 +15,23 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const { signUpUser, googleLogin } = useAuth();
 
   const handelLogin = (data) => {
-    console.log(data);
+    const email = data?.email;
+    const password = data.password;
+    signUpUser(email, password)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        toast.warning(err.code);
+      });
+
+    console.log(email, password);
   };
+
+  const handelGoogleLogin = () => {};
   return (
     <div className="flex justify-center items-center min-h-screen w-full">
       <div className="grid gap-8">
@@ -31,8 +47,6 @@ const Login = () => {
               onSubmit={handleSubmit(handelLogin)}
               className="space-y-6 mt-6"
             >
-            
-
               <div className=" relative">
                 <label
                   htmlFor="email"
@@ -120,12 +134,12 @@ const Login = () => {
             <div className="flex flex-col mt-4 text-sm text-center dark:text-gray-300">
               <p>
                 Don't have an account?{" "}
-                <a
-                  href="#"
+                <Link
+                  to="/auth/rigester"
                   className="text-blue-400 transition hover:underline"
                 >
                   Sign Up Now
-                </a>
+                </Link>
               </p>
             </div>
             <div
@@ -133,23 +147,26 @@ const Login = () => {
               className="flex justify-center gap-4 mt-5"
             >
               <button
+                onClick={handelGoogleLogin}
                 className="
-       p-2 rounded-lg 
-       shadow-lg 
-       transition 
-       transform 
-       duration-300 
-       hover:scale-105 
-       hover:shadow-xl 
-       hover:bg-gradient-to-r 
-       hover:from-blue-400 
-       hover:to-purple-600
-       focus:outline-none
-       focus:shadow-xl
-       focus:bg-gradient-to-r
-       focus:from-blue-200
-       focus:to-purple-300
-     "
+    p-2 rounded-lg 
+    shadow-lg 
+    transition 
+    transform 
+    duration-300 
+    hover:scale-105 
+    hover:shadow-xl 
+    hover:bg-gradient-to-r 
+    hover:from-blue-400 
+    hover:to-purple-600
+    focus:outline-none
+    focus:shadow-xl
+    px-6
+    focus:bg-gradient-to-r
+    focus:from-blue-200
+    focus:to-purple-300
+    flex gap-2
+  "
               >
                 <img
                   className="w-6 h-6"
@@ -157,43 +174,8 @@ const Login = () => {
                   src="https://ucarecdn.com/8f25a2ba-bdcf-4ff1-b596-088f330416ef/"
                   alt="Google"
                 />
+                <span className=" text-white"> Google</span>
               </button>
-
-              <button
-                className="
-       p-2 rounded-lg 
-       shadow-lg 
-       transition 
-       transform 
-       duration-300 
-       hover:scale-105 
-       hover:shadow-xl 
-       hover:bg-gradient-to-r 
-       hover:from-blue-400 
-       hover:to-purple-600
-       focus:outline-none
-       focus:shadow-xl
-       focus:bg-gradient-to-r
-       focus:from-blue-200
-       focus:to-purple-300
-     "
-              >
-                <img
-                  className="w-6 h-6 dark:invert"
-                  loading="lazy"
-                  src="https://ucarecdn.com/be5b0ffd-85e8-4639-83a6-5162dfa15a16/"
-                  alt="GitHub"
-                />
-              </button>
-
-              {/* <button className="p-2 rounded-lg hover:scale-105 transition transform duration-300 shadow-lg">
-                   <img
-                     className="w-6 h-6 dark:invert"
-                     loading="lazy"
-                     src="https://ucarecdn.com/be5b0ffd-85e8-4639-83a6-5162dfa15a16/"
-                     alt="GitHub"
-                   />
-                 </button> */}
             </div>
             <div className="mt-4 text-center text-sm text-gray-500">
               <p>

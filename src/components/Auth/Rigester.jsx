@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaUserAlt } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
@@ -7,6 +7,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "sonner";
+import { Link } from "react-router";
 
 const Rigester = () => {
   const [show, setShow] = useState(false);
@@ -31,22 +32,17 @@ const Rigester = () => {
     console.log(email, password);
   };
 
-
   const handelGoogleRigester = () => {
-    console.log("Google L:ogin Now");
     googleLogin()
-    .then(res => {
-      updetUserInfo(res.photoURL, res.displayName)
-      console.log(res.user);
-      
-    })
-    
+      .then((res) => {
+        updetUserInfo(res.photoURL, res.displayName);
+        console.log(res.user);
+      })
+      .catch((err) => {
+        toast.warning(err.code);
+      });
   };
 
-  const handelGithubLogin = () => {
-    console.log("Github Login Now");
-    
-  }
   return (
     <div className="flex justify-center items-center min-h-screen w-full">
       <div className="grid gap-8">
@@ -57,6 +53,7 @@ const Rigester = () => {
           <div className="border-8 border-transparent rounded-xl bg-white dark:bg-gray-900 shadow-xl p-8 m-2">
             <h1 className="text-5xl font-bold text-center cursor-default dark:text-gray-300 text-gray-900">
               Rigester Now
+              
             </h1>
             <form
               onSubmit={handleSubmit(handelRegister)}
@@ -179,18 +176,19 @@ const Rigester = () => {
                 className="w-full p-3 mt-4 text-white bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg hover:scale-105 transition transform duration-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="submit"
               >
-                LOG IN
+                Rigester Now
               </button>
             </form>
             <div className="flex flex-col mt-4 text-sm text-center dark:text-gray-300">
               <p>
-                Don't have an account?{" "}
-                <a
+                You Allready have an account?{" "}
+                <Link
+                  to="/auth/login"
                   href="#"
                   className="text-blue-400 transition hover:underline"
                 >
-                  Sign Up
-                </a>
+                  Login Now
+                </Link>
               </p>
             </div>
             <div
@@ -198,7 +196,7 @@ const Rigester = () => {
               className="flex justify-center gap-4 mt-5"
             >
               <button
-              onClick={handelGoogleRigester}
+                onClick={handelGoogleRigester}
                 className="
     p-2 rounded-lg 
     shadow-lg 
@@ -212,9 +210,11 @@ const Rigester = () => {
     hover:to-purple-600
     focus:outline-none
     focus:shadow-xl
+    px-6
     focus:bg-gradient-to-r
     focus:from-blue-200
     focus:to-purple-300
+    flex gap-2
   "
               >
                 <img
@@ -223,34 +223,7 @@ const Rigester = () => {
                   src="https://ucarecdn.com/8f25a2ba-bdcf-4ff1-b596-088f330416ef/"
                   alt="Google"
                 />
-              </button>
-
-              <button
-              onClick={handelGithubLogin}
-                className="
-    p-2 rounded-lg 
-    shadow-lg 
-    transition 
-    transform 
-    duration-300 
-    hover:scale-105 
-    hover:shadow-xl 
-    hover:bg-gradient-to-r 
-    hover:from-blue-400 
-    hover:to-purple-600
-    focus:outline-none
-    focus:shadow-xl
-    focus:bg-gradient-to-r
-    focus:from-blue-200
-    focus:to-purple-300
-  "
-              >
-                <img
-                  className="w-6 h-6 dark:invert"
-                  loading="lazy"
-                  src="https://ucarecdn.com/be5b0ffd-85e8-4639-83a6-5162dfa15a16/"
-                  alt="GitHub"
-                />
+               <span className=" text-white">  Google</span>
               </button>
 
               {/* <button className="p-2 rounded-lg hover:scale-105 transition transform duration-300 shadow-lg">

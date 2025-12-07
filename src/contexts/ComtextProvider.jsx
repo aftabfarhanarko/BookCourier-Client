@@ -15,7 +15,6 @@ import { AuthContext } from "./AuthComtext";
 const providergoogle = new GoogleAuthProvider();
 
 
-
 const ComtextProvider = ({ children }) => {
   const [loding, setLoding] = useState(false);
   const [user, setUser] = useState(null);
@@ -44,6 +43,9 @@ const ComtextProvider = ({ children }) => {
   };
 
 
+ 
+
+
   useEffect(() => {
     const unsubccripet = onAuthStateChanged(auth, (currentUser) => {
       setLoding(true);
@@ -63,7 +65,7 @@ const ComtextProvider = ({ children }) => {
     loding,
     user,
     userLogOut,
-    googleLogin
+    googleLogin,
   };
   return <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>;
 };
