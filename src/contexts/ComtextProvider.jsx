@@ -24,9 +24,9 @@ const ComtextProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const updetUserInfo = (userData) => {
+  const updetUserInfo = (userInfoUpdet) => {
     setLoding(false);
-    return updateProfile(auth.currentUser, userData);
+    return updateProfile(auth.currentUser, userInfoUpdet);
   };
 
   const signUpUser = (email, password) => {

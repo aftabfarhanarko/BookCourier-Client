@@ -7,7 +7,8 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "sonner";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
+import { imagesBB } from "../../features/imagesUp";
 
 const Rigester = () => {
   const [show, setShow] = useState(false);
@@ -17,25 +18,44 @@ const Rigester = () => {
     handleSubmit,
   } = useForm();
 
+  const locations = useLocation();
+  const from = locations.state || "/";
+  const navigate = useNavigate();
+
   const { rigersterNow, updetUserInfo, googleLogin } = useAuth();
 
-  const handelRegister = (data) => {
+  const handelRegister = async (data) => {
     const email = data.email;
     const password = data.password;
+    const displayName = data.name;
+    const photo = data.file[0];
+    const photoURL = await imagesBB(photo);
+
+    const userInfoUpdet = {
+      displayName,
+      photoURL,
+    };
+
     rigersterNow(email, password)
       .then((res) => {
         console.log(res.user);
+        updetUserInfo(userInfoUpdet).then(() => {
+          navigate(from, { replace: true });
+
+          toast.success("Rigester Successfully");
+        });
       })
       .catch((err) => {
         toast.warning(err.code);
       });
-    console.log(email, password);
+    console.log(email, password, photoURL);
   };
 
   const handelGoogleRigester = () => {
     googleLogin()
       .then((res) => {
-        updetUserInfo(res.photoURL, res.displayName);
+        toast.success("Rigester Successfully");
+        navigate(from, { replace: true });
         console.log(res.user);
       })
       .catch((err) => {
@@ -53,7 +73,6 @@ const Rigester = () => {
           <div className="border-8 border-transparent rounded-xl bg-white dark:bg-gray-900 shadow-xl p-8 m-2">
             <h1 className="text-5xl font-bold text-center cursor-default dark:text-gray-300 text-gray-900">
               Rigester Now
-              
             </h1>
             <form
               onSubmit={handleSubmit(handelRegister)}
@@ -223,7 +242,7 @@ const Rigester = () => {
                   src="https://ucarecdn.com/8f25a2ba-bdcf-4ff1-b596-088f330416ef/"
                   alt="Google"
                 />
-               <span className=" text-white">  Google</span>
+                <span className=" text-white"> Google</span>
               </button>
 
               {/* <button className="p-2 rounded-lg hover:scale-105 transition transform duration-300 shadow-lg">
