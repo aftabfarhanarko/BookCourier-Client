@@ -17,7 +17,7 @@ const Login = () => {
     console.log(data);
   };
   return (
-    <div className="flex justify-center items-center min-h-[80vh] w-full">
+    <div className="flex justify-center items-center min-h-screen w-full">
       <div className="grid gap-8">
         <section
           id="back-div"

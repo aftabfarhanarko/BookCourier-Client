@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { use, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaUserAlt } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FaRegEyeSlash } from "react-icons/fa6";
+import useAuth from "../../hooks/useAuth";
+import { toast } from "sonner";
 
 const Rigester = () => {
   const [show, setShow] = useState(false);
@@ -14,11 +16,33 @@ const Rigester = () => {
     handleSubmit,
   } = useForm();
 
+  const { rigersterNow, updetUserInfo, googleLogin } = useAuth();
+
   const handelRegister = (data) => {
-    console.log(data);
+    const email = data.email;
+    const password = data.password;
+    rigersterNow(email, password)
+      .then((res) => {
+        console.log(res.user);
+      })
+      .catch((err) => {
+        toast.warning(err.code);
+      });
+    console.log(email, password);
   };
+
+
+  const handelGoogleRigester = () => {
+    console.log("Google L:ogin Now");
+    
+  };
+
+  const handelGithubLogin = () => {
+    console.log("Github Login Now");
+    
+  }
   return (
-    <div className="flex justify-center items-center min-h-[80vh] w-full">
+    <div className="flex justify-center items-center min-h-screen w-full">
       <div className="grid gap-8">
         <section
           id="back-div"
@@ -168,6 +192,7 @@ const Rigester = () => {
               className="flex justify-center gap-4 mt-5"
             >
               <button
+              onClick={handelGoogleRigester}
                 className="
     p-2 rounded-lg 
     shadow-lg 
@@ -195,6 +220,7 @@ const Rigester = () => {
               </button>
 
               <button
+              onClick={handelGithubLogin}
                 className="
     p-2 rounded-lg 
     shadow-lg 

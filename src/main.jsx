@@ -8,13 +8,18 @@ import {
   ReactQueryDevtools,
   ReactQueryDevtoolsPanel,
 } from "@tanstack/react-query-devtools";
+import ComtextProvider from "./contexts/ComtextProvider";
+import { Toaster } from "sonner";
 
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router}></RouterProvider>
-      {/* <ReactQueryDevtoolsPanel initialIsOpen={true} /> */}
+      <ComtextProvider>
+        <Toaster position="top-center" />
+        <RouterProvider router={router}></RouterProvider>
+        {/* <ReactQueryDevtoolsPanel initialIsOpen={true} /> */}
+      </ComtextProvider>
     </QueryClientProvider>
   </StrictMode>
 );
