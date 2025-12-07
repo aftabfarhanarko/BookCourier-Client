@@ -11,7 +11,7 @@ import { GiBookAura, GiWhiteBook } from "react-icons/gi";
 import { FaClipboardList } from "react-icons/fa";
 import { BrickWallShield, Logs } from "lucide-react";
 import { HiOutlineHome } from "react-icons/hi2";
-import { Link } from "react-router";
+import { Link, Outlet } from "react-router";
 import { IoClose } from "react-icons/io5";
 
 const DashBordLayOut = () => {
@@ -28,23 +28,16 @@ const DashBordLayOut = () => {
       {/* CONTENT */}
       <div className="drawer-content flex flex-col ">
         {/* NAVBAR */}
-        <nav className="navbar bg-base-300 dark:bg-base-800 px-4 shadow-md">
-          <label
-            htmlFor="my-drawer-4"
-            className="btn btn-ghost btn-square"
-            aria-label="Toggle sidebar"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 stroke-current"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
+        <nav className="navbar bg-base-300 dark:bg-base-800 px-4 py-5 shadow-md">
+          <div className=" block md:hidden">
+            <label
+              htmlFor="my-drawer-4"
+              className="btn btn-ghost btn-square"
+              aria-label="Toggle sidebar"
             >
-              <path d="M4 4h16v16H4z" />
-              <path d="M9 4v16" />
-            </svg>
-          </label>
+              <Logs />
+            </label>
+          </div>
 
           <div className="flex items-center gap-2 text-primary ">
             <FaBookReader className="w-6 h-6" />
@@ -52,7 +45,7 @@ const DashBordLayOut = () => {
           </div>
 
           {/* AVATAR DROPDOWN */}
-          <div className="ml-auto dropdown dropdown-end">
+          <div className="ml-auto dropdown dropdown-end mr-10">
             <div
               tabIndex={0}
               role="button"
@@ -71,11 +64,27 @@ const DashBordLayOut = () => {
             >
               <li className="mb-3">
                 <div className="flex items-center gap-3 cursor-default select-none">
-                  <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-700 flex items-center justify-center">
-                    <CiUser className="text-[#e85d04]" />
+                  <div className="w-10 h-10 rounded-full bg-orange-100  flex items-center justify-center">
+                    {user?.photoURL ? (
+                      <img
+                        className="w-10 h-10 rounded-full object-cover"
+                        src={
+                          user?.photoURL ? (
+                            user?.photoURL
+                          ) : (
+                            <CiUser className=" text-[#e85d04]" />
+                          )
+                        }
+                      />
+                    ) : (
+                      <CiUser className=" text-[#e85d04]" />
+                    )}
+                    {/* <CiUser className="text-[#e85d04]" /> */}
                   </div>
                   <div>
-                    <p className="font-semibold">User</p>
+                    <p className="font-semibold">
+                      {user?.displayName || "User"}
+                    </p>
                     <p className="text-xs text-base-content/60">
                       Verified account
                     </p>
@@ -118,7 +127,7 @@ const DashBordLayOut = () => {
 
         {/* PAGE CONTENT */}
         <div className="p-6 flex-grow bg-base-100 dark:bg-base-900">
-          Page Content
+         <Outlet></Outlet>
         </div>
       </div>
 
@@ -129,9 +138,9 @@ const DashBordLayOut = () => {
         <ul className="menu px-2 py-4 gap-2 flex-grow bg-gray-900 text-white">
           {/* Main menu items */}
           <li>
-            <button className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition">
+            <Link to="/" className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition">
               <HiOutlineHome className="w-8 h-8" /> Home
-            </button>
+            </Link>
           </li>
           <div className=" block md:hidden">
             <li
