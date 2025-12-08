@@ -9,7 +9,7 @@ import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 const AllBooks = () => {
   const [selectedPrice, setSelectedPrice] = useState("");
-
+  const [search , setSearch] = useState("");
   //   Pasitionse
   const [page, setPage] = useState(1);
   const [allBook, setAllBook] = useState(0);
@@ -23,10 +23,10 @@ const AllBooks = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["Publish", "In Stock", page],
+    queryKey: ["Publish", "In Stock", page, search, selectedPrice],
     queryFn: async () => {
       const res = await axioscehore.get(
-        `allbooks?one=Publish&tow=In Stock&limit=${limit}&skip=${skip}`
+        `allbooks?one=Publish&tow=In Stock&limit=${limit}&skip=${skip}&search=${search}&sortnow=${selectedPrice}`
       );
       setAllBook(res.data.counts);
       refetch();
@@ -39,7 +39,15 @@ const AllBooks = () => {
     // console.log("Selected:", event.target.value);
   };
 
-  console.log(selectedPrice, allBook);
+  console.log(search);
+  console.log(selectedPrice);
+
+  const handelSeawdg = (e) => {
+    e.preventDefault();
+    setSelectedPrice(e.target.search.value)
+
+  }
+  
 
   if (isLoading) return <h1>Loding......</h1>;
   return (
@@ -57,8 +65,10 @@ const AllBooks = () => {
             <IoMdSearch className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 h-5 w-5 text-gray-400"></IoMdSearch>
 
             <input
+            onChange={handelSeawdg}
               type="search"
               required
+              name="search"
               placeholder="Search"
               className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
             />

@@ -4,7 +4,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 const Card = ({ book }) => {
-  console.log(book);
   useEffect(() => {
     AOS.init({
       duration: 1000,
