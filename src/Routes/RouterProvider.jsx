@@ -10,6 +10,7 @@ import AddBookLibery from "../pages/dashboard/Librarian/AddBookLibery";
 import AllBooks from "../pages/Home/AllBooks/AllBooks";
 import DetlicesPages from "../pages/Home/DetlicesPages/DetlicesPages";
 import UserOrderTable from "../pages/dashboard/User/UserOrderTable";
+import PaymentSuccess from "../pages/dashboard/Payment/PaymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ export const router = createBrowserRouter([
       {
         path:"/deshbord/userorder",
         element:<UserOrderTable></UserOrderTable>
+      },
+      {
+        path:"/deshbord/pymentSuccess",
+        element:<PaymentSuccess></PaymentSuccess>
       },
 
     ]

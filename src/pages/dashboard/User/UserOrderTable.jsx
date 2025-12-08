@@ -80,6 +80,39 @@ const UserOrderTable = () => {
       }
     });
   };
+
+  const handelPaymentSession = (orderData) => {
+    const bookInfo = {
+      customerName: orderData.name,
+      bookID: orderData?._id,
+      customerEmail: orderData.email,
+      customerAddress: orderData.address,
+      customerPhoneNumber: orderData.phoneNumber,
+      trakingId: orderData?.trakingId,
+
+      // Book Mapping
+      bookTitle: orderData.book.title,
+      bookImage: orderData.book.image,
+      bookAuthor: orderData.book.author,
+      bookPrice: orderData.book.price_sell,
+
+      // Seller Mapping
+      sellerName: user?.displayName,
+      sellerEmail: user?.email,
+
+      // Status
+      orderStatus: orderData.ordered_Status,
+      paymentStatus: orderData.payment_status,
+    };
+
+    axioscehore.post(`creat-payment-session`, bookInfo).then((res) => {
+      window.location.assign(res.data.url);
+      console.log(res);
+    });
+
+    console.log("All Boks Informations", bookInfo);
+    // console.log(orderData.sellerInfo.sellerName);
+  };
   if (isLoading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
@@ -95,44 +128,45 @@ const UserOrderTable = () => {
         />
       </h1>
 
-      <div className="overflow-x-auto mt-10  rounded-box border border-base-300  shadow bg-base-100">
-        <table className="table  ">
-          <thead className=" bg-base-300">
-            <tr>
-              <th className="p-4">Srl</th>
-              <th className="p-4">Image</th>
-              <th className="p-4">Buyer Name</th>
-              <th className="p-4">Email</th>
-              <th className="p-4">Address</th>
-              <th className="p-4">Phone</th>
-              <th className="p-4">Book Name</th>
-              <th className="p-4">Price</th>
-              <th className="p-4">Ordered Status</th>
-              <th className="p-4">Payment Status</th>
-              <th className="p-4">Order Time</th>
-              <th className="p-4">Actions</th>
-            </tr>
-          </thead>
+      <div className=" px-6">
+        <div className="overflow-x-auto mt-10  rounded-box border border-base-300  shadow bg-base-100">
+          <table className="table  ">
+            <thead className=" bg-base-300">
+              <tr>
+                <th className="p-4">Srl</th>
+                <th className="p-4">Image</th>
+                <th className="p-4">Buyer Name</th>
+                <th className="p-4">Email</th>
+                <th className="p-4">Address</th>
+                <th className="p-4">Phone</th>
+                <th className="p-4">Book Name</th>
+                <th className="p-4">Price</th>
+                <th className="p-4">Ordered Status</th>
+                <th className="p-4">Payment Status</th>
+                <th className="p-4">Order Time</th>
+                <th className="p-4">Actions</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {orders.map((item, i) => (
-              <tr key={i} className=" hover:bg-base-200">
-                <td>{i + 1}</td>
-                <td>
-                  <img src={item?.book?.image} className=" w-10 h-10"></img>
-                </td>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.address}</td>
-                <td>0{item.phoneNumber}</td>
+            <tbody>
+              {orders.map((item, i) => (
+                <tr key={i} className=" hover:bg-base-200">
+                  <td>{i + 1}</td>
+                  <td>
+                    <img src={item?.book?.image} className=" w-10 h-10"></img>
+                  </td>
+                  <td>{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.address}</td>
+                  <td>0{item.phoneNumber}</td>
 
-                {/* Book Info */}
-                <td>{item.book?.title}</td>
-                <td>{item.book?.price_sell} ৳</td>
+                  {/* Book Info */}
+                  <td>{item.book?.title}</td>
+                  <td>{item.book?.price_sell} ৳</td>
 
-                {/* Order + Payment */}
-                <td
-                  className={`
+                  {/* Order + Payment */}
+                  <td
+                    className={`
             font-semibold 
             ${
               item.ordered_Status === "pending"
@@ -140,12 +174,12 @@ const UserOrderTable = () => {
                 : "text-green-600"
             }
           `}
-                >
-                  {item.ordered_Status}
-                </td>
+                  >
+                    {item.ordered_Status}
+                  </td>
 
-                <td
-                  className={`
+                  <td
+                    className={`
             font-semibold 
             ${
               item.payment_status === "unpaid"
@@ -153,11 +187,11 @@ const UserOrderTable = () => {
                 : "text-green-600"
             }
           `}
-                >
-                  {item.payment_status === "unpaid" ? (
-                    <Link
-                      to="/payment"
-                      className="
+                  >
+                    {item.payment_status === "unpaid" ? (
+                      <button
+                        onClick={() => handelPaymentSession(item)}
+                        className="
     bg-green-500 
     text-white 
     font-semibold 
@@ -173,18 +207,18 @@ const UserOrderTable = () => {
     transition 
     duration-300
   "
-                    >
-                      <FiCreditCard size={18} /> Pay Now
-                    </Link>
-                  ) : (
-                    item.payment_status
-                  )}
-                </td>
+                      >
+                        <FiCreditCard size={18} /> Pay Now
+                      </button>
+                    ) : (
+                      item.payment_status
+                    )}
+                  </td>
 
-                {/* Order Time */}
-                <td>{new Date(item.orderTime).toLocaleString()}</td>
-                <td
-                  className={`
+                  {/* Order Time */}
+                  <td>{new Date(item.orderTime).toLocaleString()}</td>
+                  <td
+                    className={`
             font-semibold 
             ${
               item.payment_status === "unpaid"
@@ -192,11 +226,11 @@ const UserOrderTable = () => {
                 : "text-green-600"
             }
           `}
-                >
-                  {item.payment_status === "unpaid" ? (
-                    <button
-                      onClick={() => handelcancel(item._id)}
-                      className="
+                  >
+                    {item.payment_status === "unpaid" ? (
+                      <button
+                        onClick={() => handelcancel(item._id)}
+                        className="
   bg-red-500 
   text-white 
   font-semibold 
@@ -209,17 +243,18 @@ const UserOrderTable = () => {
   transition 
   duration-300
 "
-                    >
-                      Cancel
-                    </button>
-                  ) : (
-                    "Not Canceled"
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                      >
+                        Cancel
+                      </button>
+                    ) : (
+                      "Not Canceled"
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

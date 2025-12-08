@@ -14,7 +14,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ComtextProvider>
-        <Toaster position="top-center" />
+        <Toaster position="top-right" />
         <RouterProvider router={router}></RouterProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </ComtextProvider>
