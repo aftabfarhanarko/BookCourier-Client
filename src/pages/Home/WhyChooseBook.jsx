@@ -106,8 +106,8 @@ const WhyChooseBook = () => {
             deletingSpeed={40}
             pauseDuration={2000}
             loop={true}
-            showCursor={true}
-            cursorCharacter="|"
+            showCursor={false}
+            // cursorCharacter="|"
           />
         </h1>
         <p>

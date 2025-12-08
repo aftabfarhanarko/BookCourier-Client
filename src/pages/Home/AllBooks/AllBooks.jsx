@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import Card from "../../../shared/Card";
-import TextType from "../../../utils/TextType";
 import { IoMdSearch } from "react-icons/io";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import PageNotFOund from "../../../shared/PageNotFOund";
+import TextType from "../../../utils/TextType";
 
 const AllBooks = () => {
   const [search, setSearch] = useState("");
@@ -56,7 +56,16 @@ const AllBooks = () => {
       <div className="mt-20 flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-0">
         {/* Heading */}
         <h1 className="text-2xl text-center md:text-left md:text-3xl font-semibold text-secondary leading-tight">
-          All Books ({allBook})
+            <TextType
+                    text={`All Books (${allBook})`}
+                    typingSpeed={70}
+                    deletingSpeed={40}
+                    pauseDuration={2000}
+                    loop={false}
+                    showCursor={false}
+                   
+                  />
+          
         </h1>
 
         {/* Right side: Search + Sort */}

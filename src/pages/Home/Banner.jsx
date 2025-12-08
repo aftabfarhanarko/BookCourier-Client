@@ -40,7 +40,7 @@ const Banner = () => {
                     deletingSpeed={40}
                     pauseDuration={2000}
                     loop={true}
-                    showCursor={true}
+                    showCursor={false}
                     cursorCharacter="|"
                   />
                 </h1>
@@ -50,8 +50,8 @@ const Banner = () => {
                     typingSpeed={70}
                     deletingSpeed={40}
                     pauseDuration={2000}
-                    loop={true}
-                    showCursor={true}
+                    loop={false}
+                    showCursor={false}
                     cursorCharacter="|"
                   />
                 </p>
@@ -82,7 +82,7 @@ const Banner = () => {
                     deletingSpeed={40}
                     pauseDuration={2000}
                     loop={true}
-                    showCursor={true}
+                    showCursor={false}
                     cursorCharacter="|"
                   />
                 </h1>
@@ -92,8 +92,8 @@ const Banner = () => {
                     typingSpeed={70}
                     deletingSpeed={40}
                     pauseDuration={2000}
-                    loop={true}
-                    showCursor={true}
+                    loop={false}
+                    showCursor={false}
                     cursorCharacter="|"
                   />
                 </p>
@@ -124,8 +124,8 @@ const Banner = () => {
                     deletingSpeed={40}
                     pauseDuration={2000}
                     loop={true}
-                    showCursor={true}
-                    cursorCharacter="|"
+                    showCursor={false}
+                    // cursorCharacter="|"
                   />
                 </h1>
                 <p className="text-lg md:text-xl text-gray-700 max-w-lg font-medium leading-relaxed">
@@ -134,9 +134,9 @@ const Banner = () => {
                     typingSpeed={70}
                     deletingSpeed={40}
                     pauseDuration={2000}
-                    loop={true}
-                    showCursor={true}
-                    cursorCharacter="|"
+                    loop={false}
+                    showCursor={false}
+                    // cursorCharacter="|"
                   />
                 </p>
 
@@ -166,8 +166,8 @@ const Banner = () => {
                     deletingSpeed={40}
                     pauseDuration={2000}
                     loop={true}
-                    showCursor={true}
-                    cursorCharacter="|"
+                    showCursor={false}
+                    // cursorCharacter="|"
                   />
                 </h1>
                 <p className="text-lg md:text-xl text-gray-700 max-w-lg font-medium leading-relaxed">
@@ -176,9 +176,9 @@ const Banner = () => {
                     typingSpeed={70}
                     deletingSpeed={40}
                     pauseDuration={2000}
-                    loop={true}
-                    showCursor={true}
-                    cursorCharacter="|"
+                    loop={false}
+                    showCursor={false}
+                    // cursorCharacter="|"
                   />
                 </p>
 

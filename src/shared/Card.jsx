@@ -15,7 +15,7 @@ const Card = ({ book }) => {
       <Link
         data-aos="fade-up"
         data-aos-delay="300"
-        to={`${book._id}`}
+        to={`/detlicesPages/${book._id}`}
         className="max-w-sm border border-base-300 bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-shadow duration-300 font-sans block"
       >
         <div className="overflow-hidden bg-base-300">
@@ -38,10 +38,10 @@ const Card = ({ book }) => {
           <p className="text-gray-900 font-semibold text-base mb-4">
             MRP:{" "}
             <span className="line-through text-red-500 mr-2">
-              {book.price_mrp}$
+             ৳ {book.price_mrp}
             </span>
             <span className="text-green-500 font-bold">
-              {Math.floor(book.price_mrp * 0.85)}$
+             ৳ {Math.floor(book.price_mrp * 0.85)}
             </span>
           </p>
           <button

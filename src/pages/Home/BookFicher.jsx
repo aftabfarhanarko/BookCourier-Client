@@ -30,8 +30,8 @@ const BookFicher = () => {
                 deletingSpeed={50}
                 pauseDuration={2000}
                 loop={true}
-                showCursor={true}
-                cursorCharacter="|"
+                showCursor={false}
+                // cursorCharacter="|"
               />
             </h2>
 
