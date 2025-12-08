@@ -16,37 +16,136 @@ const Card = ({ book }) => {
         data-aos="fade-up"
         data-aos-delay="300"
         to={`/detlicesPages/${book._id}`}
-        className="max-w-sm border border-base-300 bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-shadow duration-300 font-sans block"
+        className="
+    max-w-sm 
+    bg-white 
+    rounded-2xl 
+    shadow-lg 
+    overflow-hidden 
+    group 
+    hover:shadow-2xl 
+    transition-shadow 
+    duration-300 
+    font-sans 
+    block
+    border border-gray-200
+    relative
+  "
       >
-        <div className="overflow-hidden bg-base-300">
+        {/* Image */}
+        <div className="relative overflow-hidden rounded-t-2xl">
           <img
-            className=" mx-auto py-4 h-40 transition-transform duration-500 ease-in-out group-hover:scale-115"
+            className="
+        mx-auto 
+        h-40 
+        py-4 
+        transition-transform 
+        duration-500 
+        ease-in-out 
+        group-hover:scale-110
+      "
             src={book.image}
+            alt={book.title}
           />
+
+          {/* Stock Badge */}
+          <span
+            className="
+      absolute top-2 left-2 
+      bg-green-600 text-white text-xs 
+      px-2 py-1 rounded-full shadow
+    "
+          >
+            {book.availability_status || "In Stock"}
+          </span>
+
+          {/* Category Badge */}
+          <span
+            className="
+      absolute top-2 right-2 
+      bg-purple-600 text-white text-xs 
+      px-2 py-1 rounded-full shadow
+    "
+          >
+            {book.category}
+          </span>
+
+          {/* Hover Overlay */}
+          <div
+            className="
+      absolute inset-0 
+      bg-black/60 
+      opacity-0 
+      group-hover:opacity-100 
+      text-white 
+      flex flex-col justify-center items-start 
+      p-4 
+      transition-opacity duration-300 rounded-t-2xl
+      text-xs
+      space-y-1
+    "
+          >
+            <p>
+              <span className="font-semibold">Pages:</span> {book.page_count}
+            </p>
+            <p>
+              <span className="font-semibold">Weight:</span> {book.weight} gm
+            </p>
+            <p>
+              <span className="font-semibold">Publisher:</span> {book.publisher}
+            </p>
+            <p>
+              <span className="font-semibold">Return Policy:</span>{" "}
+              {book.return_policy}
+            </p>
+          </div>
         </div>
-        <div className="p-5 border-t border-base-300">
+
+        {/* Info Section */}
+        <div className="p-3 px-6 border-t border-gray-200 flex flex-col gap-2">
+          {/* Title */}
           <h2
-            className="text-lg font-semibold text-gray-900 mb-1 truncate"
+            className="text-lg font-semibold text-gray-900 truncate"
             title={book.title}
           >
-            {book.title}
+         Name:   {book.title}
           </h2>
-          <p className="text-xs text-gray-600  tracking-wider font-semibold mb-1">
-            Category: {book.category}
+
+          {/* Language */} 
+          <p className="text-xs text-gray-700">Language : {book.language}</p>
+
+          {/* Rating */}
+          <p className="text-[12px] text-yellow-500 font-medium">
+            Rating :  ⭐ {book.rating_avg || 0} / 5
           </p>
-          <p className="text-xs text-gray-700 mb-3">{book.language}</p>
-          <p className="text-gray-900 font-semibold text-base mb-4">
-            MRP:{" "}
+
+          {/* Price */}
+          <p className="text-gray-900 font-semibold text-base mt-1">
+            MRP : {" "}
             <span className="line-through text-red-500 mr-2">
-             ৳ {book.price_mrp}
+              ৳ {book.price_mrp}
             </span>
-            <span className="text-green-500 font-bold">
-             ৳ {Math.floor(book.price_mrp * 0.85)}
+            <span className="text-green-600 font-bold">
+              ৳ {Math.floor(book.price_mrp * 0.85)}
             </span>
           </p>
+
+          {/* View Details Button */}
           <button
             type="button"
-            className="w-full bg-gradient-to-r from-[#C2410C] to-[#e25e0b] text-white font-semibold py-2 rounded-lg hover:from-[#e25e0b] hover:to-[#C2410C] transition-colors duration-300"
+            className="
+        w-full 
+        mt-3 
+        bg-gradient-to-r from-orange-600 to-orange-400 
+        text-white 
+        font-semibold 
+        py-2 
+        rounded-lg 
+        hover:from-orange-400 
+        hover:to-orange-600 
+        transition-colors 
+        duration-300
+      "
           >
             View Details
           </button>
