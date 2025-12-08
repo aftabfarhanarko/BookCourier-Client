@@ -9,6 +9,7 @@ import DashBordLayOut from "../layout/DashBordLayOut";
 import AddBookLibery from "../pages/dashboard/Librarian/AddBookLibery";
 import AllBooks from "../pages/Home/AllBooks/AllBooks";
 import DetlicesPages from "../pages/Home/DetlicesPages/DetlicesPages";
+import UserOrderTable from "../pages/dashboard/User/UserOrderTable";
 
 export const router = createBrowserRouter([
   {
@@ -53,7 +54,12 @@ export const router = createBrowserRouter([
       {
         path:"/deshbord/addbooks",
         element:<AddBookLibery></AddBookLibery>
-      }
+      },
+      {
+        path:"/deshbord/userorder",
+        element:<UserOrderTable></UserOrderTable>
+      },
+
     ]
 
   }

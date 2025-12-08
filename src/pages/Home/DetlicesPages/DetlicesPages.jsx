@@ -52,7 +52,10 @@ const DetlicesPages = () => {
   const handelSeawdg = (customerInfo) => {
     console.log(customerInfo);
     const orderInfo = {
-      customerInfo,
+      name:customerInfo.name,
+      email:customerInfo.email,
+      address:customerInfo.address,
+      phoneNumber:customerInfo.phoneNumber,
       book,
     };
 

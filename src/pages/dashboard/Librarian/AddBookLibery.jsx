@@ -4,6 +4,7 @@ import { imagesBB } from "../../../features/imagesUp";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import { toast } from "sonner";
+import TextType from "../../../utils/TextType";
 
 const AddBookLibery = () => {
   const {
@@ -56,7 +57,14 @@ const AddBookLibery = () => {
           bg-gradient-to-r from-[#C2410C] via-[#F97316] to-[#FDBA74]
           bg-clip-text text-transparent"
             >
-              📚 Add New Book for Sale
+              <TextType
+                text={`📚 Add New Book for Sale`}
+                typingSpeed={70}
+                deletingSpeed={40}
+                pauseDuration={2000}
+                loop={false}
+                showCursor={false}
+              />
             </h1>
             <p className="text-gray-600 mt-3 text-lg">
               Fill in the complete book details below
