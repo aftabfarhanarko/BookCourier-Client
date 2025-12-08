@@ -35,18 +35,18 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className=" menu-horizontal px-1">
             <li>
-              <NavLink to="/" className="mr-5 text-lg font-semibold">
+              <NavLink to="/" className="mr-5 text-md font-semibold">
                 Home
               </NavLink>
             </li>
             <li>
-              <NavLink to="" className="mr-5 text-lg font-semibold">
+              <NavLink to="/books" className="mr-5 text-md font-semibold">
                 {" "}
                 Books
               </NavLink>
             </li>
             <li>
-              <NavLink to="/deshbord" className="mr-5 text-lg font-semibold">
+              <NavLink to="/deshbord" className="mr-5 text-md font-semibold">
                 Dashboard
               </NavLink>
             </li>

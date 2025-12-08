@@ -13,7 +13,7 @@
 };
 
 a.active{
-
+ @apply border-b border-primary text-primary
 }
 
 @plugin "daisyui/theme" {

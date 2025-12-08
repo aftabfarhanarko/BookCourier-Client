@@ -7,6 +7,7 @@ import Rigester from "../components/Auth/Rigester";
 import Login from "../components/Auth/Login";
 import DashBordLayOut from "../layout/DashBordLayOut";
 import AddBookLibery from "../pages/dashboard/Librarian/AddBookLibery";
+import AllBooks from "../pages/Home/AllBooks/AllBooks";
 
 export const router = createBrowserRouter([
   {
@@ -18,8 +19,13 @@ export const router = createBrowserRouter([
         index: true,
         element: <Home></Home>,
       },
+      {
+        path:"/books",
+        element:<AllBooks></AllBooks>
+      }
     ],
   },
+  // Auth Layout
   {
     path:'/auth',
     Component: RenderOutlet,
@@ -34,6 +40,7 @@ export const router = createBrowserRouter([
       }
     ]
   },
+  // Dashbord
   {
     path:"/deshbord",
     element: <DashBordLayOut></DashBordLayOut>,

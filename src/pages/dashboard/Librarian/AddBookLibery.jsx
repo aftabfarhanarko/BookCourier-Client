@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { imagesBB } from "../../../features/imagesUp";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
+import { toast } from "sonner";
 
 const AddBookLibery = () => {
   const {
@@ -39,11 +40,10 @@ const AddBookLibery = () => {
       },
     };
 
-       axioscehore.post("book", savedDatabase).then(res => {
-        console.log(res.data);
-        
-      })
-
+    axioscehore.post("book", savedDatabase).then((res) => {
+      console.log(res.data);
+      toast.success("Books Creat Successfully");
+    });
   };
   return (
     <div>
@@ -359,7 +359,7 @@ const AddBookLibery = () => {
                   </option>
                   <option value="In Stock">In Stock</option>
                   <option value="Out of Stock">Out of Stock</option>
-                  <option value="Preorder">Preorder</option>
+                  {/* <option value="Preorder">Preorder</option> */}
                 </select>
                 {errors.availability_status && (
                   <p className="text-red-600 mt-1 text-sm">
