@@ -6,6 +6,7 @@ import { LogIn } from "lucide-react";
 import Rigester from "../components/Auth/Rigester";
 import Login from "../components/Auth/Login";
 import DashBordLayOut from "../layout/DashBordLayOut";
+import AddBookLibery from "../pages/dashboard/Librarian/AddBookLibery";
 
 export const router = createBrowserRouter([
   {
@@ -38,7 +39,8 @@ export const router = createBrowserRouter([
     element: <DashBordLayOut></DashBordLayOut>,
     children:[
       {
-        
+        path:"/deshbord/addbooks",
+        element:<AddBookLibery></AddBookLibery>
       }
     ]
 

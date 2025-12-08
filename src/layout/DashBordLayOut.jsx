@@ -17,18 +17,14 @@ import { IoClose } from "react-icons/io5";
 const DashBordLayOut = () => {
   const { user } = useAuth();
 
-  const logoutNow = () => {};
-  const handleTheme = (e) => {};
-
   return (
     <div className="drawer lg:drawer-open  bg-base-100 dark:bg-base-900 text-base-content dark:text-base-content">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
       {/* CONTENT */}
-      {/* CONTENT */}
       <div className="drawer-content flex flex-col ">
         {/* NAVBAR */}
-        <nav className="navbar bg-base-300 dark:bg-base-800 px-4 py-5 shadow-md">
+        <nav className="  navbar bg-base-300 dark:bg-base-800 px-4 py-5 shadow-md">
           <div className=" block md:hidden">
             <label
               htmlFor="my-drawer-4"
@@ -127,7 +123,7 @@ const DashBordLayOut = () => {
 
         {/* PAGE CONTENT */}
         <div className="p-6 flex-grow bg-base-100 dark:bg-base-900">
-         <Outlet></Outlet>
+          <Outlet></Outlet>
         </div>
       </div>
 
@@ -138,7 +134,10 @@ const DashBordLayOut = () => {
         <ul className="menu px-2 py-4 gap-2 flex-grow bg-gray-900 text-white">
           {/* Main menu items */}
           <li>
-            <Link to="/" className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition">
+            <Link
+              to="/"
+              className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition"
+            >
               <HiOutlineHome className="w-8 h-8" /> Home
             </Link>
           </li>
@@ -177,7 +176,7 @@ const DashBordLayOut = () => {
           </li>
           <li>
             <Link
-              to=""
+              to="/deshbord/addbooks"
               className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
             >
               <GiWhiteBook className="w-6 h-6" /> Add Book
