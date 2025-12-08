@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useRef } from "react";
 import { Link, useParams } from "react-router";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import { motion } from "framer-motion";
@@ -8,10 +8,20 @@ import { GrLanguage } from "react-icons/gr";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import TextType from "../../../utils/TextType";
+import { useForm } from "react-hook-form";
+import useAuth from "../../../hooks/useAuth";
+import { toast } from "sonner";
 
 const DetlicesPages = () => {
+  const { user } = useAuth();
   const { id } = useParams();
   const axioscehore = useAxiosSchore();
+  const refene = useRef();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   // Load Single Book
   const { data: book = {}, isLoading: newLoding } = useQuery({
@@ -33,7 +43,30 @@ const DetlicesPages = () => {
       return res.data;
     },
   });
-  console.log(relatedBooks);
+  //   console.log(relatedBooks);
+
+  const habdelModalOpen = () => {
+    refene.current.showModal();
+  };
+
+  const handelSeawdg = (customerInfo) => {
+    console.log(customerInfo);
+    const orderInfo = {
+      customerInfo,
+      book,
+    };
+
+    axioscehore.post("ordernow", orderInfo).then((res) => {
+      console.log(res.data);
+      if (res.data.insertedId) {
+        toast.success("Order Successfully ");
+        // Close the dialog
+        if (refene.current) {
+          refene.current.close(); // <-- use close(), not closeModal()
+        }
+      }
+    });
+  };
 
   if (isLoading || newLoding) return <LoadingSpinner></LoadingSpinner>;
   return (
@@ -115,10 +148,11 @@ const DetlicesPages = () => {
             <div className="flex gap-1 md:gap-4 pt-3">
               {/* Buy Now */}
               <motion.button
+                onClick={habdelModalOpen}
                 whileHover={{ scale: 1.05 }}
                 className="
         flex items-center md:gap-2
-        px-7 py-2.5 
+        px-7 py-2
         text-white font-medium
         rounded-xl shadow 
         bg-[#C2410C]
@@ -126,7 +160,7 @@ const DetlicesPages = () => {
         transition-all
       "
               >
-                <span>🛒</span> Order Now
+                <span>🛒</span>Prase Order
               </motion.button>
 
               {/* Add to Cart */}
@@ -134,7 +168,7 @@ const DetlicesPages = () => {
                 whileHover={{ scale: 1.05 }}
                 className="
         flex items-center gap-2
-        px-7 py-2.5 
+        px-7 py-2 
         border-2 border-[#C2410C] 
         text-[#C2410C] font-semibold 
         rounded-xl 
@@ -355,7 +389,7 @@ const DetlicesPages = () => {
 
         {/* Related Book */}
         <div className="md:col-span-12 mt-10">
-          <h2 className=" text-2xl md:text-3xl leading-tight lg:text-4xl text-secondary font-semibold">
+          <h2 className=" text-2xl md:text-3xl leading-tight text-secondary font-semibold">
             <TextType
               text={"Related Category Books "}
               typingSpeed={70}
@@ -454,6 +488,120 @@ const DetlicesPages = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal Open */}
+      {/* You can open the modal using document.getElementById('ID').showModal() method */}
+
+      <dialog
+        ref={refene}
+        className="modal backdrop:bg-black/40 backdrop:backdrop-blur-sm"
+      >
+        <div className="modal-box w-full max-w-md sm:max-w-lg md:max-w-xl rounded-3xl p-6 sm:p-8 relative shadow-2xl border border-gray-200 bg-white mx-4 sm:mx-auto">
+          {/* Close Button */}
+          <form method="dialog" className="absolute top-4 right-4">
+            <button className="btn btn-sm btn-circle btn-ghost text-gray-500 hover:text-gray-800 transition">
+              ✕
+            </button>
+          </form>
+
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 text-center">
+            Complete Your Order
+          </h2>
+
+          <form
+            onSubmit={handleSubmit(handelSeawdg)}
+            className="space-y-4 sm:space-y-6"
+            encType="multipart/form-data"
+          >
+            {/* Name */}
+            <div className="space-y-1">
+              <label className="font-medium text-gray-700 text-sm sm:text-base">
+                Your Name <span className="text-red-600">*</span>
+              </label>
+              <input
+                {...register("name", { required: "Your Name is required" })}
+                type="text"
+                defaultValue={user?.displayName}
+                readOnly
+                className="w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-orange-600 shadow-sm focus:ring-2 focus:ring-orange-400 focus:outline-none transition text-sm sm:text-base"
+              />
+              {errors.name && (
+                <p className="text-red-600 text-xs sm:text-sm">
+                  {errors.name.message}
+                </p>
+              )}
+            </div>
+
+            {/* Email */}
+            <div className="space-y-1">
+              <label className="font-medium text-gray-700 text-sm sm:text-base">
+                Your Email <span className="text-red-600">*</span>
+              </label>
+              <input
+                {...register("email", { required: "Your Email is required" })}
+                type="email"
+                defaultValue={user?.email}
+                readOnly
+                className="w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-orange-600 shadow-sm focus:ring-2 focus:ring-orange-400 focus:outline-none transition text-sm sm:text-base"
+              />
+              {errors.email && (
+                <p className="text-red-600 text-xs sm:text-sm">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+
+            {/* Phone Number */}
+            <div className="space-y-1">
+              <label className="font-medium text-gray-700 text-sm sm:text-base">
+                Phone Number <span className="text-red-600">*</span>
+              </label>
+              <input
+                {...register("phoneNumber", {
+                  required: "Phone Number is required",
+                  valueAsNumber: true,
+                })}
+                type="number"
+                placeholder="e.g. 017XXXXXXXX"
+                className="w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-orange-600 shadow-sm focus:ring-2 focus:ring-orange-400 focus:outline-none transition text-sm sm:text-base"
+              />
+              {errors.phoneNumber && (
+                <p className="text-red-600 text-xs sm:text-sm">
+                  {errors.phoneNumber.message}
+                </p>
+              )}
+            </div>
+
+            {/* Address */}
+            <div className="space-y-1">
+              <label className="font-medium text-gray-700 text-sm sm:text-base">
+                Your Address <span className="text-red-600">*</span>
+              </label>
+              <input
+                {...register("address", {
+                  required: "Please provide your address",
+                })}
+                type="text"
+                placeholder="Your full address"
+                className="w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-orange-600 shadow-sm focus:ring-2 focus:ring-orange-400 focus:outline-none transition text-sm sm:text-base"
+              />
+              {errors.address && (
+                <p className="text-red-600 text-xs sm:text-sm">
+                  {errors.address.message}
+                </p>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full py-2.5 sm:py-3 rounded-full font-bold text-base sm:text-lg text-white bg-gradient-to-r from-orange-500 to-yellow-400 shadow-lg hover:shadow-xl active:scale-95 transition"
+            >
+              Order Now
+            </button>
+          </form>
+        </div>
+      </dialog>
     </div>
   );
 };

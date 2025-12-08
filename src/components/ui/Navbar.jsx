@@ -6,8 +6,11 @@ import { CiUser } from "react-icons/ci";
 import { CiSettings } from "react-icons/ci";
 import { PiSignOutLight } from "react-icons/pi";
 import { CgProfile } from "react-icons/cg";
+import { Heart, ShoppingCart } from "lucide-react";
 
 const Navbar = () => {
+  const [wishlistCount, setWishlistCount] = useState(0);
+  const [cartCount, setCartCount] = useState(2);
   const { user, userLogOut } = useAuth();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   useEffect(() => {
@@ -129,7 +132,28 @@ const Navbar = () => {
                     </li>
 
                     <div className="divider my-2" />
+                    {/* wish list */}
+                    <li>
+                      <Link className="relative cursor-pointer">
+                        <Heart className="w-6 h-6 text-red-500" />
 
+                        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                          {wishlistCount}
+                        </span>
+                      </Link>
+                    </li>
+
+                    <div className="divider my-2" />
+                    <li>
+                      {/* Shopping Cart */}
+                      <Link className="relative cursor-pointer">
+                        <ShoppingCart className="w-6 h-6 text-blue-600" />
+                        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                          {cartCount}
+                        </span>
+                      </Link>
+                    </li>
+                    <div className="divider my-2" />
                     {/* SETTINGS */}
                     <li>
                       <div>
@@ -230,6 +254,7 @@ const Navbar = () => {
             </div>
           )}
         </div>
+        <div className="flex items-center space-x-6">{/* Wishlist */}</div>
       </div>
     </div>
   );
