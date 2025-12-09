@@ -17,6 +17,11 @@ import OrderAllBooks from "../pages/dashboard/Librarian/OrderAllBooks";
 import AlluserData from "../pages/dashboard/Admin/AlluserData";
 import ManazeBooks from "../pages/dashboard/Admin/ManazeBooks";
 import Profile from "../pages/dashboard/Profile/Profile";
+import PrivetRoute from "./PrivetRoute";
+import LibrarianRoute from "./LibrarianRoute";
+import AdminRoute from "./AdminRoute";
+import UserRoute from "./UserRoute";
+import Invortorey from "../pages/dashboard/User/Invortorey";
 
 export const router = createBrowserRouter([
   {
@@ -29,73 +34,115 @@ export const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path:"/books",
-        element:<AllBooks></AllBooks>
+        path: "/books",
+        element: <AllBooks></AllBooks>,
       },
       {
-        path:"/detlicesPages/:id",
-        element:<DetlicesPages></DetlicesPages>
-      }
+        path: "/detlicesPages/:id",
+        element: (
+          <PrivetRoute>
+            <DetlicesPages></DetlicesPages>{" "}
+          </PrivetRoute>
+        ),
+      },
     ],
   },
   // Auth Layout
   {
-    path:'/auth',
+    path: "/auth",
     Component: RenderOutlet,
-    children:[
+    children: [
       {
-        path:"/auth/login",
-         element: <Login></Login>
+        path: "/auth/login",
+        element: <Login></Login>,
       },
       {
-        path:"/auth/rigester",
-        element:<Rigester></Rigester>
-      }
-    ]
+        path: "/auth/rigester",
+        element: <Rigester></Rigester>,
+      },
+    ],
   },
   // Dashbord
   {
-    path:"/deshbord",
-    element: <DashBordLayOut></DashBordLayOut>,
-    children:[
+    path: "/deshbord",
+    element: (
+      <PrivetRoute>
+        <DashBordLayOut></DashBordLayOut>{" "}
+      </PrivetRoute>
+    ),
+    children: [
       {
-        path:"/deshbord/addbooks",
-        element:<AddBookLibery></AddBookLibery>
+        path: "/deshbord/addbooks",
+        element: (
+          <LibrarianRoute>
+            <AddBookLibery></AddBookLibery>
+          </LibrarianRoute>
+        ),
       },
       {
-        path:"/deshbord/userorder",
-        element:<UserOrderTable></UserOrderTable>
+        path: "/deshbord/userorder",
+        element: (
+          <UserRoute>
+            <UserOrderTable></UserOrderTable>
+          </UserRoute>
+        ),
       },
       {
-        path:"/deshbord/pymentSuccess",
-        element:<PaymentSuccess></PaymentSuccess>
+        path: "/deshbord/pymentSuccess",
+        element: <PaymentSuccess></PaymentSuccess>,
       },
       {
-        path:"/deshbord/paymenthistory",
-        element:<PaymentHistory></PaymentHistory>
+        path: "/deshbord/paymenthistory",
+        element: (
+          <UserRoute>
+            <PaymentHistory></PaymentHistory>
+          </UserRoute>
+        ),
       },
       {
-        path:"/deshbord/myBooks",
-        element:<MyBooks></MyBooks>
+        path: "/deshbord/inventory",
+        element: (
+          <UserRoute>
+            <Invortorey></Invortorey>
+          </UserRoute>
+        ),
       },
       {
-        path:"/deshbord/orderAllBooks",
-        element:<OrderAllBooks></OrderAllBooks>
+        path: "/deshbord/myBooks",
+        element: (
+          <LibrarianRoute>
+            <MyBooks></MyBooks>
+          </LibrarianRoute>
+        ),
       },
       {
-        path:"/deshbord/adminuserDataSloved",
-        element:<AlluserData></AlluserData>
+        path: "/deshbord/orderAllBooks",
+        element: (
+          <LibrarianRoute>
+            <OrderAllBooks></OrderAllBooks>
+          </LibrarianRoute>
+        ),
       },
       {
-        path:"/deshbord/manazeBooks",
-        element:<ManazeBooks></ManazeBooks>
+        path: "/deshbord/adminuserDataSloved",
+        element: (
+          <AdminRoute>
+            <AlluserData></AlluserData>
+          </AdminRoute>
+        ),
       },
       {
-        path:"/deshbord/profileLoginUser",
-        element:<Profile></Profile>
+        path: "/deshbord/manazeBooks",
+        element: (
+          <AdminRoute>
+            <ManazeBooks></ManazeBooks>
+          </AdminRoute>
+        ),
       },
-
-    ]
-
-  }
+      {
+        path: "/deshbord/profileLoginUser",
+        element: <Profile></Profile>,
+      },
+    ],
+  },
 ]);

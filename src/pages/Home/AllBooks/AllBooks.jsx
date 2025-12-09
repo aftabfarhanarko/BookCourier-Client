@@ -23,16 +23,21 @@ const AllBooks = () => {
   const {
     data: books = [],
     isLoading,
-    isFetching
+    isFetching,
   } = useQuery({
     queryKey: ["Publish", "In Stock", page, search],
     queryFn: async () => {
       const res = await axioscehore.get(
         `allbooks?one=Publish&tow=In Stock&limit=${limit}&skip=${skip}&search=${search}`
       );
-      setAllBook(res.data.counts);
+      // setAllBook(res?.data?.counts);
       // refetch();
-      return res.data.result;
+      console.log(res.data);
+
+      return res?.data?.result || [];
+    },
+    onSuccess: (data) => {
+      setAllBook(data.counts);
     },
   });
 
@@ -43,29 +48,29 @@ const AllBooks = () => {
     setPage(1); // ✅ search করলে first page
     setSearch(text); // ✅ queryKey change → auto refetch
   };
-  
+
   if (isLoading) return <LoadingSpinner></LoadingSpinner>;
-  {isFetching && (
-  <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
-    <LoadingSpinner />
-  </div>
-)}
+  {
+    isFetching && (
+      <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className=" w-11/12 mx-auto">
       <div className="mt-20 flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-0">
         {/* Heading */}
         <h1 className="text-2xl text-center md:text-left md:text-3xl font-semibold text-secondary leading-tight">
-            <TextType
-                    text={`All Books (${allBook})`}
-                    typingSpeed={70}
-                    deletingSpeed={40}
-                    pauseDuration={2000}
-                    loop={false}
-                    showCursor={false}
-                   
-                  />
-          
+          <TextType
+            text={`All Books (${allBook})`}
+            typingSpeed={70}
+            deletingSpeed={40}
+            pauseDuration={2000}
+            loop={false}
+            showCursor={false}
+          />
         </h1>
 
         {/* Right side: Search + Sort */}

@@ -15,11 +15,13 @@ import { Link, Outlet } from "react-router";
 import { IoClose } from "react-icons/io5";
 import { CreditCard } from "lucide-react";
 import LoadingSpinner from "../shared/LoadingSpinner ";
+import useRole from "../hooks/useRole";
 
 const DashBordLayOut = () => {
-  const { user } = useAuth();
+  const { user, loding } = useAuth();
+  const { role } = useRole();
 
-  if (!user?.email) return <LoadingSpinner></LoadingSpinner>;
+  if (!user?.email || loding) return <LoadingSpinner></LoadingSpinner>;
   return (
     <div className="drawer lg:drawer-open  bg-base-100 dark:bg-base-900 text-base-content dark:text-base-content">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -134,7 +136,7 @@ const DashBordLayOut = () => {
       <div className="drawer-side  md:w-full bg-base-200 dark:bg-base-900 flex flex-col">
         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
 
-        <ul className="menu px-2 py-4 gap-2 flex-grow bg-gray-900 text-white">
+        <ul className="menu px-5.5 py-4 gap-2 flex-grow bg-gray-900 text-white">
           {/* Main menu items */}
           <li>
             <Link
@@ -161,75 +163,86 @@ const DashBordLayOut = () => {
               <RiDashboardHorizontalLine className="w-6 h-6" /> Dashboard
             </Link>
           </li>
-          <li>
-            <Link
-              to="/deshbord/adminuserDataSloved"
-              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-            >
-              <HiMiniUserGroup className="w-6 h-6" /> All Users{" "}
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/deshbord/manazeBooks"
-              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-            >
-              <ImBooks className="w-6 h-6" /> Manage Books{" "}
-            </Link>
-          </li>
-          <>liberin sections</>
-          <li>
-            <Link
-              to="/deshbord/addbooks"
-              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-            >
-              <GiWhiteBook className="w-6 h-6" /> Add Book
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/deshbord/myBooks"
-              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-            >
-              <GiBookAura className="w-6 h-6" /> My Books{" "}
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/deshbord/orderAllBooks"
-              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-            >
-              <FaClipboardList className="w-6 h-6" /> Orders{" "}
-            </Link>
-          </li>
-          <>user sections</>
-          <li>
-            <Link
-              to="/deshbord/userorder"
-              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-            >
-              <Logs className="w-6 h-6" /> User Orders{" "}
-            </Link>
-            <button className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition"></button>
-          </li>
 
-          <li>
-            <Link
-              to="/deshbord/paymenthistory"
-              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-            >
-              <CreditCard className="w-6 h-6" /> Payment History{" "}
-            </Link>
-            <button className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition"></button>
-          </li>
-          <li>
-            <Link
-              to=""
-              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-            >
-              <BrickWallShield className="w-6 h-6" /> Invoices
-            </Link>
-          </li>
+          {role === "admin" && (
+            <>
+              <li>
+                <Link
+                  to="/deshbord/adminuserDataSloved"
+                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
+                >
+                  <HiMiniUserGroup className="w-6 h-6" /> All Users{" "}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/deshbord/manazeBooks"
+                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
+                >
+                  <ImBooks className="w-6 h-6" /> Manage Books{" "}
+                </Link>
+              </li>
+            </>
+          )}
+
+          {role === "librarian" && (
+            <>
+              <li>
+                <Link
+                  to="/deshbord/addbooks"
+                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
+                >
+                  <GiWhiteBook className="w-6 h-6" /> Add Book
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/deshbord/myBooks"
+                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
+                >
+                  <GiBookAura className="w-6 h-6" /> My Books{" "}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/deshbord/orderAllBooks"
+                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
+                >
+                  <FaClipboardList className="w-6 h-6" /> Orders{" "}
+                </Link>
+              </li>
+            </>
+          )}
+          {role === "user" && (
+            <>
+              <li>
+                <Link
+                  to="/deshbord/userorder"
+                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
+                >
+                  <Logs className="w-6 h-6" /> User Orders{" "}
+                </Link>
+                <button className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition"></button>
+              </li>
+              <li>
+                <Link
+                  to="/deshbord/paymenthistory"
+                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
+                >
+                  <CreditCard className="w-6 h-6" /> Payment History{" "}
+                </Link>
+                <button className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition"></button>
+              </li>
+              <li>
+                <Link
+                  to=""
+                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
+                >
+                  <BrickWallShield className="w-6 h-6" /> Invoices
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
 
         {/* Bottom fixed buttons */}
