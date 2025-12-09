@@ -171,7 +171,7 @@ const DashBordLayOut = () => {
           </li>
           <li>
             <Link
-              to=""
+              to="/deshbord/manazeBooks"
               className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
             >
               <ImBooks className="w-6 h-6" /> Manage Books{" "}
@@ -233,7 +233,7 @@ const DashBordLayOut = () => {
         </ul>
 
         {/* Bottom fixed buttons */}
-        <ul className="menu  w-[185px] py-4 border-t border-gray-800 bg-gray-900 text-white dark:border-base-700">
+        <ul className="menu  w-[185px]   border-t border-gray-800 bg-gray-900 text-white dark:border-base-700">
           <li>
             <Link
               to=""

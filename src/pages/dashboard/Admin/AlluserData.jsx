@@ -129,7 +129,7 @@ const AlluserData = () => {
                 <th className="p-4">Creat Time</th>
                 <th className="p-4">User Status</th>
                 <th className="p-4">Admin Actions</th>
-                <th className="p-4">Delet User</th>
+                <th className="p-4">Delete User</th>
               </tr>
             </thead>
 
@@ -145,13 +145,13 @@ const AlluserData = () => {
                     />
                   </td>
                   <td>
-                    <div className="flex items-center gap-2 text-[16px]">
+                    <div className="flex items-center gap-2 text-[13px] md:text-[16px]">
                       {item.displayName}
                     </div>
                   </td>
 
                   <td>
-                    <div className="flex items-center gap-2 text-[16px]">
+                    <div className="flex items-center gap-2 text-[13px] md:text-[16px]">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-4 h-4 "

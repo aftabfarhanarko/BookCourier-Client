@@ -366,7 +366,7 @@ const AddBookLibery = () => {
                     Select Status
                   </option>
                   <option value="In Stock">In Stock</option>
-                  <option value="Out of Stock">Out of Stock</option>
+                  <option value="Out of Stock">Out Stock</option>
                   {/* <option value="Preorder">Preorder</option> */}
                 </select>
                 {errors.availability_status && (

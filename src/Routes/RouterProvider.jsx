@@ -15,6 +15,7 @@ import PaymentHistory from "../pages/dashboard/User/PaymentHistory";
 import MyBooks from "../pages/dashboard/Librarian/MyBooks";
 import OrderAllBooks from "../pages/dashboard/Librarian/OrderAllBooks";
 import AlluserData from "../pages/dashboard/Admin/AlluserData";
+import ManazeBooks from "../pages/dashboard/Admin/ManazeBooks";
 
 export const router = createBrowserRouter([
   {
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
       {
         path:"/deshbord/adminuserDataSloved",
         element:<AlluserData></AlluserData>
+      },
+      {
+        path:"/deshbord/manazeBooks",
+        element:<ManazeBooks></ManazeBooks>
       },
 
     ]

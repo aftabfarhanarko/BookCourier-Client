@@ -49,56 +49,9 @@ const MyBooks = () => {
     console.log(updeatBookInfo);
   };
 
-  // const handelDeletNow = (id) => {
-  //   Swal.fire({
-  //     title: "Confirm Book Deletion",
-  //     text: `Are you sure you want to delete this book ? This action cannot be undone.`,
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonText: "Yes, Delete",
-  //     cancelButtonText: "No, Cancel",
-
-  //     customClass: {
-  //       popup: "rounded-2xl shadow-xl",
-  //       title: "text-lg font-semibold text-gray-800",
-  //       htmlContainer: "text-gray-600",
-  //       actions: "flex gap-3 justify-end",
-  //       confirmButton:
-  //         "bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-xl",
-  //       cancelButton:
-  //         "bg-red-500 ml-4 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-xl",
-  //     },
-
-  //     buttonsStyling: false,
-  //     backdrop: `rgba(0,0,0,0.45)`,
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       axioscehore
-  //         .delete(`deletLiberyanBooks/${id}`)
-  //         .then((res) => {
-  //           refetch();
-  //           toast.success("Delet Now");
-  //         })
-  //         .catch((err) => {
-  //           toast.warning(err?.code);
-  //         });
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Book Successfully Deleted",
-  //         text: "Your Book has been Deletd Proprely .",
-  //         confirmButtonText: "OK",
-  //         customClass: {
-  //           popup: "rounded-2xl shadow-lg",
-  //           title: "text-lg font-bold text-green-700",
-  //           htmlContainer: "text-gray-700",
-  //           confirmButton:
-  //             "bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-xl",
-  //         },
-  //         buttonsStyling: false,
-  //       });
-  //     }
-  //   });
-  // };
+  const handelDeletNow = (id) => {
+   
+  };
 
   if (isLoading || isFetching || !user?.email)
     return <LoadingSpinner></LoadingSpinner>;
