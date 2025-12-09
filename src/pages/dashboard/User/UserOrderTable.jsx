@@ -143,7 +143,7 @@ const UserOrderTable = () => {
                 <th className="p-4">Book Name</th>
                 <th className="p-4">Price</th>
                 <th className="p-4">Ordered Status</th>
-                <th className="p-4">Delivery Time</th>
+                {/* <th className="p-4">Delivery Time</th> */}
                 <th className="p-4">Payment Status</th>
                 <th className="p-4">Order Time</th>
                 <th className="p-4">Actions</th>
@@ -227,8 +227,10 @@ const UserOrderTable = () => {
 
                   {/* Book Info */}
                   <td>
-                    <div className="flex items-center gap-2 text-wrap
-">
+                    <div
+                      className="flex items-center gap-2 text-wrap
+"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-4 h-4 text-purple-600"
@@ -246,7 +248,7 @@ const UserOrderTable = () => {
                   <td>
                     <div className=" gap-0 ">
                       <span className="w-4 h-4 text-green-600 flex items-center">
-                       { `৳ ${item.book?.price_sell}`}
+                        {`৳ ${item.book?.price_sell}`}
                       </span>
                     </div>
                   </td>
@@ -303,11 +305,6 @@ const UserOrderTable = () => {
                         </svg>
                       )}
                       {item.ordered_Status}
-                    </div>
-                  </td>
-                  <td>
-                    <div>
-                   ""
                     </div>
                   </td>
 

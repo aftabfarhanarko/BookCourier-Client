@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
-import useAuth from "../../../hooks/useAuth";
 import {
   CheckCircle,
   CreditCard,
@@ -15,7 +14,6 @@ import {
 const PaymentSuccess = () => {
   const axioscehore = useAxiosSchore();
   const [data, setData] = useState({});
-  const { user } = useAuth();
   const [searchParems] = useSearchParams();
   const sessionId = searchParems.get("session_id");
   console.log(searchParems.get("session_id"));
@@ -84,7 +82,7 @@ const PaymentSuccess = () => {
             <div>
               <p className="text-gray-500 text-xs md:text-sm">Amount Paid</p>
               <p className="font-semibold text-gray-900 text-sm md:text-base">
-                ${data?.amount}
+                ৳{data?.amount}
               </p>
             </div>
           </div>

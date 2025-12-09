@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
@@ -6,11 +6,15 @@ import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import TextType from "../../../utils/TextType";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { imagesBB } from "../../../features/imagesUp";
 
 const MyBooks = () => {
+  const { register, handleSubmit } = useForm();
   const { user } = useAuth();
+  const reafernc = useRef();
   const axioscehore = useAxiosSchore();
-  const { data, isLoading, isFetching, refetch } = useQuery({
+  const { data, isLoading, isFetching } = useQuery({
     queryKey: [user?.email],
     queryFn: async () => {
       const res = await axioscehore.get(
@@ -21,60 +25,80 @@ const MyBooks = () => {
     },
   });
 
-  console.log(data);
-
-  const handelEditNow = (item) => {};
-
-  const handelDeletNow = (id) => {
-    Swal.fire({
-      title: "Confirm Book Deletion",
-      text: `Are you sure you want to delete this book ? This action cannot be undone.`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, Delete",
-      cancelButtonText: "No, Cancel",
-
-      customClass: {
-        popup: "rounded-2xl shadow-xl",
-        title: "text-lg font-semibold text-gray-800",
-        htmlContainer: "text-gray-600",
-        actions: "flex gap-3 justify-end",
-        confirmButton:
-          "bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-xl",
-        cancelButton:
-          "bg-red-500 ml-4 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-xl",
-      },
-
-      buttonsStyling: false,
-      backdrop: `rgba(0,0,0,0.45)`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axioscehore
-          .delete(`deletLiberyanBooks/${id}`)
-          .then((res) => {
-            refetch();
-            toast.success("Delet Now");
-          })
-          .catch((err) => {
-            toast.warning(err?.code);
-          });
-        Swal.fire({
-          icon: "success",
-          title: "Book Successfully Deleted",
-          text: "Your Book has been Deletd Proprely .",
-          confirmButtonText: "OK",
-          customClass: {
-            popup: "rounded-2xl shadow-lg",
-            title: "text-lg font-bold text-green-700",
-            htmlContainer: "text-gray-700",
-            confirmButton:
-              "bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-xl",
-          },
-          buttonsStyling: false,
-        });
-      }
-    });
+  // console.log(data);
+  const handelEditNow = () => {
+    reafernc.current.showModal();
   };
+  const handelEditesForm = async (newItem) => {
+    const photo = newItem.images[0];
+    const imagesLink = await imagesBB(photo);
+
+    const updeatBookInfo = {
+      title: newItem.title || data.title,
+      availability_status:
+        newItem.availability_status || data.availability_status,
+      description: newItem.description || data.description,
+      image: imagesLink || data.image,
+      price_mrp: newItem.price_mrp || data.price_mrp,
+      price_sell: newItem.price_sell || data.price_sell,
+      publisher: newItem.publisher || data.publisher,
+      stock_qty: newItem.stock_qty || data.stock_qty,
+      updeateTime: new Date().toISOString(),
+    };
+
+    console.log(updeatBookInfo);
+  };
+
+  // const handelDeletNow = (id) => {
+  //   Swal.fire({
+  //     title: "Confirm Book Deletion",
+  //     text: `Are you sure you want to delete this book ? This action cannot be undone.`,
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Yes, Delete",
+  //     cancelButtonText: "No, Cancel",
+
+  //     customClass: {
+  //       popup: "rounded-2xl shadow-xl",
+  //       title: "text-lg font-semibold text-gray-800",
+  //       htmlContainer: "text-gray-600",
+  //       actions: "flex gap-3 justify-end",
+  //       confirmButton:
+  //         "bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-xl",
+  //       cancelButton:
+  //         "bg-red-500 ml-4 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-xl",
+  //     },
+
+  //     buttonsStyling: false,
+  //     backdrop: `rgba(0,0,0,0.45)`,
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       axioscehore
+  //         .delete(`deletLiberyanBooks/${id}`)
+  //         .then((res) => {
+  //           refetch();
+  //           toast.success("Delet Now");
+  //         })
+  //         .catch((err) => {
+  //           toast.warning(err?.code);
+  //         });
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Book Successfully Deleted",
+  //         text: "Your Book has been Deletd Proprely .",
+  //         confirmButtonText: "OK",
+  //         customClass: {
+  //           popup: "rounded-2xl shadow-lg",
+  //           title: "text-lg font-bold text-green-700",
+  //           htmlContainer: "text-gray-700",
+  //           confirmButton:
+  //             "bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-xl",
+  //         },
+  //         buttonsStyling: false,
+  //       });
+  //     }
+  //   });
+  // };
 
   if (isLoading || isFetching || !user?.email)
     return <LoadingSpinner></LoadingSpinner>;
@@ -255,8 +279,8 @@ const MyBooks = () => {
                     <div className=" flex  items-center gap-2">
                       {/* Edit Button */}
                       <button
-                        onClick={() => handelEditNow(item)}
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
+                        onClick={handelEditNow}
+                        className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -272,7 +296,7 @@ const MyBooks = () => {
                         Edit
                       </button>
 
-                      {/* Delete Button */}
+                      {/* Delete Button
                       <button
                         onClick={() => handelDeletNow(item._id)}
                         className="bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
@@ -291,7 +315,7 @@ const MyBooks = () => {
                           <line x1="14" y1="11" x2="14" y2="17" />
                         </svg>
                         Delete
-                      </button>
+                      </button> */}
                     </div>
                   </td>
                 </tr>
@@ -302,6 +326,155 @@ const MyBooks = () => {
       </div>
 
       {/* Edite Er kaj Baki */}
+      <dialog ref={reafernc} className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <form
+            onSubmit={handleSubmit(handelEditesForm)}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-12"
+            encType="multipart/form-data"
+          >
+            {/* ===== Left Section ===== */}
+            <div className="space-y-8">
+              {/* Book Title */}
+              <div>
+                <label className="font-medium text-gray-800">
+                  Book Title <span className="text-red-600">*</span>
+                </label>
+                <input
+                  {...register("title")}
+                  type="text"
+                  // defaultValue={data.title}
+                  placeholder="Introduction to Algorithms"
+                  className="w-full mt-2 px-6 py-2 rounded-2xl  border-2 border-orange-400  focus:outline-none"
+                />
+              </div>
+
+              {/* Publisher */}
+              <div>
+                <label className="font-medium text-gray-800">Publisher</label>
+                <select
+                  {...register("publisher")}
+                  className="w-full select mt-2 px-6 py-2 rounded-2xl  border-2 border-orange-400  focus:outline-none"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Select Book Stutas
+                  </option>
+                  <option value="Publish">Publish</option>
+                  <option value="UnPublish">UnPublish</option>
+                </select>
+              </div>
+
+              {/* Availability Status */}
+              <div>
+                <label className="font-medium text-gray-800">
+                  Availability Status <span className="text-red-600">*</span>
+                </label>
+                <select
+                  {...register("availability_status")}
+                  className=" select w-full mt-2 px-6 py-2 rounded-2xl  border-2 border-orange-400  focus:outline-none"
+                >
+                  <option value="" disabled>
+                    Select Status
+                  </option>
+                  <option value="In Stock">In Stock</option>
+                  <option value="Out of Stock">Out of Stock</option>
+                  {/* <option value="Preorder">Preorder</option> */}
+                </select>
+              </div>
+
+              {/* Images Upload */}
+              <div className="border-2 border-dashed border-[#C2410C] rounded-2xl p-4 text-center bg-yellow-50 cursor-pointer hover:scale-105 transition">
+                <label className="cursor-pointer w-full block">
+                  <input
+                    {...register("images")}
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                  />
+                  <p className="font-semibold hover:underline text-[#C2410C] text-xs">
+                    Click here to Edit book images (minimum 1)
+                  </p>
+                </label>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full py-2 rounded-full font-bold text-md text-white bg-gradient-to-r from-[#C2410C] to-[#FDBA74] shadow-xl hover:shadow-2xl active:scale-95 transition"
+              >
+                Edit Book Complete
+              </button>
+            </div>
+
+            {/* ===== Right Section ===== */}
+            <div className="space-y-8">
+              {/* Price MRP */}
+              <div>
+                <label className="font-medium text-gray-800">
+                  Price <span className="text-red-600">*</span>
+                </label>
+                <input
+                  {...register("price_mrp")}
+                  type="number"
+                  min={0}
+                  placeholder="$ Set Price..."
+                  className="w-full mt-2 px-6 py-2 rounded-2xl  border-2 border-orange-400  focus:outline-none"
+                />
+              </div>
+
+              {/* Selling Price */}
+              <div>
+                <label className="font-medium text-gray-800">
+                  Selling Price <span className="text-red-600">*</span>
+                </label>
+                <input
+                  {...register("price_sell")}
+                  type="number"
+                  min={0}
+                  placeholder="$ Selling price...."
+                  className="w-full mt-2 px-6 py-2 rounded-2xl  border-2 border-orange-400  focus:outline-none "
+                />
+              </div>
+
+              {/* Stock Quantity */}
+              <div>
+                <label className="font-medium text-gray-800">
+                  Stock Quantity <span className="text-red-600">*</span>
+                </label>
+                <input
+                  {...register("stock_qty")}
+                  type="number"
+                  min={0}
+                  placeholder="edite now"
+                  className="w-full mt-2 px-6 py-2 rounded-2xl  border-2 border-orange-400  focus:outline-none"
+                />
+              </div>
+              {/* Description */}
+              <div>
+                <label className="font-medium text-gray-800">
+                  Description <span className="text-red-600">*</span>
+                </label>
+                <textarea
+                  {...register("description")}
+                  placeholder="Short summary about the book....."
+                  className="w-full  mt-2 px-6 py-2 rounded-2xl  border-2 border-orange-400  focus:outline-none min-h-[140px]"
+                ></textarea>
+              </div>
+            </div>
+          </form>
+
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="bg-red-500 ml-4 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-xl">
+                Close
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };

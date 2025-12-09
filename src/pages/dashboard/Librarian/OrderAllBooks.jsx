@@ -3,6 +3,8 @@ import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import TextType from "../../../utils/TextType";
+import { toast } from "sonner";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 const OrderAllBooks = () => {
   const axioscehore = useAxiosSchore();
@@ -27,12 +29,14 @@ const OrderAllBooks = () => {
     console.log(id);
 
     handelUpdetNow("delivered", id);
+    toast.success("Book Deliverd Successfully");
   };
 
   const handelShipedNow = (id) => {
     console.log(id);
 
     handelUpdetNow("shipped", id);
+    toast.success("Book Shipped Successfully");
   };
 
   if (isLoading || isFetching) return <LoadingSpinner></LoadingSpinner>;
@@ -279,49 +283,68 @@ const OrderAllBooks = () => {
                   </td>
 
                   <td className="p-4">
-                    <div className="flex items-center gap-2">
-                      {item.ordered_Status === "pending" ? (
-                        <button
-                          onClick={() => handelShipedNow(item._id)}
-                          className="bg-orange-500 hover:bg-[#cd5728] text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
+                    {item.payment_status === "unpaid" ? (
+                      <span className=" text-red-500 font-semibold flex items-center gap-2">
+                        {" "}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-4 h-4"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="15" y1="9" x2="9" y2="15" />
+                          <line x1="9" y1="9" x2="15" y2="15" />
+                        </svg>{" "}
+                        Did not pay
+                      </span>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        {item.ordered_Status === "pending" ? (
+                          <button
+                            onClick={() => handelShipedNow(item._id)}
+                            className="bg-orange-500 hover:bg-[#cd5728] text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
                           >
-                            <rect x="1" y="3" width="15" height="13" />
-                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
-                            <circle cx="5.5" cy="18.5" r="2.5" />
-                            <circle cx="18.5" cy="18.5" r="2.5" />
-                          </svg>
-                          Shipped
-                        </button>
-                      ) : item.ordered_Status === "shipped" ? (
-                        <button
-                          onClick={() => handelDeliveryNow(item._id)}
-                          className="bg-green-600 hover:bg-green-600 text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-4 h-4"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="w-4 h-4"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            >
+                              <rect x="1" y="3" width="15" height="13" />
+                              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                              <circle cx="5.5" cy="18.5" r="2.5" />
+                              <circle cx="18.5" cy="18.5" r="2.5" />
+                            </svg>
+                            Shipped
+                          </button>
+                        ) : item.ordered_Status === "shipped" ? (
+                          <button
+                            onClick={() => handelDeliveryNow(item._id)}
+                            className="bg-green-600 hover:bg-green-600 text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
                           >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                            <polyline points="22 4 12 14.01 9 11.01" />
-                          </svg>
-                          Delivered
-                        </button>
-                      ) : (
-                      <span className="text-green-500">Compleate</span>
-                      )}
-                    </div>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="w-4 h-4"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            >
+                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                              <polyline points="22 4 12 14.01 9 11.01" />
+                            </svg>
+                            Delivered
+                          </button>
+                        ) : (
+                          <span className="text-green-500">Compleate</span>
+                        )}
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}
