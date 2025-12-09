@@ -9,6 +9,7 @@ import useAuth from "../../hooks/useAuth";
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router";
 import { imagesBB } from "../../features/imagesUp";
+import useAxiosSchore from "../../hooks/useAxiosSchore";
 
 const Rigester = () => {
   const [show, setShow] = useState(false);
@@ -17,7 +18,7 @@ const Rigester = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-
+  const axioShore = useAxiosSchore();
   const locations = useLocation();
   const from = locations.state || "/";
   const navigate = useNavigate();
@@ -39,6 +40,15 @@ const Rigester = () => {
     rigersterNow(email, password)
       .then((res) => {
         console.log(res.user);
+        const savedDatabase = {
+          email,
+          displayName,
+          password,
+          photoURL,
+        };
+        axioShore.post(`ucustomer`, savedDatabase).then((res) => {
+          console.log(res.data);
+        });
         updetUserInfo(userInfoUpdet).then(() => {
           navigate(from, { replace: true });
 
@@ -54,6 +64,17 @@ const Rigester = () => {
   const handelGoogleRigester = () => {
     googleLogin()
       .then((res) => {
+        const savedDatabase = {
+          email: res?.user?.email,
+          displayName: res?.user?.displayName,
+          password: res?.user?.password || "12453hgfgyusf%44hgv",
+          photoURL: res?.user?.photoURL,
+        };
+        console.log(savedDatabase);
+        
+        axioShore.post(`ucustomer`, savedDatabase).then((res) => {
+          console.log(res.data);
+        });
         toast.success("Rigester Successfully");
         navigate(from, { replace: true });
         console.log(res.user);
