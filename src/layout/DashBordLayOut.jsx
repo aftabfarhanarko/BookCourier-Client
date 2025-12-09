@@ -236,7 +236,7 @@ const DashBordLayOut = () => {
         <ul className="menu  w-[185px]   border-t border-gray-800 bg-gray-900 text-white dark:border-base-700">
           <li>
             <Link
-              to=""
+              to="/deshbord/profileLoginUser"
               className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
             >
               <CgProfile className="w-6 h-6" /> Profile

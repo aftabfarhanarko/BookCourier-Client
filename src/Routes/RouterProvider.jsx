@@ -16,6 +16,7 @@ import MyBooks from "../pages/dashboard/Librarian/MyBooks";
 import OrderAllBooks from "../pages/dashboard/Librarian/OrderAllBooks";
 import AlluserData from "../pages/dashboard/Admin/AlluserData";
 import ManazeBooks from "../pages/dashboard/Admin/ManazeBooks";
+import Profile from "../pages/dashboard/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -88,6 +89,10 @@ export const router = createBrowserRouter([
       {
         path:"/deshbord/manazeBooks",
         element:<ManazeBooks></ManazeBooks>
+      },
+      {
+        path:"/deshbord/profileLoginUser",
+        element:<Profile></Profile>
       },
 
     ]
