@@ -125,7 +125,7 @@ const DashBordLayOut = () => {
         </nav>
 
         {/* PAGE CONTENT */}
-        <div className="p-6 flex-grow bg-base-100 dark:bg-base-900">
+        <div className="p-4 py-6 flex-grow bg-base-100 dark:bg-base-900">
           <Outlet></Outlet>
         </div>
       </div>
@@ -177,6 +177,7 @@ const DashBordLayOut = () => {
               <ImBooks className="w-6 h-6" /> Manage Books{" "}
             </Link>
           </li>
+          <>liberin sections</>
           <li>
             <Link
               to="/deshbord/addbooks"
@@ -187,7 +188,7 @@ const DashBordLayOut = () => {
           </li>
           <li>
             <Link
-              to=""
+              to="/deshbord/myBooks"
               className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
             >
               <GiBookAura className="w-6 h-6" /> My Books{" "}
@@ -195,12 +196,13 @@ const DashBordLayOut = () => {
           </li>
           <li>
             <Link
-              to=""
+              to="/deshbord/orderAllBooks"
               className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
             >
               <FaClipboardList className="w-6 h-6" /> Orders{" "}
             </Link>
           </li>
+          <>user sections</>
           <li>
             <Link
               to="/deshbord/userorder"

@@ -9,7 +9,7 @@ const PaymentHistory = () => {
   const { user } = useAuth();
   const axioscehore = useAxiosSchore();
 
-  const { data, isLoading , isFetching} = useQuery({
+  const { data, isLoading, isFetching } = useQuery({
     queryKey: [user?.email],
     queryFn: async () => {
       const res = await axioscehore.get(`paymentChack?email=${user?.email}`);
@@ -18,7 +18,8 @@ const PaymentHistory = () => {
   });
   console.log(data);
 
-  if (isLoading || isFetching || !user?.email) return <LoadingSpinner></LoadingSpinner>;
+  if (isLoading || isFetching || !user?.email)
+    return <LoadingSpinner></LoadingSpinner>;
   return (
     <div>
       <h1 className=" text-2xl md:text-3xl leading-tight text-secondary font-semibold">
@@ -33,25 +34,23 @@ const PaymentHistory = () => {
       </h1>
 
       <div className="mt-10 w-full overflow-x-auto">
-        <div className="min-w-[1200px] bg-white shadow-2xl rounded-2xl border border-gray-200 overflow-hidden">
+        <div className="min-w-[1200px] bg-white shadow-6xl rounded-2xl border border-gray-200 overflow-hidden">
           {/* Table Header */}
           <div className="bg-gray-100 border-b border-gray-300">
             <table className="table w-full">
-                  <thead className=" bg-base-300">
-              <tr>
-                <th className="p-4">Srl</th>
-                <th className="p-4 ">Book Name</th>
-                <th className="p-4">Amount</th>
-                <th className="p-4">Currency</th>
-                <th className="p-4">Customer Email</th>
-                <th className="p-4">Tracking ID</th>
-                <th className="p-4">Transaction ID</th>
-                <th className="p-4">Payment Status</th>
-                <th className="p-4">Paid At</th>
-                
-              </tr>
-            </thead>
-             
+              <thead className=" bg-base-300">
+                <tr>
+                  <th className="p-4">Srl</th>
+                  <th className="p-4 ">Book Name</th>
+                  <th className="p-4">Amount</th>
+                  <th className="p-4">Currency</th>
+                  <th className="p-4">Customer Email</th>
+                  <th className="p-4">Tracking ID</th>
+                  <th className="p-4">Transaction ID</th>
+                  <th className="p-4">Payment Status</th>
+                  <th className="p-4">Paid At</th>
+                </tr>
+              </thead>
             </table>
           </div>
 
@@ -68,51 +67,168 @@ const PaymentHistory = () => {
                     <td className="p-4 font-medium text-gray-700">{i + 1}</td>
 
                     {/* Book Name */}
-                    <td className="p-4 font-semibold text-gray-800">
-                      {item?.bookName}
+                    <td className="p-4">
+                      <div className="flex items-center gap-2 font-semibold text-gray-800">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 text-purple-600"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                        </svg>
+                        {item?.bookName}
+                      </div>
                     </td>
 
                     {/* Amount */}
-                    <td className="p-4 font-bold text-gray-900">
-                      ${item?.amount}
+                    <td className="p-4">
+                      <div className=" gap-0 not-only:">
+                        <span className="w-4 h-4 text-green-600">
+                          ৳ {item?.amount}
+                        </span>
+                      </div>
                     </td>
 
                     {/* Currency */}
-                    <td className="p-4 uppercase text-gray-700">
-                      {item?.currency}
+                    <td className="p-4">
+                      <div className="flex items-center gap-2 uppercase text-gray-700">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 text-blue-600"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <circle cx="12" cy="12" r="10" />
+                          <path d="M2 12h20" />
+                          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg>
+                        {item?.currency}
+                      </div>
                     </td>
 
                     {/* Email */}
-                    <td className="p-4 text-gray-700">{item?.customerEmail}</td>
+                    <td className="p-4">
+                      <div className="flex items-center gap-2 text-gray-700">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 text-red-600"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                          <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                        {item?.customerEmail}
+                      </div>
+                    </td>
 
                     {/* Tracking ID */}
-                    <td className="p-4 font-mono text-blue-600">
-                      {item?.trakingId}
+                    <td className="p-4">
+                      <div className="flex items-center gap-2 font-mono text-blue-600">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 text-blue-600"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                          <circle cx="9" cy="7" r="4" />
+                          <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                        {item?.trakingId}
+                      </div>
                     </td>
 
                     {/* Transaction */}
-                    <td className="p-4 font-mono text-gray-700">
-                      {item?.transactionId}
+                    <td className="p-4">
+                      <div className="flex items-center gap-2 font-mono text-gray-700">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 text-indigo-600"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                          <line x1="12" y1="8" x2="12" y2="12" />
+                          <line x1="12" y1="12" x2="14" y2="14" />
+                          <polyline points="22 4 12 14 9 11" />
+                        </svg>
+                        {item?.transactionId}
+                      </div>
                     </td>
 
                     {/* Payment Status */}
                     <td className="p-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm font-semibold
-                    ${
-                      item.paymentStatus === "paid"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-red-100 text-red-700"
-                    }
-                  `}
-                      >
-                        {item.paymentStatus}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        {item.paymentStatus === "paid" ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-4 h-4 text-green-600"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-4 h-4 text-red-600"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="15" y1="9" x2="9" y2="15" />
+                            <line x1="9" y1="9" x2="15" y2="15" />
+                          </svg>
+                        )}
+                        <span
+                          className={`px-3 py-1 rounded-full text-sm font-semibold
+            ${
+              item.paymentStatus === "paid"
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            }
+          `}
+                        >
+                          {item.paymentStatus}
+                        </span>
+                      </div>
                     </td>
 
                     {/* Paid At */}
-                    <td className="p-4 text-sm text-gray-700">
-                      {new Date(item?.paidAt).toLocaleString()}
+                    <td className="p-4">
+                      <div className="flex items-center gap-2 text-sm text-gray-700">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 text-gray-600"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <circle cx="12" cy="12" r="10" />
+                          <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                        {new Date(item?.paidAt).toLocaleString()}
+                      </div>
                     </td>
                   </tr>
                 ))}

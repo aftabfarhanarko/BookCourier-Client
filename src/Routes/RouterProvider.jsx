@@ -12,6 +12,8 @@ import DetlicesPages from "../pages/Home/DetlicesPages/DetlicesPages";
 import UserOrderTable from "../pages/dashboard/User/UserOrderTable";
 import PaymentSuccess from "../pages/dashboard/Payment/PaymentSuccess";
 import PaymentHistory from "../pages/dashboard/User/PaymentHistory";
+import MyBooks from "../pages/dashboard/Librarian/MyBooks";
+import OrderAllBooks from "../pages/dashboard/Librarian/OrderAllBooks";
 
 export const router = createBrowserRouter([
   {
@@ -68,6 +70,14 @@ export const router = createBrowserRouter([
       {
         path:"/deshbord/paymenthistory",
         element:<PaymentHistory></PaymentHistory>
+      },
+      {
+        path:"/deshbord/myBooks",
+        element:<MyBooks></MyBooks>
+      },
+      {
+        path:"/deshbord/orderAllBooks",
+        element:<OrderAllBooks></OrderAllBooks>
       },
 
     ]
