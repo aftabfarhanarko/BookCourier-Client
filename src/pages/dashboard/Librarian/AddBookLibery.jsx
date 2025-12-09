@@ -384,6 +384,7 @@ const AddBookLibery = () => {
                 <textarea
                   {...register("return_policy")}
                   defaultValue="Customers can return the book within 7 days of receiving it"
+                  readOnly
                   className="w-full mt-2 px-6  py-4 rounded-2xl border  shadow-sm focus:ring focus:ring-[#C2410C]  focus:outline-none border-[#C2410C] min-h-[120px]"
                 ></textarea>
               </div>
