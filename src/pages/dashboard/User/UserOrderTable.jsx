@@ -1,5 +1,4 @@
 import React from "react";
-import H1text from "../../../utils/H1text";
 import TextType from "../../../utils/TextType";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
@@ -17,6 +16,7 @@ const UserOrderTable = () => {
     data: orders,
     isLoading,
     refetch,
+    isFetching,
   } = useQuery({
     queryKey: [user?.email],
     queryFn: async () => {
@@ -113,7 +113,8 @@ const UserOrderTable = () => {
     console.log("All Boks Informations", bookInfo);
     // console.log(orderData.sellerInfo.sellerName);
   };
-  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
+  if (isLoading || isFetching || !user?.email)
+    return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div>

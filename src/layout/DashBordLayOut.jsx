@@ -13,10 +13,13 @@ import { BrickWallShield, Logs } from "lucide-react";
 import { HiOutlineHome } from "react-icons/hi2";
 import { Link, Outlet } from "react-router";
 import { IoClose } from "react-icons/io5";
+import { CreditCard } from "lucide-react";
+import LoadingSpinner from "../shared/LoadingSpinner ";
 
 const DashBordLayOut = () => {
   const { user } = useAuth();
 
+  if(!user?.email) return <LoadingSpinner></LoadingSpinner>
   return (
     <div className="drawer lg:drawer-open  bg-base-100 dark:bg-base-900 text-base-content dark:text-base-content">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -204,6 +207,16 @@ const DashBordLayOut = () => {
               className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
             >
               <Logs className="w-6 h-6" /> User Orders{" "}
+            </Link>
+            <button className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition"></button>
+          </li>
+
+          <li>
+            <Link
+              to="/deshbord/paymenthistory"
+              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
+            >
+              <CreditCard className="w-6 h-6" /> Payment History{" "}
             </Link>
             <button className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition"></button>
           </li>

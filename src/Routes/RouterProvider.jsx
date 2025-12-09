@@ -11,6 +11,7 @@ import AllBooks from "../pages/Home/AllBooks/AllBooks";
 import DetlicesPages from "../pages/Home/DetlicesPages/DetlicesPages";
 import UserOrderTable from "../pages/dashboard/User/UserOrderTable";
 import PaymentSuccess from "../pages/dashboard/Payment/PaymentSuccess";
+import PaymentHistory from "../pages/dashboard/User/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
       {
         path:"/deshbord/pymentSuccess",
         element:<PaymentSuccess></PaymentSuccess>
+      },
+      {
+        path:"/deshbord/paymenthistory",
+        element:<PaymentHistory></PaymentHistory>
       },
 
     ]
