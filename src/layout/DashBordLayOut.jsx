@@ -19,7 +19,7 @@ import LoadingSpinner from "../shared/LoadingSpinner ";
 const DashBordLayOut = () => {
   const { user } = useAuth();
 
-  if(!user?.email) return <LoadingSpinner></LoadingSpinner>
+  if (!user?.email) return <LoadingSpinner></LoadingSpinner>;
   return (
     <div className="drawer lg:drawer-open  bg-base-100 dark:bg-base-900 text-base-content dark:text-base-content">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -163,7 +163,7 @@ const DashBordLayOut = () => {
           </li>
           <li>
             <Link
-              to=""
+              to="/deshbord/adminuserDataSloved"
               className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
             >
               <HiMiniUserGroup className="w-6 h-6" /> All Users{" "}
