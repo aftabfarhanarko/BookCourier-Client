@@ -131,7 +131,7 @@ const PaymentSuccess = () => {
         {/* Footer */}
         <div className="mt-8 md:mt-10 flex justify-start">
           <Link
-            to="/"
+            to="/deshbord/paymenthistory"
             className="
         flex 
         items-center 

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
@@ -8,20 +8,28 @@ import Swal from "sweetalert2";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { imagesBB } from "../../../features/imagesUp";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 const MyBooks = () => {
   const { register, handleSubmit } = useForm();
   const { user } = useAuth();
   const reafernc = useRef();
   const axioscehore = useAxiosSchore();
+  // Pasitions
+  const [page, setPage] = useState(1);
+  const [allUser, setAllUser] = useState(0);
+  const limit = 12;
+  const skip = (page - 1) * limit;
+  const totalPage = Math.ceil(allUser / limit);
+
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: [user?.email],
+    queryKey: [user?.email, page],
     queryFn: async () => {
       const res = await axioscehore.get(
-        `liberin-add-books?email=${user?.email}`
+        `liberin-add-books?email=${user?.email}&limit=${limit}&skip=${skip}`
       );
-      console.log(res);
-      return res.data;
+      setAllUser(res.data.counts);
+      return res.data.result;
     },
   });
 
@@ -49,7 +57,6 @@ const MyBooks = () => {
     console.log(updeatBookInfo);
   };
 
-
   if (isLoading || isFetching || !user?.email)
     return <LoadingSpinner></LoadingSpinner>;
 
@@ -57,7 +64,7 @@ const MyBooks = () => {
     <div>
       <h1 className=" text-2xl md:text-3xl leading-tight text-secondary font-semibold">
         <TextType
-          text={` My Post All Books`}
+          text={` My Post All Books (${allUser})`}
           typingSpeed={70}
           deletingSpeed={40}
           pauseDuration={2000}
@@ -425,6 +432,49 @@ const MyBooks = () => {
           </div>
         </div>
       </dialog>
+
+      {/* Pasitions */}
+      <div className="flex justify-between items-center px-6 py-4 mt-7 bg-white  border-t border-gray-200 dark:border-gray-300 rounded-b-2xl">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+            page === 1
+              ? "text-gray-400 cursor-not-allowed bg-base-300"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+          }`}
+        >
+          <FaArrowLeftLong /> Previous
+        </button>
+
+        <div className="flex gap-2">
+          {Array.from({ length: totalPage }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold transition ${
+                page === i + 1
+                  ? "bg-gradient-to-br from-orange-400 to-orange-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-pink-50 hover:via-purple-50 hover:to-blue-50"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+
+        <button
+          disabled={page === totalPage}
+          onClick={() => setPage(page + 1)}
+          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+            page === totalPage
+              ? "text-gray-400 cursor-not-allowed bg-base-300"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+          }`}
+        >
+          Next <FaArrowRightLong />
+        </button>
+      </div>
     </div>
   );
 };

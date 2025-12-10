@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import TextType from "../../../utils/TextType";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 const PaymentHistory = () => {
   const { user } = useAuth();
   const axioscehore = useAxiosSchore();
 
+  // Pasitions
+  const [page, setPage] = useState(1);
+  const [allUser, setAllUser] = useState(0);
+  const limit = 12;
+  const skip = (page - 1) * limit;
+  const totalPage = Math.ceil(allUser / limit);
+
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: [user?.email],
+    queryKey: [user?.email, page],
     queryFn: async () => {
-      const res = await axioscehore.get(`paymentChack?email=${user?.email}`);
-      return res.data;
+      const res = await axioscehore.get(
+        `paymentChack?email=${user?.email}&limit=${limit}&skip=${skip}`
+      );
+      setAllUser(res.data.counts || []);
+      return res?.data?.result || [];
     },
   });
   console.log(data);
@@ -236,6 +247,49 @@ const PaymentHistory = () => {
             </table>
           </div>
         </div>
+      </div>
+
+      {/* Pasitions */}
+      <div className="flex justify-between items-center px-6 py-4 mt-7 bg-white  border-t border-gray-200 dark:border-gray-300 rounded-b-2xl">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+            page === 1
+              ? "text-gray-400 cursor-not-allowed bg-base-300"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+          }`}
+        >
+          <FaArrowLeftLong /> Previous
+        </button>
+
+        <div className="flex gap-2">
+          {Array.from({ length: totalPage }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold transition ${
+                page === i + 1
+                  ? "bg-gradient-to-br from-orange-400 to-orange-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-pink-50 hover:via-purple-50 hover:to-blue-50"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+
+        <button
+          disabled={page === totalPage}
+          onClick={() => setPage(page + 1)}
+          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+            page === totalPage
+              ? "text-gray-400 cursor-not-allowed bg-base-300"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+          }`}
+        >
+          Next <FaArrowRightLong />
+        </button>
       </div>
     </div>
   );

@@ -102,11 +102,13 @@ const DashBordLayOut = () => {
               <NavLink
                 to="/deshbord"
                 className={({ isActive }) =>
-                  `flex gap-3 items-center px-4 py-2 rounded-xl
-                  ${
-                    isActive ? "bg-orange-500 text-white" : "hover:bg-gray-800"
-                  }`
-                }
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                    }
               >
                 <RiDashboardHorizontalLine className="w-6 h-6" /> Dashboard
               </NavLink>
