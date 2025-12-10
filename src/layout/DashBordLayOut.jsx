@@ -76,7 +76,7 @@ const DashBordLayOut = () => {
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  `flex gap-3 items-center px-4 py-3 md:mt-0 mt-18 rounded-xl
+                  `flex gap-3 items-center px-4 py-1 md:mt-0 mt-18 rounded-xl
                   ${
                     isActive ? "bg-orange-500 text-white" : "hover:bg-gray-800"
                   }`
@@ -105,8 +105,8 @@ const DashBordLayOut = () => {
                       `flex gap-3 px-4 py-1.5 rounded-xl
                       ${
                         isActive
-                          ? "bg-orange-500 text-white"
-                          : "hover:bg-gray-800"
+                          && "bg-gray-800 text-white"
+                          
                       }`
                     }
               >

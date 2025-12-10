@@ -38,7 +38,7 @@ const Profile = () => {
     <div
       className="min-h-screen flex items-center justify-center px-4 py-10
       bg-gradient-to-br from-orange-50 via-slate-50 to-amber-50
-      dark:from-[#1e1e1e] dark:via-[#242424] dark:to-[#2a2a2a]"
+     "
     >
       <div className="w-full max-w-2xl">
         {/* Card */}

@@ -83,6 +83,15 @@ const ManazeBooks = () => {
     });
   };
 
+
+
+// Show all the books that all the librarians added, Admin can publish / unpublish books and also delete a book. Deleting a book will also delete all the orders or that book
+
+
+
+
+
+
   if (isFetching || isLoading) return <LoadingSpinner />;
   return (
     <div>
