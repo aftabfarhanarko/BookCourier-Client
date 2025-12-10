@@ -1,20 +1,33 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
 import useAuth from "../../../hooks/useAuth";
+import TextType from "../../../utils/TextType";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 const ManazeBooks = () => {
   const axioscehore = useAxiosSchore();
-  const {user} = useAuth();
+  const { user } = useAuth();
+
+  // Pasitionse
+  const [page, setPage] = useState(1);
+  const [allUser, setAllUser] = useState(0);
+  const limit = 15;
+  const skip = (page - 1) * limit;
+  const totalPage = Math.ceil(allUser / limit);
+
   const { data, isLoading, isFetching, refetch } = useQuery({
-    queryKey: ["admin"],
+    queryKey: ["admin", page],
     queryFn: async () => {
-      const res = await axioscehore.get(`allbooks?email=${user?.email}`);
+      const res = await axioscehore.get(
+        `allbooks?email=${user?.email}&limit=${limit}&skip=${skip}`
+      );
       console.log(res.data);
-      return res.data;
+      setAllUser(res.data.counts);
+      return res.data.result || [];
     },
   });
 
@@ -73,7 +86,16 @@ const ManazeBooks = () => {
   if (isFetching || isLoading) return <LoadingSpinner />;
   return (
     <div>
-      ManazeBooks ManazeBooks
+      <h1 className=" text-2xl md:text-3xl leading-tight text-secondary font-semibold">
+        <TextType
+          text={` All Books (${allUser})`}
+          typingSpeed={70}
+          deletingSpeed={40}
+          pauseDuration={2000}
+          loop={false}
+          showCursor={false}
+        />
+      </h1>
       <div className=" px-6">
         <div className="overflow-x-auto mt-10  rounded-box border border-base-300  shadow bg-base-100">
           <table className="table  ">
@@ -302,7 +324,7 @@ const ManazeBooks = () => {
                       {/* Delete Button */}
                       <button
                         onClick={() => handelDeletNow(item)}
-                        className="bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
+                        className="bg-gradient-to-br from-orange-400 to-orange-600 text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -326,6 +348,48 @@ const ManazeBooks = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div className="flex justify-between items-center px-6 py-4 mt-7 bg-white  border-t border-gray-200 dark:border-gray-300 rounded-b-2xl">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+            page === 1
+              ? "text-gray-400 cursor-not-allowed bg-base-300"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+          }`}
+        >
+          <FaArrowLeftLong /> Previous
+        </button>
+
+        <div className="flex gap-2">
+          {Array.from({ length: totalPage }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold transition ${
+                page === i + 1
+                  ? "bg-gradient-to-br from-orange-400 to-orange-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-pink-50 hover:via-purple-50 hover:to-blue-50"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+
+        <button
+          disabled={page === totalPage}
+          onClick={() => setPage(page + 1)}
+          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+            page === totalPage
+              ? "text-gray-400 cursor-not-allowed bg-base-300"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+          }`}
+        >
+          Next <FaArrowRightLong />
+        </button>
       </div>
     </div>
   );

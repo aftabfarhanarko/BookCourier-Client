@@ -42,14 +42,14 @@ const Login = () => {
   const handelGoogleLogin = () => {
     googleLogin()
       .then((res) => {
-          const savedDatabase = {
+        const savedDatabase = {
           email: res?.user?.email,
           displayName: res?.user?.displayName,
           password: res?.user?.password || "12453hgfgyusf%44hgv",
           photoURL: res?.user?.photoURL,
         };
         console.log(savedDatabase);
-        
+
         axioShore.post(`ucustomer`, savedDatabase).then((res) => {
           console.log(res.data);
         });

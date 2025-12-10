@@ -18,6 +18,7 @@ a.active {
     @apply text-primary
 }
 
+
 @plugin "daisyui/theme" {
     name: "light";
     default: true;
@@ -26,5 +27,9 @@ a.active {
     --color-secondary: #C2410C;
     --color-mytext: #6B7280;
     --color-thried: #FFF7ED;
+     
+}
 
+.button{
+  @apply  bg-gradient-to-br from-orange-400 to-orange-600
 }

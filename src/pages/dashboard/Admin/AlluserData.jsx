@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import TextType from "../../../utils/TextType";
@@ -9,22 +9,33 @@ import { ShieldUser } from "lucide-react";
 import { GiBookAura } from "react-icons/gi";
 import { FaUserCheck } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 const AlluserData = () => {
   const axioShore = useAxiosSchore();
-  const {user} = useAuth();
-  // /
+  const { user } = useAuth();
+  // Pasitionse
+
+  const [page, setPage] = useState(1);
+  const [allUser, setAllUser] = useState(0);
+  const limit = 10;
+  const skip = (page - 1) * limit;
+  const totalPage = Math.ceil(allUser / limit);
+
   const {
     data: users,
     isLoading,
     isFetching,
     refetch,
   } = useQuery({
-    queryKey: ["admin"],
+    queryKey: ["admin", page],
     queryFn: async () => {
-      const res = await axioShore.get(`alluser-data?email=${user?.email}`);
+      const res = await axioShore.get(
+        `alluser-data?email=${user?.email}&limit=${limit}&skip=${skip}`
+      );
       console.log(res.data);
-      return res.data;
+      setAllUser(res.data.counts);
+      return res?.data?.result || [];
     },
   });
 
@@ -105,6 +116,8 @@ const AlluserData = () => {
     handelUpdetRole("librarian", id);
   };
 
+  console.log(allUser);
+
   if (isFetching || isLoading) return <LoadingSpinner></LoadingSpinner>;
   return (
     <div>
@@ -117,6 +130,7 @@ const AlluserData = () => {
           loop={false}
           showCursor={false}
         />
+        ({allUser})
       </h1>
 
       <div className=" px-6">
@@ -296,7 +310,7 @@ const AlluserData = () => {
                     {/* Delete Button */}
                     <button
                       onClick={() => handelDeletNow(item._id)}
-                      className="bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
+                      className="bg-gradient-to-br from-orange-400 to-orange-600 text-white font-semibold px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -319,6 +333,49 @@ const AlluserData = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Pasitions */}
+      <div className="flex justify-between items-center px-6 py-4 mt-7 bg-white  border-t border-gray-200 dark:border-gray-300 rounded-b-2xl">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+            page === 1
+              ? "text-gray-400 cursor-not-allowed bg-base-300"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+          }`}
+        >
+          <FaArrowLeftLong /> Previous
+        </button>
+
+        <div className="flex gap-2">
+          {Array.from({ length: totalPage }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold transition ${
+                page === i + 1
+                  ? "bg-gradient-to-br from-orange-400 to-orange-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-pink-50 hover:via-purple-50 hover:to-blue-50"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+
+        <button
+          disabled={page === totalPage}
+          onClick={() => setPage(page + 1)}
+          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+            page === totalPage
+              ? "text-gray-400 cursor-not-allowed bg-base-300"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+          }`}
+        >
+          Next <FaArrowRightLong />
+        </button>
       </div>
     </div>
   );

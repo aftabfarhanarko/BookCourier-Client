@@ -18,7 +18,7 @@ import LoadingSpinner from "../shared/LoadingSpinner ";
 import useRole from "../hooks/useRole";
 
 const DashBordLayOut = () => {
-  const { user, loding ,userLogOut} = useAuth();
+  const { user, loding, userLogOut } = useAuth();
   const { role, roleLoding } = useRole();
 
   if (loding || roleLoding) {
@@ -152,41 +152,48 @@ const DashBordLayOut = () => {
             {/* LIBRARIAN */}
             {role === "librarian" && (
               <>
-                <li
-                  
-                >
-                  <NavLink to="/deshbord/addbooks"   className={({ isActive }) =>
+                <li>
+                  <NavLink
+                    to="/deshbord/addbooks"
+                    className={({ isActive }) =>
                       `flex gap-3 px-4 py-1.5 rounded-xl
                       ${
                         isActive
                           ? "bg-orange-500 text-white"
                           : "hover:bg-gray-800"
                       }`
-                    }>
+                    }
+                  >
                     <GiWhiteBook className="w-6 h-6" /> Add Book
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/deshbord/myBooks"   className={({ isActive }) =>
+                  <NavLink
+                    to="/deshbord/myBooks"
+                    className={({ isActive }) =>
                       `flex gap-3 px-4 py-1.5 rounded-xl
                       ${
                         isActive
                           ? "bg-orange-500 text-white"
                           : "hover:bg-gray-800"
                       }`
-                    }>
+                    }
+                  >
                     <GiBookAura className="w-6 h-6" /> My Books
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/deshbord/orderAllBooks"   className={({ isActive }) =>
+                  <NavLink
+                    to="/deshbord/orderAllBooks"
+                    className={({ isActive }) =>
                       `flex gap-3 px-4 py-1.5 rounded-xl
                       ${
                         isActive
                           ? "bg-orange-500 text-white"
                           : "hover:bg-gray-800"
                       }`
-                    }>
+                    }
+                  >
                     <FaClipboardList className="w-6 h-6" /> Orders
                   </NavLink>
                 </li>
@@ -196,61 +203,115 @@ const DashBordLayOut = () => {
             {/* USER */}
             {role === "user" && (
               <>
-                <li
-                   >
-                  <NavLink to="/deshbord/userorder"  className={({ isActive }) =>
+                <li>
+                  <NavLink
+                    to="/deshbord/userorder"
+                    className={({ isActive }) =>
                       `flex gap-3 px-4 py-1.5 rounded-xl
                       ${
                         isActive
                           ? "bg-orange-500 text-white"
                           : "hover:bg-gray-800"
                       }`
-                    }>
+                    }
+                  >
                     <Logs className="w-6 h-6" /> Orders
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/deshbord/paymenthistory"  className={({ isActive }) =>
+                  <NavLink
+                    to="/deshbord/paymenthistory"
+                    className={({ isActive }) =>
                       `flex gap-3 px-4 py-1.5 rounded-xl
                       ${
                         isActive
                           ? "bg-orange-500 text-white"
                           : "hover:bg-gray-800"
                       }`
-                    }>
+                    }
+                  >
                     <CreditCard className="w-6 h-6" /> Payment History
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/"  className={({ isActive }) =>
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
                       `flex gap-3 px-4 py-1.5 rounded-xl
                       ${
                         isActive
                           ? "bg-orange-500 text-white"
                           : "hover:bg-gray-800"
                       }`
-                    }>
+                    }
+                  >
                     <BrickWallShield className="w-6 h-6" /> Invoices
                   </NavLink>
                 </li>
               </>
             )}
+            <li>
+              <NavLink
+                to="/deshbord/profileLoginUser"
+                className={({ isActive }) =>
+                  `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                }
+              >
+                <CgProfile className="w-6 h-6" /> Profile
+              </NavLink>
+            </li>
           </ul>
 
           {/* ✅ BOTTOM FIXED */}
           <ul className="menu border-t border-gray-700 px-4 py-3">
             <li>
-              <NavLink to="/deshbord/profileLoginUser" className="menu-item">
+              <NavLink
+                to="/deshbord/profileLoginUser"
+                className={({ isActive }) =>
+                  `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                }
+              >
                 <CgProfile className="w-6 h-6" /> Profile
               </NavLink>
             </li>
             <li>
-              <NavLink to="/deshbord/settings" className="menu-item">
+              <NavLink
+                to="/deshbord/settings"
+                className={({ isActive }) =>
+                  `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                }
+              >
                 <CiSettings className="w-6 h-6" /> Settings
               </NavLink>
             </li>
             <li>
-              <button onClick={()=> userLogOut()} className="menu-item text-red-400">
+              <button
+                onClick={() => userLogOut()}
+                c
+                className={({ isActive }) =>
+                  `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                }
+              >
                 <PiSignOutLight className="w-6 h-6" /> Logout
               </button>
             </li>

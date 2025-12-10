@@ -413,7 +413,7 @@ const AddBookLibery = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full py-3 rounded-full font-bold text-lg text-white bg-gradient-to-r from-[#C2410C] to-[#FDBA74] shadow-xl hover:shadow-2xl active:scale-95 transition"
+                className="w-full py-3 rounded-full font-bold text-lg text-white bg-gradient-to-br from-orange-400 to-orange-600 shadow-xl hover:shadow-2xl active:scale-95 transition"
               >
                 Publish Book
               </button>

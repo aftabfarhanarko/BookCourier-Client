@@ -52,10 +52,10 @@ const DetlicesPages = () => {
   const handelSeawdg = (customerInfo) => {
     console.log(customerInfo);
     const orderInfo = {
-      name:customerInfo.name,
-      email:customerInfo.email,
-      address:customerInfo.address,
-      phoneNumber:customerInfo.phoneNumber,
+      name: customerInfo.name,
+      email: customerInfo.email,
+      address: customerInfo.address,
+      phoneNumber: customerInfo.phoneNumber,
       book,
     };
 
@@ -158,8 +158,7 @@ const DetlicesPages = () => {
         px-7 py-2
         text-white font-medium
         rounded-xl shadow 
-        bg-[#C2410C]
-        hover:bg-[#a8370b]
+        bg-gradient-to-br from-orange-400 to-orange-600
         transition-all
       "
               >
@@ -598,7 +597,7 @@ const DetlicesPages = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-2.5 sm:py-3 rounded-full font-bold text-base sm:text-lg text-white bg-gradient-to-r from-orange-500 to-yellow-400 shadow-lg hover:shadow-xl active:scale-95 transition"
+              className="w-full py-2.5 sm:py-3 rounded-full font-bold text-base sm:text-lg text-white bg-gradient-to-br from-orange-400 to-orange-600 shadow-lg hover:shadow-xl active:scale-95 transition"
             >
               Order Now
             </button>

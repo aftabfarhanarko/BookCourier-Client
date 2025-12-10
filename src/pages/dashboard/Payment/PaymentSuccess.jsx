@@ -137,7 +137,7 @@ const PaymentSuccess = () => {
         items-center 
         gap-1.5 
         md:gap-2 
-        bg-gray-900 
+        bg-gradient-to-br from-orange-400 to-orange-600
         text-white 
         px-4 
         py-2 
@@ -147,7 +147,6 @@ const PaymentSuccess = () => {
         text-xs 
         md:text-sm 
         font-medium 
-        hover:bg-gray-800 
         transition-all 
         shadow-md
       "

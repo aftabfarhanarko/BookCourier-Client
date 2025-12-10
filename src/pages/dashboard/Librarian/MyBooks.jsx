@@ -230,7 +230,7 @@ const MyBooks = () => {
                       {/* Edit Button */}
                       <button
                         onClick={handelEditNow}
-                        className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
+                        className="bg-gradient-to-br from-orange-400 to-orange-600 text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

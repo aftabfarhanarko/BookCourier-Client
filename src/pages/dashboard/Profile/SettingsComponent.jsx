@@ -72,9 +72,9 @@ export default function SettingsComponent() {
 
   const getAccentClass = () => accentColors[accentColor] || accentColors.orange;
   const { user } = useAuth();
-  const { register,reset , handleSubmit } = useForm();
+  const { register, reset, handleSubmit } = useForm();
   const handelData = (newas) => {
-    reset ();
+    reset();
   };
   const handelClickes = () => {
     toast.success("User Seatting Complete Now");
@@ -243,10 +243,14 @@ export default function SettingsComponent() {
                             : "bg-gradient-to-br from-orange-400 to-orange-600"
                         } flex items-center justify-center text-white text-3xl font-bold shadow-lg`}
                       >
-                        <img
-                          src={user?.photoURL}
-                          className=" w-24 h-25 rounded-full"
-                        ></img>
+                        {user.photoURL ? (
+                          <img
+                            src={user?.photoURL || "User"}
+                            className=" w-24 h-24 rounded-full"
+                          ></img>
+                        ) : (
+                          "User"
+                        )}
                       </div>
                       <button
                         className={`absolute bottom-0 right-0 p-2 rounded-full ${
