@@ -282,7 +282,7 @@ const Navbar = () => {
         <div className=" bg-base-100 border-t border-base-300 opacity-100 scale-100 transition duration-300">
           {user ? (
             <>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3"> 
                 <div className="dropdown dropdown-end">
                   {/* AVATAR */}
                   <div

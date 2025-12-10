@@ -11,44 +11,33 @@ import {
 import { auth } from "../firebase/firebase.config";
 import { AuthContext } from "./AuthComtext";
 
-
 const providergoogle = new GoogleAuthProvider();
 
-
 const ComtextProvider = ({ children }) => {
-  const [loding, setLoding] = useState(false);
+  const [loding, setLoding] = useState(true);
   const [user, setUser] = useState(null);
 
   const rigersterNow = (email, password) => {
-    setLoding(false);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const updetUserInfo = (userInfoUpdet) => {
-    setLoding(false);
     return updateProfile(auth.currentUser, userInfoUpdet);
   };
 
   const signUpUser = (email, password) => {
-    setLoding(false);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const userLogOut = () => {
-    setLoding(false);
     return signOut(auth);
   };
-    const googleLogin = () => {
+  const googleLogin = () => {
     return signInWithPopup(auth, providergoogle);
   };
 
-
- 
-
-
   useEffect(() => {
     const unsubccripet = onAuthStateChanged(auth, (currentUser) => {
-      setLoding(true);
       setUser(currentUser);
       setLoding(false);
     });
@@ -67,7 +56,9 @@ const ComtextProvider = ({ children }) => {
     userLogOut,
     googleLogin,
   };
-  return <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>
+  );
 };
 
 export default ComtextProvider;

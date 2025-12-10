@@ -4,13 +4,15 @@ import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
+import useAuth from "../../../hooks/useAuth";
 
 const ManazeBooks = () => {
   const axioscehore = useAxiosSchore();
+  const {user} = useAuth();
   const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: ["admin"],
     queryFn: async () => {
-      const res = await axioscehore.get("allbooks");
+      const res = await axioscehore.get(`allbooks?email=${user?.email}`);
       console.log(res.data);
       return res.data;
     },

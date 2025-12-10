@@ -1,4 +1,5 @@
-import React from "react";
+import { NavLink, Link, Outlet, Navigate } from "react-router";
+
 import { FaBookReader } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 import { CiSettings, CiUser } from "react-icons/ci";
@@ -11,7 +12,6 @@ import { GiBookAura, GiWhiteBook } from "react-icons/gi";
 import { FaClipboardList } from "react-icons/fa";
 import { BrickWallShield, Logs } from "lucide-react";
 import { HiOutlineHome } from "react-icons/hi2";
-import { Link, Outlet } from "react-router";
 import { IoClose } from "react-icons/io5";
 import { CreditCard } from "lucide-react";
 import LoadingSpinner from "../shared/LoadingSpinner ";
@@ -19,259 +19,198 @@ import useRole from "../hooks/useRole";
 
 const DashBordLayOut = () => {
   const { user, loding } = useAuth();
-  const { role } = useRole();
+  const { role, roleLoding } = useRole();
 
-  if (!user?.email || loding) return <LoadingSpinner></LoadingSpinner>;
+  if (loding || roleLoding) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
   return (
-    <div className="drawer lg:drawer-open  bg-base-100 dark:bg-base-900 text-base-content dark:text-base-content">
+    <div className="drawer lg:drawer-open h-screen bg-base-100">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
-      {/* CONTENT */}
-      <div className="drawer-content flex flex-col ">
-        {/* NAVBAR */}
-        <nav className="  navbar bg-base-300 dark:bg-base-800 px-4 py-5 shadow-md">
-          <div className=" block md:hidden">
-            <label
-              htmlFor="my-drawer-4"
-              className="btn btn-ghost btn-square"
-              aria-label="Toggle sidebar"
-            >
-              <Logs />
-            </label>
-          </div>
+      {/* ================= CONTENT ================= */}
+      <div className="drawer-content flex flex-col h-screen">
+        {/* ✅ FIXED NAVBAR */}
+        <nav className="navbar fixed top-0 left-0 lg:left-59 right-0 z-50 bg-base-300 px-4 shadow-md">
+          {/* Toggle Button */}
+          <label
+            htmlFor="my-drawer-4"
+            className="btn btn-ghost btn-square lg:hidden"
+          >
+            <Logs />
+          </label>
 
-          <div className="flex items-center gap-2 text-primary ">
+          {/* LOGO */}
+          <div className="flex items-center gap-2 text-primary">
             <FaBookReader className="w-6 h-6" />
-            <span className="text-xl font-semibold  ">BookCourier</span>
+            <span className="text-xl font-semibold">BookCourier</span>
           </div>
 
-          {/* AVATAR DROPDOWN */}
-          <div className="ml-auto dropdown dropdown-end mr-10">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar relative hover:scale-105 transition-transform"
-            >
-              <div className="w-10 h-10 rounded-full ring-2 ring-[#e85d04] ring-offset-2 ring-offset-base-100 dark:ring-offset-base-900 bg-white dark:bg-neutral flex items-center justify-center shadow-lg">
-                <CiUser className="w-7 h-7 text-[#e85d04]" />
-              </div>
-              <span className="absolute top-0 right-0 h-2.5 w-2.5 bg-green-500 rounded-full ring-2 ring-white animate-pulse" />
+          {/* Avatar */}
+          <div className="ml-auto">
+            <div className="w-10 h-10 rounded-full ring ring-orange-500 flex items-center justify-center">
+              <CiUser className="w-6 h-6 text-orange-500" />
             </div>
-
-            {/* DROPDOWN MENU */}
-            <ul
-              tabIndex={0}
-              className="menu dropdown-content mt-4 w-64 rounded-2xl bg-base-100 dark:bg-base-800 p-4 shadow-2xl border border-base-300 dark:border-base-700"
-            >
-              <li className="mb-3">
-                <div className="flex items-center gap-3 cursor-default select-none">
-                  <div className="w-10 h-10 rounded-full bg-orange-100  flex items-center justify-center">
-                    {user?.photoURL ? (
-                      <img
-                        className="w-10 h-10 rounded-full object-cover"
-                        src={
-                          user?.photoURL ? (
-                            user?.photoURL
-                          ) : (
-                            <CiUser className=" text-[#e85d04]" />
-                          )
-                        }
-                      />
-                    ) : (
-                      <CiUser className=" text-[#e85d04]" />
-                    )}
-                    {/* <CiUser className="text-[#e85d04]" /> */}
-                  </div>
-                  <div>
-                    <p className="font-semibold">
-                      {user?.displayName || "User"}
-                    </p>
-                    <p className="text-xs text-base-content/60">
-                      Verified account
-                    </p>
-                  </div>
-                </div>
-              </li>
-
-              <div className="divider my-2" />
-
-              <li>
-                <div className="flex items-center gap-2 cursor-pointer hover:text-primary dark:hover:text-primary-content">
-                  <CgProfile className="w-6 h-6" /> Profile
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center gap-2 cursor-pointer hover:text-primary dark:hover:text-primary-content">
-                  <CiSettings className="w-6 h-6" /> Settings
-                </div>
-              </li>
-
-              <div className="divider my-2" />
-
-              <li>
-                <div className="flex items-center gap-2">
-                  <input type="checkbox" className="toggle toggle-warning" />
-                  <span>Theme</span>
-                </div>
-              </li>
-
-              <div className="divider my-2" />
-
-              <li>
-                <button className="flex items-center gap-2 text-red-500 bg-red-50 rounded-xl hover:bg-red-100 dark:bg-red-900 dark:hover:bg-red-800 px-3 py-1 transition">
-                  <PiSignOutLight className="w-6 h-6" /> Logout
-                </button>
-              </li>
-            </ul>
           </div>
         </nav>
 
-        {/* PAGE CONTENT */}
-        <div className="p-4 py-6 flex-grow bg-base-100 dark:bg-base-900">
-          <Outlet></Outlet>
+        {/* ✅ CONTENT (navbar height space added) */}
+        <div className="flex-grow mt-16 p-2 bg-gray-50 overflow-y-auto">
+          <Outlet />
         </div>
       </div>
 
-      {/* SIDEBAR */}
-      <div className="drawer-side  md:w-full bg-base-200 dark:bg-base-900 flex flex-col">
+      {/* ================= SIDEBAR ================= */}
+      <div className="drawer-side h-screen">
         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
 
-        <ul className="menu px-5.5 py-4 gap-2 flex-grow bg-gray-900 text-white">
-          {/* Main menu items */}
-          <li>
-            <Link
-              to="/"
-              className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition"
-            >
-              <HiOutlineHome className="w-8 h-8" /> Home
-            </Link>
-          </li>
-          <div className=" block md:hidden">
-            <li
-              onClick={() => {
-                const drawerCheckbox = document.getElementById("my-drawer-4");
-                if (drawerCheckbox) drawerCheckbox.checked = false;
-              }}
-            >
-              <Link className="flex  md:mt-10 items-center gap-3 text-[16px] hover:text-primary  transition">
-                <IoClose className="w-6 h-6" /> Close
-              </Link>
+        {/* ✅ FULL HEIGHT SIDEBAR */}
+        <div className="w-59 bg-gray-900 text-white flex flex-col h-full">
+          {/* MAIN MENU */}
+          <ul className="menu px-4 py-4 flex-grow gap-6">
+            <li>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `flex gap-3 items-center px-4 py-3 md:mt-0 mt-18 rounded-xl
+                  ${
+                    isActive ? "bg-orange-500 text-white" : "hover:bg-gray-800"
+                  }`
+                }
+              >
+                <HiOutlineHome className="w-6 h-6" /> Home
+              </NavLink>
             </li>
-          </div>
-          <li>
-            <Link className="flex mt-4 md:mt-10 items-center gap-3 text-[16px] hover:text-primary  transition">
-              <RiDashboardHorizontalLine className="w-6 h-6" /> Dashboard
-            </Link>
-          </li>
 
-          {role === "admin" && (
-            <>
-              <li>
-                <Link
-                  to="/deshbord/adminuserDataSloved"
-                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-                >
-                  <HiMiniUserGroup className="w-6 h-6" /> All Users{" "}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/deshbord/manazeBooks"
-                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-                >
-                  <ImBooks className="w-6 h-6" /> Manage Books{" "}
-                </Link>
-              </li>
-            </>
-          )}
+            {/* MOBILE CLOSE
+            <li className="md:hidden">
+              <button
+                onClick={() =>
+                  (document.getElementById("my-drawer-4").checked = false)
+                }
+                className="flex gap-3 items-center px-4 py-3 rounded-xl hover:bg-red-500/20"
+              >
+                <IoClose className="w-6 h-6 text-red-400" /> Close
+              </button>
+            </li> */}
 
-          {role === "librarian" && (
-            <>
-              <li>
-                <Link
-                  to="/deshbord/addbooks"
-                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-                >
-                  <GiWhiteBook className="w-6 h-6" /> Add Book
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/deshbord/myBooks"
-                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-                >
-                  <GiBookAura className="w-6 h-6" /> My Books{" "}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/deshbord/orderAllBooks"
-                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-                >
-                  <FaClipboardList className="w-6 h-6" /> Orders{" "}
-                </Link>
-              </li>
-            </>
-          )}
-          {role === "user" && (
-            <>
-              <li>
-                <Link
-                  to="/deshbord/userorder"
-                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-                >
-                  <Logs className="w-6 h-6" /> User Orders{" "}
-                </Link>
-                <button className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition"></button>
-              </li>
-              <li>
-                <Link
-                  to="/deshbord/paymenthistory"
-                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-                >
-                  <CreditCard className="w-6 h-6" /> Payment History{" "}
-                </Link>
-                <button className="flex items-center gap-3 text-lg hover:text-primary dark:hover:text-primary-content transition"></button>
-              </li>
-              <li>
-                <Link
-                  to=""
-                  className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-                >
-                  <BrickWallShield className="w-6 h-6" /> Invoices
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
+            <li>
+              <NavLink
+                to="/deshbord"
+                className={({ isActive }) =>
+                  `flex gap-3 items-center px-4 py-2 rounded-xl
+                  ${
+                    isActive ? "bg-orange-500 text-white" : "hover:bg-gray-800"
+                  }`
+                }
+              >
+                <RiDashboardHorizontalLine className="w-6 h-6" /> Dashboard
+              </NavLink>
+            </li>
 
-        {/* Bottom fixed buttons */}
-        <ul className="menu  w-[185px]   border-t border-gray-800 bg-gray-900 text-white dark:border-base-700">
-          <li>
-            <Link
-              to="/deshbord/profileLoginUser"
-              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-            >
-              <CgProfile className="w-6 h-6" /> Profile
-            </Link>
-          </li>
-          <li>
-            <Link
-              to=""
-              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-            >
-              <CiSettings className="w-6 h-6" /> Settings
-            </Link>
-          </li>
-          <li>
-            <Link
-              to=""
-              className="flex items-center gap-3 text-[16px] hover:text-primary  transition"
-            >
-              <PiSignOutLight className="w-6 h-6" /> Logout
-            </Link>
-          </li>
-        </ul>
+            {/* ADMIN */}
+            {role === "admin" && (
+              <>
+                <li>
+                  <NavLink
+                    to="/deshbord/adminuserDataSloved"
+                    className={({ isActive }) =>
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                    }
+                  >
+                    <HiMiniUserGroup className="w-6 h-6" /> All Users
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/deshbord/manazeBooks"
+                    className={({ isActive }) =>
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                    }
+                  >
+                    <ImBooks className="w-6 h-6" /> Manage Books
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* LIBRARIAN */}
+            {role === "librarian" && (
+              <>
+                <li>
+                  <NavLink to="/deshbord/addbooks" className="menu-item">
+                    <GiWhiteBook className="w-6 h-6" /> Add Book
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/deshbord/myBooks" className="menu-item">
+                    <GiBookAura className="w-6 h-6" /> My Books
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/deshbord/orderAllBooks" className="menu-item">
+                    <FaClipboardList className="w-6 h-6" /> Orders
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* USER */}
+            {role === "user" && (
+              <>
+                <li>
+                  <NavLink to="/deshbord/userorder" className="menu-item">
+                    <Logs className="w-6 h-6" /> Orders
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/deshbord/paymenthistory" className="menu-item">
+                    <CreditCard className="w-6 h-6" /> Payment History
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="" className="menu-item">
+                    <BrickWallShield className="w-6 h-6" /> Invoices
+                  </NavLink>
+                </li>
+              </>
+            )}
+          </ul>
+
+          {/* ✅ BOTTOM FIXED */}
+          <ul className="menu border-t border-gray-700 px-4 py-3">
+            <li>
+              <NavLink to="/deshbord/profileLoginUser" className="menu-item">
+                <CgProfile className="w-6 h-6" /> Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="" className="menu-item">
+                <CiSettings className="w-6 h-6" /> Settings
+              </NavLink>
+            </li>
+            <li>
+              <button className="menu-item text-red-400">
+                <PiSignOutLight className="w-6 h-6" /> Logout
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );

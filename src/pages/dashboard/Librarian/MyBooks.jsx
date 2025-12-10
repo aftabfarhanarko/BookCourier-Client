@@ -49,9 +49,6 @@ const MyBooks = () => {
     console.log(updeatBookInfo);
   };
 
-  const handelDeletNow = (id) => {
-   
-  };
 
   if (isLoading || isFetching || !user?.email)
     return <LoadingSpinner></LoadingSpinner>;

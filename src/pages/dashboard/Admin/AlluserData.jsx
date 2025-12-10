@@ -8,19 +8,21 @@ import { toast } from "sonner";
 import { ShieldUser } from "lucide-react";
 import { GiBookAura } from "react-icons/gi";
 import { FaUserCheck } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
 
 const AlluserData = () => {
   const axioShore = useAxiosSchore();
+  const {user} = useAuth();
   // /
   const {
-    data: user,
+    data: users,
     isLoading,
     isFetching,
     refetch,
   } = useQuery({
     queryKey: ["admin"],
     queryFn: async () => {
-      const res = await axioShore.get("alluser-data");
+      const res = await axioShore.get(`alluser-data?email=${user?.email}`);
       console.log(res.data);
       return res.data;
     },
@@ -134,7 +136,7 @@ const AlluserData = () => {
             </thead>
 
             <tbody>
-              {user.map((item, i) => (
+              {users.map((item, i) => (
                 <tr key={i} className="hover:bg-base-200">
                   <td>{i + 1}</td>
                   <td>

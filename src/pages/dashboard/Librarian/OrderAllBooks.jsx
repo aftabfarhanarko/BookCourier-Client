@@ -5,13 +5,15 @@ import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import TextType from "../../../utils/TextType";
 import { toast } from "sonner";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import useAuth from "../../../hooks/useAuth";
 
 const OrderAllBooks = () => {
   const axioscehore = useAxiosSchore();
+  const {user} = useAuth();
   const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: ["totalorderbooks"],
     queryFn: async () => {
-      const res = await axioscehore.get("allcustomer-order");
+      const res = await axioscehore.get(`allcustomer-order?email=${user?.email}`);
       return res.data;
     },
   });
