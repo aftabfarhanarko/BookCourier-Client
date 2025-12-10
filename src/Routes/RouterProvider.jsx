@@ -22,6 +22,8 @@ import LibrarianRoute from "./LibrarianRoute";
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
 import Invortorey from "../pages/dashboard/User/Invortorey";
+import SettingsComponent from "../pages/dashboard/Profile/SettingsComponent";
+import ProfileNavbar from "../pages/Home/ProfileNavbar";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +38,18 @@ export const router = createBrowserRouter([
       {
         path: "/books",
         element: <AllBooks></AllBooks>,
+      },
+      {
+        path: "/settingse",
+        element: <SettingsComponent></SettingsComponent>,
+      },
+      {
+        path: "/profile2",
+        element: (
+          <PrivetRoute>
+            <ProfileNavbar></ProfileNavbar>
+          </PrivetRoute>
+        ),
       },
       {
         path: "/detlicesPages/:id",
@@ -142,6 +156,10 @@ export const router = createBrowserRouter([
       {
         path: "/deshbord/profileLoginUser",
         element: <Profile></Profile>,
+      },
+      {
+        path: "/deshbord/settings",
+        element: <SettingsComponent></SettingsComponent>,
       },
     ],
   },

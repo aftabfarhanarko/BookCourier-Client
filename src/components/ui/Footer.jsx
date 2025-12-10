@@ -15,7 +15,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-orange-50 mt-20 border-t border-base-300">
+    <footer className="bg-orange-50  border-t border-base-300">
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Logo & Description */}

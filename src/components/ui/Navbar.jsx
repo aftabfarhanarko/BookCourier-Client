@@ -1,486 +1,260 @@
-import React, { useEffect, useState } from "react";
-import { FaBookReader, FaRegUser } from "react-icons/fa";
+import React, { useState } from "react";
+import {
+  Menu,
+  X,
+  Home,
+  Settings,
+  Bell,
+  User,
+  Moon,
+  Sun,
+  Search,
+  ChevronDown,
+} from "lucide-react";
+import { MdOutlineDashboardCustomize } from "react-icons/md";
+import { GiSpellBook } from "react-icons/gi";
+import { FaUserCog } from "react-icons/fa";
+import { FaUserCheck } from "react-icons/fa6";
+
+import { FaBookReader } from "react-icons/fa";
 import { Link, NavLink } from "react-router";
+import { FiUser } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
-import { CiUser } from "react-icons/ci";
-import { CiSettings } from "react-icons/ci";
 import { PiSignOutLight } from "react-icons/pi";
-import { CgProfile } from "react-icons/cg";
-import { Heart, ShoppingCart } from "lucide-react";
-import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { CgClose } from "react-icons/cg";
 
-const Navbar = () => {
-  const [showa, setShowa] = useState(false);
+export default function Navbar() {
+  const [darkMode, setDarkMode] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileDropdown, setProfileDropdown] = useState(false);
 
-  const [wishlistCount, setWishlistCount] = useState(0);
-  const [cartCount, setCartCount] = useState(2);
+  const bgPrimary = darkMode ? "bg-gray-900" : "bg-white";
+  const textPrimary = darkMode ? "text-white" : "text-gray-900";
+  const textSecondary = darkMode ? "text-gray-300" : "text-gray-700";
+  const textMuted = darkMode ? "text-gray-400" : "text-gray-600";
+  const borderColor = darkMode ? "border-gray-800" : "border-gray-200";
+  const hoverBg = darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100";
 
   const { user, userLogOut } = useAuth();
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  useEffect(() => {
-    const html = document.querySelector("html");
-    html.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-  const handleTheme = (checked) => {
-    setTheme(checked ? "dark" : "light");
-  };
+  console.log(user?.photoURL);
 
-  console.log(user);
-
-  const logoutNow = () => {
-    userLogOut();
-  };
+  // if(!user){
+  //   return <LoadingSpinner/>
+  // }
 
   return (
-    <>
-      <div className=" bg-base-100 shadow-sm py-2.5 z-90">
-        <div className="navbar  w-11/12 mx-auto">
-          <div className="navbar-start flex gap-2 items-center">
+    <nav
+      className={`${bgPrimary} border-b ${borderColor} shadow-sm transition-colors duration-300 sticky top-0 z-50    fixed `}
+    >
+      <div className=" w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo Section */}
+          <div className="flex items-center gap-3">
             <FaBookReader className="h-6 w-6  text-primary" />
-            <a className=" text-xl text-primary">BookCourier </a>
+            <div className="navbar-start flex  items-center">
+              <span className=" text-xl text-primary mt-1">BookCourier </span>
+            </div>
           </div>
-          <div className="navbar-center hidden lg:flex">
-            <ul className=" menu-horizontal px-1">
-              <li>
-                <NavLink to="/" className="mr-5 text-md font-semibold">
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/books" className="mr-5 text-md font-semibold">
-                  {" "}
-                  Books
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/deshbord" className="mr-5 text-md font-semibold">
-                  Dashboard
-                </NavLink>
-              </li>
-            </ul>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-1">
+            <NavLink
+              to="/"
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
+            >
+              <Home className="w-5 h-5" />
+              <span className="font-medium">Home</span>
+            </NavLink>
+            <NavLink
+              to="/books"
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
+            >
+              <GiSpellBook className="w-5 h-5" />
+              <span className="font-medium">All Books</span>
+            </NavLink>
+            <NavLink
+              to="/deshbord"
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
+            >
+              <MdOutlineDashboardCustomize className="w-5 h-5" />
+              <span className="font-medium">Dashboard</span>
+            </NavLink>
           </div>
-          <div className="  navbar-end">
-            <div className=" hidden md:block">
-              {user ? (
-                <>
-                  <div className="flex items-center gap-3">
-                    <div className="dropdown dropdown-end">
-                      {/* AVATAR */}
-                      <div
-                        tabIndex={0}
-                        role="button"
-                        className="relative btn btn-ghost btn-circle avatar hover:scale-105 transition"
-                      >
-                        <div className="w-10 h-10 rounded-full ring-2 ring-[#e85d04] ring-offset-2 ring-offset-white overflow-hidden shadow-lg flex items-center justify-center bg-white">
-                          {user.photoURL ? (
-                            <img
-                              src={
-                                user?.photoURL ? (
-                                  user?.photoURL
-                                ) : (
-                                  <CiUser className="w-8 h-8 text-[#e85d04]" />
-                                )
-                              }
-                              alt="User Profile"
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <CiUser className="w-8 h-8 text-[#e85d04]" />
-                          )}
-                        </div>
 
-                        {/*  */}
-
-                        {user && (
-                          <>
-                            {" "}
-                            <span className="absolute -top-0.5 -right-2 h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-white animate-pulse" />
-                          </>
-                        )}
-                      </div>
-
-                      {/* DROPDOWN */}
-                      <ul
-                        tabIndex={0}
-                        className="menu dropdown-content mt-6 w-64 rounded-2xl
-              bg-base-100 p-4 shadow-2xl border border-base-300"
-                      >
-                        {/* USER INFO */}
-                        <li className="mb-3">
-                          <div className="flex items-center gap-3 cursor-default">
-                            <div className="avatar">
-                              {user.photoURL ? (
-                                <img
-                                  src={
-                                    user?.photoURL ? (
-                                      user?.photoURL
-                                    ) : (
-                                      <CiUser className="w-8 h-8 text-[#e85d04]" />
-                                    )
-                                  }
-                                  className="w-10 h-10 rounded-full object-cover"
-                                />
-                              ) : (
-                                <CiUser className="w-8 h-8 text-[#e85d04]" />
-                              )}
-                            </div>
-                            <div>
-                              <p className="font-semibold leading-tight ml-1">
-                                {user?.displayName || "User"}
-                              </p>
-                              <p className="text-xs text-base-content/60 flex items-center gap-1">
-                                <i className="fa-regular fa-envelope" />
-                                Verified account
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-
-                        <div className="divider my-2" />
-                        {/* wish list */}
-                        <li>
-                          <Link className="relative cursor-pointer">
-                            <Heart className="w-6 h-6 text-red-500" />
-
-                            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                              {wishlistCount}
-                            </span>
-                          </Link>
-                        </li>
-
-                        <div className="divider my-2" />
-                        <li>
-                          {/* Shopping Cart */}
-                          <Link className="relative cursor-pointer">
-                            <ShoppingCart className="w-6 h-6 text-blue-600" />
-                            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                              {cartCount}
-                            </span>
-                          </Link>
-                        </li>
-                        <div className="divider my-2" />
-                        {/* SETTINGS */}
-                        <li>
-                          <div>
-                            <CgProfile className=" w-6 h-6"></CgProfile>
-                            Profile
-                          </div>
-                        </li>
-                        <div className="divider my-1" />
-
-                        {/* SETTINGS */}
-                        <li>
-                          <div>
-                            <CiSettings className=" w-7 h-7"></CiSettings>
-                            Settings
-                          </div>
-                        </li>
-
-                        {/* THEME */}
-                        <div className="divider my-1" />
-                        <li>
-                          <div>
-                            <label className="swap swap-rotate ">
-                              {" "}
-                              {/* this hidden checkbox controls the state */}{" "}
-                              <input
-                                type="checkbox"
-                                onChange={(e) => handleTheme(e.target.checked)}
-                                defaultChecked={
-                                  localStorage.getItem("theme") === "dark"
-                                }
-                                className="theme-controller"
-                                value="synthwave"
-                              />{" "}
-                              {/* sun icon */}{" "}
-                              <svg
-                                className="swap-off h-7 w-7 fill-current"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                              >
-                                {" "}
-                                <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />{" "}
-                              </svg>{" "}
-                              {/* moon icon */}{" "}
-                              <svg
-                                className="swap-on h-7 w-7 fill-current"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                              >
-                                {" "}
-                                <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />{" "}
-                              </svg>{" "}
-                            </label>
-                            Theme
-                          </div>
-                        </li>
-
-                        <div className="divider my-2" />
-
-                        {/* LOGOUT */}
-                        <li>
-                          <button
-                            onClick={logoutNow}
-                            className="flex items-center gap-2 text-red-500 bg-red-50 rounded-xl"
-                          >
-                            <PiSignOutLight className=" w-6 h-6"></PiSignOutLight>
-                            <i className="fa-solid fa-right-from-bracket" />
-                            Logout
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
+          {/* Right Section */}
+          <div className="flex items-center gap1.5 md:gap-3">
+            {/* Search Bar */}
+            {/* <div className="hidden lg:flex items-center">
+              <div
+                className={`relative ${
+                  darkMode ? "bg-gray-800" : "bg-gray-100"
+                } rounded-lg`}
+              >
+                <Search
+                  className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 ${textMuted}`}
+                />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className={`pl-10 pr-4 py-2 ${
+                    darkMode
+                      ? "bg-gray-800 text-white"
+                      : "bg-gray-100 text-gray-900"
+                  } rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 w-64 transition-all`}
+                />
+              </div>
+            </div> */}
+            {/* Profile Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setProfileDropdown(!profileDropdown)}
+                className={`flex items-center gap-2 p-1 rounded-lg ${hoverBg} transition-all duration-200`}
+              >
+                {user ? (
+                  <img
+                    src={user?.photoURL}
+                    className="w-9 h-9 rounded-full"
+                  ></img>
+                ) : (
+                  <div className="w-9 h-9 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                    <FiUser></FiUser>
                   </div>
-                </>
-              ) : (
-                <div className="flex gap-3">
-                  {/* LOGIN */}
-                  <Link
-                    to="/auth/login"
-                    className="px-6 py-2 rounded-xl font-semibold text-[#e85d04]
-          border-2 border-[#e85d04]
-          transition-all duration-300
-          hover:bg-gradient-to-r from-[#C2410C] to-[#e85d04]
-          hover:text-white hover:scale-105"
-                  >
-                    Login
-                  </Link>
+                )}
+                <ChevronDown
+                  className={`w-4 h-4 ${textSecondary} hidden sm:block transition-transform duration-200 ${
+                    profileDropdown ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
 
-                  {/* REGISTER */}
-                  <Link
-                    to="/auth/rigester"
-                    className="px-6 py-2 rounded-xl text-white font-semibold
-          bg-gradient-to-r from-[#C2410C] to-[#e85d04]
-          shadow-lg transition-all duration-300
-          hover:scale-105"
-                  >
-                    Register
-                  </Link>
+              {/* Dropdown Menu */}
+              {profileDropdown && (
+                <div
+                  className={`absolute right-0 mt-2 w-56 ${bgPrimary} rounded-xl shadow-xl border ${borderColor} py-2 transition-all duration-200`}
+                >
+                  {user ? (
+                    <>
+                      <div className={`px-5 py-5 border-b  ${borderColor}`}>
+                        <p className={`font-semibold ${textPrimary}`}>
+                          {user?.displayName}
+                        </p>
+                        <p className={`text-sm ${textMuted}`}>{user?.email}</p>
+                      </div>
+                      <Link
+                        to="/profile2"
+                        className={`flex items-center gap-3 px-5 py-2 ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all`}
+                      >
+                        <User className="w-4 h-4" />
+                        <span>Profile</span>
+                      </Link>
+                      <Link
+                        to="/settingse"
+                        className={`flex items-center gap-3 px-5 py-2 ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all`}
+                      >
+                        <Settings className="w-4 h-4" />
+                        <span>Settings</span>
+                      </Link>
+                      <div className={`border-t ${borderColor} mt-2 pt-2 `}>
+                        <button
+                          onClick={() => userLogOut()}
+                          className={`w-full rounded-lg  text-left flex items-center gap-3 px-4 py-2 text-orange-500 bg-orange-50 ${hoverBg} transition-all`}
+                        >
+                          <PiSignOutLight className=" w-5 h-5" /> Logout
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className=" flex flex-col p-6 text-center gap-6 ">
+                      <Link
+                        to="/auth/login"
+                        className="px-6 py-1.5 rounded-xl font-semibold text-[#e85d04]
+                            border-2 hover:border flex items-center gap-3 border-[#e85d04]
+                            transition-all duration-300
+                            hover:bg-gradient-to-r from-[#C2410C] to-[#e85d04]
+                            hover:text-white hover:scale-105"
+                      >
+                        <FaUserCheck className=" w-4 h-4" /> Login
+                      </Link>
+
+                      {/* REGISTER */}
+                      <Link
+                        to="/auth/rigester"
+                        className="px-6 py-1.5 gap-3 rounded-xl text-white font-semibold
+                            bg-gradient-to-r from-[#C2410C] to-[#e85d04]
+                            shadow-lg transition-all flex items-center duration-300
+                            hover:scale-105"
+                      >
+                        <FaUserCog className=" w-4 h-4" /> Register
+                      </Link>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
-            {/* MobileMenu */}
-            <div className="block md:hidden items-center">
-              <div
-                onClick={() => setShowa(!showa)}
-                className="transition duration-300 ease-in-out transform"
-              >
-                {showa ? (
-                  <CgClose className="w-10 h-10 opacity-100 scale-100 transition duration-300" />
-                ) : (
-                  <HiOutlineMenuAlt3 className="w-10 h-10 opacity-100 scale-100 transition duration-300" />
-                )}
-              </div>
-            </div>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className={`p-2 rounded-lg ${hoverBg} ${textSecondary} hover:text-orange-500 transition-all duration-200`}
+              title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {darkMode ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
+
+            {/* Notifications */}
+            <button
+              className={`p-2 rounded-lg ${hoverBg} ${textSecondary} hover:text-orange-500 transition-all duration-200 relative`}
+            >
+              <Bell className="w-5 h-5" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-orange-500 rounded-full"></span>
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={`md:hidden p-2 rounded-lg ${hoverBg} ${textSecondary} transition-all`}
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
           </div>
         </div>
-      </div>
 
-      {showa && (
-        <div className=" bg-base-100 border-t border-base-300 opacity-100 scale-100 transition duration-300">
-          {user ? (
-            <>
-              <div className="flex items-center gap-3"> 
-                <div className="dropdown dropdown-end">
-                  {/* AVATAR */}
-                  <div
-                    tabIndex={0}
-                    role="button"
-                    className="relative btn btn-ghost btn-circle avatar hover:scale-105 transition"
-                  >
-                    <div className="w-10 h-10 rounded-full ring-2 ring-[#e85d04] ring-offset-2 ring-offset-white overflow-hidden shadow-lg flex items-center justify-center bg-white">
-                      {user.photoURL ? (
-                        <img
-                          src={
-                            user?.photoURL ? (
-                              user?.photoURL
-                            ) : (
-                              <CiUser className="w-8 h-8 text-[#e85d04]" />
-                            )
-                          }
-                          alt="User Profile"
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <CiUser className="w-8 h-8 text-[#e85d04]" />
-                      )}
-                    </div>
-
-                    {/*  */}
-
-                    {user && (
-                      <>
-                        {" "}
-                        <span className="absolute -top-0.5 -right-2 h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-white animate-pulse" />
-                      </>
-                    )}
-                  </div>
-
-                  {/* DROPDOWN */}
-                  <ul
-                    tabIndex={0}
-                    className="menu dropdown-content mt-6 w-64 rounded-2xl
-              bg-base-100 p-4 shadow-2xl border border-base-300"
-                  >
-                    {/* USER INFO */}
-                    <li className="mb-3">
-                      <div className="flex items-center gap-3 cursor-default">
-                        <div className="avatar">
-                          {user.photoURL ? (
-                            <img
-                              src={
-                                user?.photoURL ? (
-                                  user?.photoURL
-                                ) : (
-                                  <CiUser className="w-8 h-8 text-[#e85d04]" />
-                                )
-                              }
-                              className="w-10 h-10 rounded-full object-cover"
-                            />
-                          ) : (
-                            <CiUser className="w-8 h-8 text-[#e85d04]" />
-                          )}
-                        </div>
-                        <div>
-                          <p className="font-semibold leading-tight ml-1">
-                            {user?.displayName || "User"}
-                          </p>
-                          <p className="text-xs text-base-content/60 flex items-center gap-1">
-                            <i className="fa-regular fa-envelope" />
-                            Verified account
-                          </p>
-                        </div>
-                      </div>
-                    </li>
-
-                    <div className="divider my-2" />
-                    {/* wish list */}
-                    <li>
-                      <Link className="relative cursor-pointer">
-                        <Heart className="w-6 h-6 text-red-500" />
-
-                        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                          {wishlistCount}
-                        </span>
-                      </Link>
-                    </li>
-
-                    <div className="divider my-2" />
-                    <li>
-                      {/* Shopping Cart */}
-                      <Link className="relative cursor-pointer">
-                        <ShoppingCart className="w-6 h-6 text-blue-600" />
-                        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                          {cartCount}
-                        </span>
-                      </Link>
-                    </li>
-                    <div className="divider my-2" />
-                    {/* SETTINGS */}
-                    <li>
-                      <div>
-                        <CgProfile className=" w-6 h-6"></CgProfile>
-                        Profile
-                      </div>
-                    </li>
-                    <div className="divider my-1" />
-
-                    {/* SETTINGS */}
-                    <li>
-                      <div>
-                        <CiSettings className=" w-7 h-7"></CiSettings>
-                        Settings
-                      </div>
-                    </li>
-
-                    {/* THEME */}
-                    <div className="divider my-1" />
-                    <li>
-                      <div>
-                        <label className="swap swap-rotate ">
-                          {" "}
-                          {/* this hidden checkbox controls the state */}{" "}
-                          <input
-                            type="checkbox"
-                            onChange={(e) => handleTheme(e.target.checked)}
-                            defaultChecked={
-                              localStorage.getItem("theme") === "dark"
-                            }
-                            className="theme-controller"
-                            value="synthwave"
-                          />{" "}
-                          {/* sun icon */}{" "}
-                          <svg
-                            className="swap-off h-7 w-7 fill-current"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                          >
-                            {" "}
-                            <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />{" "}
-                          </svg>{" "}
-                          {/* moon icon */}{" "}
-                          <svg
-                            className="swap-on h-7 w-7 fill-current"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                          >
-                            {" "}
-                            <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />{" "}
-                          </svg>{" "}
-                        </label>
-                        Theme
-                      </div>
-                    </li>
-
-                    <div className="divider my-2" />
-
-                    {/* LOGOUT */}
-                    <li>
-                      <button
-                        onClick={logoutNow}
-                        className="flex items-center gap-2 text-red-500 bg-red-50 rounded-xl"
-                      >
-                        <PiSignOutLight className=" w-6 h-6"></PiSignOutLight>
-                        <i className="fa-solid fa-right-from-bracket" />
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className=" flex flex-col ">
-              {/* LOGIN */}
-              <Link
-                to="/auth/login"
-                className="px-6 py-2 rounded-xl font-semibold text-[#e85d04]
-          border-2 border-[#e85d04]
-          transition-all duration-300
-          hover:bg-gradient-to-r from-[#C2410C] to-[#e85d04]
-          hover:text-white hover:scale-105"
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className={`md:hidden py-4 border-t ${borderColor}`}>
+            <div className="space-y-1">
+              <NavLink
+                to="/"
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
               >
-                Login
-              </Link>
-
-              {/* REGISTER */}
-              <Link
-                to="/auth/rigester"
-                className="px-6 py-2 rounded-xl text-white font-semibold
-          bg-gradient-to-r from-[#C2410C] to-[#e85d04]
-          shadow-lg transition-all duration-300
-          hover:scale-105"
+                <Home className="w-5 h-5" />
+                <span className="font-medium">Home</span>
+              </NavLink>
+              <NavLink
+                to="/books"
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
               >
-                Register
-              </Link>
+                <GiSpellBook className="w-5 h-5" />
+                <span className="font-medium">All Books</span>
+              </NavLink>
+              <NavLink
+                to="/deshbord"
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
+              >
+                <MdOutlineDashboardCustomize className="w-5 h-5" />
+                <span className="font-medium">Dashboard</span>
+              </NavLink>
             </div>
-          )}
-        </div>
-      )}
-    </>
+          </div>
+        )}
+      </div>
+    </nav>
   );
-};
-
-export default Navbar;
+}

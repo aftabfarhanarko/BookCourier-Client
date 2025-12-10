@@ -10,10 +10,12 @@
 
 @plugin "daisyui" {
     themes: light --default;
-};
+}
 
-a.active{
- @apply border-b border-primary text-primary
+;
+
+a.active {
+    @apply text-primary
 }
 
 @plugin "daisyui/theme" {
@@ -21,8 +23,8 @@ a.active{
     default: true;
     --color-primary: #C2410C;
     --color-newa: #FACC15;
-    --color-secondary: #C2410C ;
+    --color-secondary: #C2410C;
     --color-mytext: #6B7280;
     --color-thried: #FFF7ED;
-   
+
 }

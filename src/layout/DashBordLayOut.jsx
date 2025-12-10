@@ -18,7 +18,7 @@ import LoadingSpinner from "../shared/LoadingSpinner ";
 import useRole from "../hooks/useRole";
 
 const DashBordLayOut = () => {
-  const { user, loding } = useAuth();
+  const { user, loding ,userLogOut} = useAuth();
   const { role, roleLoding } = useRole();
 
   if (loding || roleLoding) {
@@ -35,7 +35,7 @@ const DashBordLayOut = () => {
       {/* ================= CONTENT ================= */}
       <div className="drawer-content flex flex-col h-screen">
         {/* ✅ FIXED NAVBAR */}
-        <nav className="navbar fixed top-0 left-0 lg:left-59 right-0 z-50 bg-base-300 px-4 shadow-md">
+        <nav className="navbar fixed top-0 left-0 lg:left-55 right-0 z-50 bg-base-300 px-4 shadow-md">
           {/* Toggle Button */}
           <label
             htmlFor="my-drawer-4"
@@ -59,7 +59,7 @@ const DashBordLayOut = () => {
         </nav>
 
         {/* ✅ CONTENT (navbar height space added) */}
-        <div className="flex-grow mt-16 p-2 bg-gray-50 overflow-y-auto">
+        <div className="flex-grow mt-14 py-10 px-6 bg-gray-50 overflow-y-auto">
           <Outlet />
         </div>
       </div>
@@ -69,7 +69,7 @@ const DashBordLayOut = () => {
         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
 
         {/* ✅ FULL HEIGHT SIDEBAR */}
-        <div className="w-59 bg-gray-900 text-white flex flex-col h-full">
+        <div className="w-55 bg-gray-900 text-white flex flex-col h-full">
           {/* MAIN MENU */}
           <ul className="menu px-4 py-4 flex-grow gap-6">
             <li>
@@ -200,12 +200,12 @@ const DashBordLayOut = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="" className="menu-item">
+              <NavLink to="/deshbord/settings" className="menu-item">
                 <CiSettings className="w-6 h-6" /> Settings
               </NavLink>
             </li>
             <li>
-              <button className="menu-item text-red-400">
+              <button onClick={()=> userLogOut()} className="menu-item text-red-400">
                 <PiSignOutLight className="w-6 h-6" /> Logout
               </button>
             </li>
