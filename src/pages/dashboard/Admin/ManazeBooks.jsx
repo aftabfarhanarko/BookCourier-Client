@@ -15,7 +15,7 @@ const ManazeBooks = () => {
   // Pasitionse
   const [page, setPage] = useState(1);
   const [allUser, setAllUser] = useState(0);
-  const limit = 15;
+  const limit = 13;
   const skip = (page - 1) * limit;
   const totalPage = Math.ceil(allUser / limit);
 

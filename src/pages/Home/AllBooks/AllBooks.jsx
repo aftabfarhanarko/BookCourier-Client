@@ -28,7 +28,7 @@ const AllBooks = () => {
     queryKey: ["Publish", "In Stock", page, search],
     queryFn: async () => {
       const res = await axioscehore.get(
-        `allbooks?one=Publish&tow=In Stock&limit=${limit}&skip=${skip}&search=${search}`
+        `allBooksCollections?one=Publish&tow=In Stock&limit=${limit}&skip=${skip}&search=${search}`
       );
       setAllBook(res?.data?.counts);
       // refetch();
@@ -36,15 +36,14 @@ const AllBooks = () => {
 
       return res?.data?.result || [];
     },
-    
   });
 
   // console.log(data);
 
   const handelSeawdg = (ol) => {
     const text = ol.search;
-    setPage(1); // ✅ search করলে first page
-    setSearch(text); // ✅ queryKey change → auto refetch
+    setPage(1); 
+    setSearch(text); 
   };
 
   if (isLoading) return <LoadingSpinner></LoadingSpinner>;
@@ -97,26 +96,7 @@ const AllBooks = () => {
               </button>
             </label>
           </form>
-          {/* Sort Dropdown
-          <fieldset className="w-full max-w-xs">
-            <select
-              onChange={handleChange}
-              defaultValue=""
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
-            >
-              <option value="" disabled>
-                Price Search
-              </option>
-              <option value="100">$50 - $100</option>
-              <option value="200">$100 - $200</option>
-              <option value="300">$300 - $400</option>
-              <option value="400">$400 - $500</option>
-              <option value="500">$600 - $700</option>
-              <option value="600">$800 - $900</option>
-              <option value="700">$1000 - $1000</option>
-              <option value="800">$1100 - $1200</option>
-            </select>
-          </fieldset> */}
+         
         </div>
       </div>
       <div className=" grid mx-auto  grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mt-15">
@@ -137,7 +117,7 @@ const AllBooks = () => {
           className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
             page === 1
               ? "text-gray-400 cursor-not-allowed bg-base-300"
-              : "bg-gradient-to-r from-pink-500 via-purple-500 to-blue-400 text-white hover:opacity-90"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-whitehover:opacity-90"
           }`}
         >
           <FaArrowLeftLong /> Previous
@@ -150,7 +130,7 @@ const AllBooks = () => {
               onClick={() => setPage(i + 1)}
               className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold transition ${
                 page === i + 1
-                  ? "bg-gradient-to-r from-pink-500 via-purple-500 to-blue-400 text-white"
+                  ? "bg-gradient-to-br from-orange-400 to-orange-600 text-white"
                   : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-pink-50 hover:via-purple-50 hover:to-blue-50"
               }`}
             >
@@ -165,7 +145,7 @@ const AllBooks = () => {
           className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
             page === totalPage
               ? "text-gray-400 cursor-not-allowed bg-base-300"
-              : "bg-gradient-to-r from-pink-500 via-purple-500 to-blue-400 text-white hover:opacity-90"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
           }`}
         >
           Next <FaArrowRightLong />

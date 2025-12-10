@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import { motion } from "framer-motion";
@@ -15,8 +15,8 @@ import { toast } from "sonner";
 const DetlicesPages = () => {
   const { user } = useAuth();
   const { id } = useParams();
+  const [isOpen, setIsOpen] = useState(false);
   const axioscehore = useAxiosSchore();
-  const refene = useRef();
   const {
     register,
     handleSubmit,
@@ -43,11 +43,9 @@ const DetlicesPages = () => {
       return res.data;
     },
   });
-  //   console.log(relatedBooks);
 
-  const habdelModalOpen = () => {
-    refene.current.showModal();
-  };
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   const handelSeawdg = (customerInfo) => {
     console.log(customerInfo);
@@ -63,547 +61,729 @@ const DetlicesPages = () => {
       console.log(res.data);
       if (res.data.insertedId) {
         toast.success("Order Successfully ");
-        // Close the dialog
-        if (refene.current) {
-          refene.current.close(); // <-- use close(), not closeModal()
-        }
+        setIsOpen(false);
       }
     });
   };
 
   if (isLoading || newLoding) return <LoadingSpinner></LoadingSpinner>;
+
   return (
-    <div className="bg-gray-100 min-h-screen pb-20 mt-11">
-      <div className=" h-10"></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 pb-24 pt-20">
+      {/* Hero Background Pattern */}
+      <div className="fixed inset-0 -z-10 opacity-30">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+      </div>
 
-      <div className="max-w-7xl mx-auto  px-4 grid grid-cols-1 md:grid-cols-12 gap-8">
-        {/* -------------------------------- 
-             LEFT IMAGE
-        -------------------------------- */}
-        <div className="md:col-span-4 bg-white p-12 rounded-lg shadow  top-24 h-max">
-          <motion.img
-            whileHover={{ scale: 1.05 }}
-            src={book?.image}
-            className="w-full h-[450px] object-cover rounded-lg  shadow-md"
-          />
-        </div>
-
-        <div
-          className="
-    md:col-span-5 
-    bg-white/90 backdrop-blur-md 
-    p-7 rounded-lg   
-    shadow-[0_4px_22px_rgba(0,0,0,0.08)]
-    border border-gray-200
-    space-y-5
-    flex flex-col
-
-    justify-center 
-  "
-        >
-          <div className=" space-y-4">
-            {/* Title */}
-            <h1 className="text-3xl font-bold text-gray-900 leading-snug text-left">
-              {book?.title}
-            </h1>
-
-            {/* Author */}
-            <p className="text-gray-600 text-lg text-left">
-              by{" "}
-              <span className="font-medium text-gray-800">{book?.author}</span>
-            </p>
-
-            {/* Rating */}
-            <div className="flex items-center gap-2 text-[#FACC15] font-medium text-left">
-              ⭐ {book?.rating_avg}/5
-            </div>
-
-            {/* Price */}
-            <div className="flex items-center gap-4 mt-2 text-left">
-              <span className="text-4xl font-extrabold text-[#C2410C]">
-                ৳ {book?.price_sell}
-              </span>
-
-              <span className="line-through text-gray-400 text-lg">
-                ৳ {book?.price_mrp}
-              </span>
-
-              <span
-                className="
-        text-sm px-3 py-1 rounded-xl 
-        bg-gradient-to-r from-red-500 to-rose-500 
-        text-white shadow
-      "
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Main Product Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-12">
+          {/* ===========================
+               LEFT - IMAGE SECTION
+          =========================== */}
+          <div className="lg:col-span-5 xl:col-span-4">
+            <div className="sticky top-24">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="relative group"
               >
-                {Math.round(
-                  ((book.price_mrp - book.price_sell) / book.price_mrp) * 100
-                )}
-                % OFF
-              </span>
-            </div>
+                {/* Glow Effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 rounded-3xl blur-2xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
 
-            {/* Stock */}
-            <p className="text-green-600 font-semibold text-base text-left">
-              ✔ In Stock ({book?.stock_qty})
-            </p>
+                {/* Main Card */}
+                <div className="relative bg-white rounded-3xl p-6 shadow-2xl border border-gray-200/50">
+                  {/* Image Container */}
+                  <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 aspect-[3/4]">
+                    <motion.img
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
+                      src={book?.image}
+                      alt={book?.title}
+                      className="w-full h-full object-cover"
+                    />
 
-            {/* Actions */}
-            <div className="flex gap-1 md:gap-4 pt-3">
-              {/* Buy Now */}
-              <motion.button
-                onClick={habdelModalOpen}
-                whileHover={{ scale: 1.05 }}
-                className="
-        flex items-center md:gap-2
-        px-7 py-2
-        text-white font-medium
-        rounded-xl shadow 
-        bg-gradient-to-br from-orange-400 to-orange-600
-        transition-all
-      "
-              >
-                <span>🛒</span>Prase Order
-              </motion.button>
+                    {/* Overlay Gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-              {/* Add to Cart */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                className="
-        flex items-center gap-2
-        px-7 py-2 
-        border-2 border-[#C2410C] 
-        text-[#C2410C] font-semibold 
-        rounded-xl 
-        hover:bg-[#FFF4F1]
-        transition-all
-      "
-              >
-                <span>➕</span> Add to Cart
-              </motion.button>
-            </div>
-          </div>
-        </div>
+                    {/* Stock Badge */}
+                    {book?.stock_qty > 0 && (
+                      <motion.div
+                        initial={{ scale: 0, rotate: -10 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ delay: 0.3, type: "spring" }}
+                        className="absolute top-4 right-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-4 py-2 rounded-full shadow-lg font-semibold text-sm flex items-center gap-2"
+                      >
+                        <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                        In Stock
+                      </motion.div>
+                    )}
 
-        <div className="md:col-span-3 space-y-5 top-24 h-max">
-          {/* CATEGORY */}
-          <div
-            className="
-      bg-white/80 backdrop-blur-md p-5 
-      rounded-lg  border border-gray-200 
-      shadow-[0_4px_18px_rgba(0,0,0,0.05)]
-      hover:shadow-[0_6px_26px_rgba(0,0,0,0.10)]
-      transition-all duration-300
-    "
-          >
-            <h3 className="font-semibold mb-3 flex items-center gap-3 text-gray-800 text-lg">
-              <span className="p-2 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow">
-                <GoDuplicate size={18} />
-              </span>
-              Category
-            </h3>
+                    {/* Discount Badge */}
+                    {book?.price_mrp && book?.price_sell && (
+                      <motion.div
+                        initial={{ scale: 0, rotate: 10 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ delay: 0.4, type: "spring" }}
+                        className="absolute top-4 left-4 bg-gradient-to-r from-red-500 to-pink-600 text-white px-4 py-2 rounded-full shadow-lg font-bold text-sm"
+                      >
+                        {Math.round(
+                          ((book.price_mrp - book.price_sell) /
+                            book.price_mrp) *
+                            100
+                        )}
+                        %
+                      </motion.div>
+                    )}
+                  </div>
 
-            <p className="text-gray-600 ml-1">{book?.category}</p>
-          </div>
+                  {/* Quick Stats Grid */}
+                  <div className="mt-6 grid grid-cols-3 gap-3">
+                    <motion.div
+                      whileHover={{ y: -4 }}
+                      className="bg-gradient-to-br from-amber-50 to-orange-100 p-4 rounded-xl text-center border border-amber-200/50 shadow-sm"
+                    >
+                      <div className="text-2xl mb-1">⭐</div>
+                      <p className="text-xs text-gray-600 mb-0.5">Rating</p>
+                      <p className="text-lg font-bold text-amber-600">
+                        {book?.rating_avg || 0}
+                      </p>
+                    </motion.div>
 
-          {/* LANGUAGE */}
-          <div
-            className="
-      bg-white/80 backdrop-blur-md p-5 
-      rounded-lg  border border-gray-200 
-      shadow-[0_4px_18px_rgba(0,0,0,0.05)]
-      hover:shadow-[0_6px_26px_rgba(0,0,0,0.10)]
-      transition-all duration-300
-    "
-          >
-            <h3 className="font-semibold mb-3 flex items-center gap-3 text-gray-800 text-lg">
-              <span className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow">
-                <GrLanguage size={18} />
-              </span>
-              Language
-            </h3>
+                    <motion.div
+                      whileHover={{ y: -4 }}
+                      className="bg-gradient-to-br from-blue-50 to-indigo-100 p-4 rounded-xl text-center border border-blue-200/50 shadow-sm"
+                    >
+                      <div className="text-2xl mb-1">📖</div>
+                      <p className="text-xs text-gray-600 mb-0.5">Pages</p>
+                      <p className="text-lg font-bold text-blue-600">
+                        {book?.page_count}
+                      </p>
+                    </motion.div>
 
-            <p className="text-gray-600 ml-1">{book?.language}</p>
-          </div>
-
-          {/* PUBLISHER */}
-          <div
-            className="
-      bg-white/80 backdrop-blur-md p-5 
-      rounded-lg  border border-gray-200 
-      shadow-[0_4px_18px_rgba(0,0,0,0.05)]
-      hover:shadow-[0_6px_26px_rgba(0,0,0,0.10)]
-      transition-all duration-300
-    "
-          >
-            <h3 className="font-semibold mb-3 flex items-center gap-3 text-gray-800 text-lg">
-              <span className="p-2 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 text-white shadow">
-                <MdOutlinePublishedWithChanges size={18} />
-              </span>
-              Publisher
-            </h3>
-
-            <p className="text-gray-600 ml-1">{book?.publisher}</p>
-          </div>
-          {/* BOOK TAGS */}
-          <div
-            className="
-    bg-white/80 backdrop-blur-md p-5 
-    rounded-lg  border border-gray-200 
-    shadow-[0_4px_18px_rgba(0,0,0,0.05)]
-    hover:shadow-[0_6px_26px_rgba(0,0,0,0.10)]
-    transition-all duration-300
-  "
-          >
-            <h3 className="font-semibold mb-3 flex items-center gap-3 text-gray-800 text-lg">
-              <span className="p-2 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 text-white shadow">
-                🏷️
-              </span>
-              Tags
-            </h3>
-
-            <p className="text-gray-600 ml-1">{book?.tags || "New Tags"}</p>
-          </div>
-        </div>
-
-        <div
-          className="
-    md:col-span-12 
-    bg-white/80 
-    backdrop-blur-md 
-    p-6 md:p-8 
-   rounded-lg 
-    border border-gray-200 
-   
-    transition-all duration-300
-  "
-        >
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-            Description
-          </h2>
-
-          <p className="text-gray-600 leading-relaxed text-[15px] md:text-[16px]">
-            {book?.description}
-          </p>
-        </div>
-
-        <div className="md:col-span-12 grid md:grid-cols-2 gap-5">
-          <div
-            className="
-    bg-white/80 backdrop-blur-md 
-    p-5 md:p-6 
-    rounded-lg  
-    shadow-[0_4px_20px_rgba(0,0,0,0.06)]
-    border border-gray-200
-    hover:shadow-[0_6px_28px_rgba(0,0,0,0.12)]
-    transition-all duration-300
-  "
-          >
-            <h2 className="text-xl font-semibold mb-5 text-gray-800">
-              Book Information
-            </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-              {/* Pages */}
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-base-300">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 text-white">
-                  📄
+                    <motion.div
+                      whileHover={{ y: -4 }}
+                      className="bg-gradient-to-br from-purple-50 to-pink-100 p-4 rounded-xl text-center border border-purple-200/50 shadow-sm"
+                    >
+                      <div className="text-2xl mb-1">📦</div>
+                      <p className="text-xs text-gray-600 mb-0.5">Stock</p>
+                      <p className="text-lg font-bold text-purple-600">
+                        {book?.stock_qty}
+                      </p>
+                    </motion.div>
+                  </div>
                 </div>
-                <p className="text-gray-700">
-                  <strong>Pages:</strong> {book?.page_count}
-                </p>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* ===========================
+               MIDDLE - DETAILS SECTION
+          =========================== */}
+          <div className="lg:col-span-7 xl:col-span-5 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-xl border border-white/50"
+            >
+              {/* Category Badge */}
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-lg mb-4">
+                <GoDuplicate size={14} />
+                {book?.category}
               </div>
 
-              {/* Weight */}
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-base-300">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-white">
+              {/* Title */}
+              <h1 className="text-3xl md:text-4xl  font-black text-gray-900 leading-tight mb-4 tracking-tight">
+                {book?.title}
+              </h1>
+
+              {/* Author */}
+              <div className="flex items-center gap-2 mb-6">
+                <span className="text-gray-500">by</span>
+                <span className="text-lg font-semibold text-gray-800 hover:text-purple-600 transition-colors cursor-pointer">
+                  {book?.author}
+                </span>
+              </div>
+
+              {/* Rating */}
+              <div className="flex items-center gap-3 mb-6">
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <span
+                      key={i}
+                      className={`text-xl ${
+                        i < Math.floor(book?.rating_avg || 0)
+                          ? "text-amber-400"
+                          : "text-gray-300"
+                      }`}
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <span className="text-sm font-semibold text-gray-700">
+                  {book?.rating_avg || 0} out of 5
+                </span>
+              </div>
+
+              {/* Divider */}
+              <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-6"></div>
+
+              {/* Price Section */}
+              <div className="relative overflow-hidden bg-gradient-to-br from-orange-500 via-red-500 to-pink-600 p-6 rounded-2xl mb-6 shadow-xl">
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
+
+                <div className="relative">
+                  <p className="text-white/90 text-sm font-semibold mb-2">
+                    Special Offer
+                  </p>
+                  <div className="flex items-baseline gap-4 flex-wrap">
+                    <span className="text-3xl  font-black text-white">
+                      ৳{book?.price_sell}
+                    </span>
+                    <span className="text-xl line-through text-white/60 font-semibold">
+                      ৳{book?.price_mrp}
+                    </span>
+                  </div>
+
+                  <div className="mt-4 flex items-center gap-3 flex-wrap">
+                    <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-1.5 rounded-full font-bold shadow-lg border border-white/30">
+                      <span className="text-md">🔥</span>
+                      Save ৳{book?.price_mrp - book?.price_sell}
+                    </div>
+                    <div className="text-white/90 text-sm font-medium">
+                      ✓ Limited Time Deal
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="space-y-3">
+                <motion.button
+                  onClick={openModal}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-2 px-6 rounded-2xl font-bold text-lg text-white bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 flex items-center justify-center gap-3 group"
+                >
+                  <span className="text-xl group-hover:scale-110 transition-transform">
+                    🛒
+                  </span>
+                  <span>Place Order</span>
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity">
+                    →
+                  </span>
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-1.5 px-6 rounded-2xl font-bold text-lg border-3 border-purple-600 text-purple-600 hover:bg-purple-50 transition-all duration-300 flex items-center justify-center gap-3"
+                >
+                  <span className="text-xl">➕</span>
+                  Add to Cart
+                </motion.button>
+              </div>
+
+              {/* Trust Badges */}
+              <div className="mt-8 pt-6 border-t border-gray-200 grid grid-cols-3 gap-4">
+                <div className="text-center">
+                  <div className="text-3xl mb-2">🚚</div>
+                  <p className="text-xs font-semibold text-gray-700">Fast</p>
+                  <p className="text-xs text-gray-500">Delivery</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl mb-2">🔒</div>
+                  <p className="text-xs font-semibold text-gray-700">100%</p>
+                  <p className="text-xs text-gray-500">Secure</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl mb-2">↩️</div>
+                  <p className="text-xs font-semibold text-gray-700">Easy</p>
+                  <p className="text-xs text-gray-500">Returns</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* ===========================
+               RIGHT - SIDEBAR
+          =========================== */}
+          <div className="lg:col-span-12 xl:col-span-3 grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-1 gap-4">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-gradient-to-br from-purple-500 to-pink-600 p-5 rounded-2xl shadow-xl text-white"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg">
+                  <GrLanguage size={20} />
+                </div>
+                <h3 className="font-bold text-lg">Language</h3>
+              </div>
+              <p className="text-white/90 font-semibold text-lg">
+                {book?.language}
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+              className="bg-gradient-to-br from-emerald-500 to-teal-600 p-5 rounded-2xl shadow-xl text-white"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg">
+                  <MdOutlinePublishedWithChanges size={20} />
+                </div>
+                <h3 className="font-bold text-lg">Publisher</h3>
+              </div>
+              <p className="text-white/90 font-semibold text-sm line-clamp-2">
+                {book?.publisher}
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+              className="bg-gradient-to-br from-orange-500 to-red-600 p-5 rounded-2xl shadow-xl text-white"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg text-xl">
+                  🏷️
+                </div>
+                <h3 className="font-bold text-lg">Tags</h3>
+              </div>
+              <p className="text-white/90 font-semibold text-sm">
+                {book?.tags || "New Tags"}
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 }}
+              className="bg-gradient-to-br from-blue-500 to-indigo-600 p-5 rounded-2xl shadow-xl text-white"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg text-xl">
                   ⚖️
                 </div>
-                <p className="text-gray-700">
-                  <strong>Weight:</strong> {book?.weight} gm
+                <h3 className="font-bold text-lg">Weight</h3>
+              </div>
+              <p className="text-white/90 font-semibold text-lg">
+                {book?.weight} gm
+              </p>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Description Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50 mb-12"
+        >
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-1.5 h-12 bg-gradient-to-b from-purple-600 to-pink-600 rounded-full"></div>
+            <h2 className="text-3xl font-black text-gray-900">
+              Book Description
+            </h2>
+          </div>
+          <p className="text-gray-700 leading-relaxed text-base sm:text-lg">
+            {book?.description}
+          </p>
+        </motion.div>
+
+        {/* Book Info & Seller Grid */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-12">
+          {/* Book Information */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-4xl">📚</span>
+              <h2 className="text-2xl font-black text-gray-900">
+                Book Details
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-gradient-to-br from-blue-50 to-cyan-100 p-5 rounded-2xl border border-blue-200/50">
+                <div className="text-3xl mb-2">📄</div>
+                <p className="text-xs text-gray-600 mb-1 font-medium">
+                  Total Pages
+                </p>
+                <p className="text-2xl font-black text-blue-700">
+                  {book?.page_count}
                 </p>
               </div>
 
-              {/* Status */}
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-base-300">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 text-white">
-                  🔰
-                </div>
-                <p className="text-gray-700">
-                  <strong>Status:</strong> {book?.availability_status}
+              <div className="bg-gradient-to-br from-purple-50 to-pink-100 p-5 rounded-2xl border border-purple-200/50">
+                <div className="text-3xl mb-2">⚖️</div>
+                <p className="text-xs text-gray-600 mb-1 font-medium">Weight</p>
+                <p className="text-2xl font-black text-purple-700">
+                  {book?.weight}g
                 </p>
               </div>
 
-              {/* Created */}
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-base-300">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 text-white">
-                  🗓️
-                </div>
-                <p className="text-gray-700">
-                  <strong>Created:</strong>{" "}
+              <div className="bg-gradient-to-br from-green-50 to-emerald-100 p-5 rounded-2xl border border-green-200/50">
+                <div className="text-3xl mb-2">📊</div>
+                <p className="text-xs text-gray-600 mb-1 font-medium">Status</p>
+                <p className="text-sm font-black text-green-700">
+                  {book?.availability_status}
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-br from-orange-50 to-amber-100 p-5 rounded-2xl border border-orange-200/50">
+                <div className="text-3xl mb-2">📅</div>
+                <p className="text-xs text-gray-600 mb-1 font-medium">
+                  Listed On
+                </p>
+                <p className="text-sm font-black text-orange-700">
                   {new Date(book?.creatAt).toLocaleDateString()}
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div
-            className="
-    bg-white/80 backdrop-blur-md 
-    p-5 md:p-6 
-    rounded-lg 
-    shadow-[0_4px_20px_rgba(0,0,0,0.06)]
-    border border-gray-200
-    hover:shadow-[0_6px_28px_rgba(0,0,0,0.12)]
-    transition-all duration-300
-  "
+          {/* Seller Information */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/50"
           >
-            <h2 className="text-xl font-semibold mb-5 text-gray-800 flex items-center gap-2">
-              🛒 Seller Information
-            </h2>
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-4xl">👤</span>
+              <h2 className="text-2xl font-black text-gray-900">Seller Info</h2>
+            </div>
 
-            <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-xl border border-base-300">
-              <img
-                src={book?.sellerInfo?.sellerPhoto}
-                className="w-16 h-16 rounded-full object-contain shadow-md border  border-gray-400"
-              />
-              <div>
-                <p className="font-semibold text-gray-800 text-lg flex items-center gap-2">
-                  <span className="text-xl">👤</span>
-                  {book?.sellerInfo?.sellerName}
-                </p>
-
-                <p className="text-sm text-gray-600 flex items-center gap-2 mt-1">
-                  ✉️ {book?.sellerInfo?.sellerEmail}
-                </p>
+            <div className="bg-gradient-to-br from-slate-50 to-gray-100 p-6 rounded-2xl border border-gray-200 mb-4">
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <img
+                    src={book?.sellerInfo?.sellerPhoto}
+                    alt="Seller"
+                    className="w-20 h-20 rounded-2xl object-cover shadow-lg border-4 border-white"
+                  />
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border-3 border-white shadow-lg"></div>
+                </div>
+                <div className="flex-1">
+                  <p className="font-black text-gray-900 text-xl mb-1">
+                    {book?.sellerInfo?.sellerName}
+                  </p>
+                  <p className="text-sm text-gray-600 font-medium">
+                    {book?.sellerInfo?.sellerEmail}
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="mt-5 p-4 bg-gray-50 rounded-xl border flex gap-3 border-base-300">
-              <div className="p-2 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 text-white">
-                📦
+            <div className="bg-gradient-to-br from-orange-50 via-red-50 to-pink-50 p-6 rounded-2xl border-2 border-orange-200">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 text-white flex items-center justify-center text-2xl shadow-lg">
+                  📦
+                </div>
+                <div className="flex-1">
+                  <p className="font-black text-gray-900 mb-2 text-lg">
+                    Return Policy
+                  </p>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    {book?.return_policy}
+                  </p>
+                </div>
               </div>
-              <p className="text-sm text-gray-700 leading-relaxed">
-                {book?.return_policy}
-              </p>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Related Book */}
-        <div className="md:col-span-12 mt-10">
-          <h2 className=" text-2xl md:text-3xl leading-tight text-secondary font-semibold">
-            <TextType
-              text={"Related Category Books "}
-              typingSpeed={70}
-              deletingSpeed={40}
-              pauseDuration={2000}
-              loop={false}
-              showCursor={false}
-            />
-          </h2>
-          <div className="grid grid-cols-2 mt-10 sm:grid-cols-3 md:grid-cols-4 gap-6">
-            {relatedBooks.map((item) => (
-              <Link
+        {/* Related Books */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="mt-16"
+        >
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-1.5 h-12 bg-gradient-to-b from-violet-600 to-purple-600 rounded-full"></div>
+            <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
+              <TextType
+                text={"Related Category Books"}
+                typingSpeed={70}
+                deletingSpeed={40}
+                pauseDuration={2000}
+                loop={false}
+                showCursor={false}
+              />
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+            {relatedBooks.map((item, idx) => (
+              <motion.div
                 key={item._id}
-                to={`/detlicesPages/${item._id}`}
-                className="
-        group 
-        bg-white 
-        rounded-3xl 
-        shadow-[0_4px_20px_rgba(0,0,0,0.08)] 
-        hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)]
-        p-4 
-        transition-all 
-        duration-300 
-        border border-gray-100
-        hover:-translate-y-1
-        flex flex-col
-      "
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * idx }}
               >
-                {/* Image */}
-                <div className="relative w-full h-60 overflow-hidden rounded-2xl">
-                  <img
-                    src={item?.image}
-                    className="
-            w-full h-full object-cover 
-            transition-transform duration-300 
-            group-hover:scale-105
-          "
-                  />
+                <Link
+                  to={`/detlicesPages/${item._id}`}
+                  className="group block bg-white rounded-3xl shadow-lg hover:shadow-2xl p-4 transition-all duration-300 border border-gray-100 hover:-translate-y-2"
+                >
+                  <div className="relative w-full aspect-[3/4] overflow-hidden rounded-2xl mb-4 bg-gray-100">
+                    <img
+                      src={item?.image}
+                      alt={item?.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                  {/* Gradient overlay */}
-                  <div
-                    className="
-          absolute inset-0 
-          bg-gradient-to-t from-black/20 to-transparent 
-          opacity-0 group-hover:opacity-100 
-          rounded-2xl
-          transition-opacity duration-300
-        "
-                  ></div>
-
-                  {/* Stock Badge */}
-                  <span
-                    className="
-          absolute top-2 left-2 
-          bg-green-600 text-white text-xs 
-          px-2 py-1 rounded-full shadow
-        "
-                  >
-                    {item.availability_status || "In Stock"}
-                  </span>
-                </div>
-
-                {/* Info */}
-                <div className="mt-3 flex flex-col flex-1 justify-between">
-                  {/* Title */}
-                  <p
-                    className="
-          text-sm font-semibold line-clamp-2
-          group-hover:text-purple-600
-        "
-                  >
-                    {item.title}
-                  </p>
-
-                  {/* Author & Category */}
-                  <p className="text-xs text-gray-500 mt-1">{item.author}</p>
-                  <p className="text-[11px] text-gray-400">{item.category}</p>
-
-                  {/* Price & Rating */}
-                  <div className="mt-2 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[13px] font-semibold text-green-600">
-                        ৳ {item.price_sell}
-                      </span>
-                      <span className="text-[11px] line-through text-gray-400">
-                        ৳ {item.price_mrp}
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-yellow-500 font-medium">
-                      ⭐ {item.rating_avg || 0} / 5
-                    </p>
+                    <span className="absolute top-2 left-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs px-3 py-1 rounded-full shadow-lg font-semibold">
+                      {item.availability_status || "Available"}
+                    </span>
                   </div>
-                </div>
-              </Link>
+
+                  <div className="space-y-2">
+                    <p className="text-sm font-bold line-clamp-2 group-hover:text-purple-600 transition-colors leading-tight">
+                      {item.title}
+                    </p>
+                    <p className="text-xs text-gray-600 font-medium">
+                      {item.author}
+                    </p>
+                    <p className="text-xs text-gray-400">{item.category}</p>
+
+                    <div className="pt-2 border-t border-gray-100 space-y-1.5">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-black text-green-600">
+                          ৳{item.price_sell}
+                        </span>
+                        <span className="text-xs line-through text-gray-400">
+                          ৳{item.price_mrp}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="text-amber-400 text-sm">★</span>
+                        <span className="text-xs font-semibold text-gray-700">
+                          {item.rating_avg || 0} / 5
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Modal Open */}
-      {/* You can open the modal using document.getElementById('ID').showModal() method */}
-
-      <dialog
-        ref={refene}
-        className="modal backdrop:bg-black/40 backdrop:backdrop-blur-sm"
-      >
-        <div className="modal-box w-full max-w-md sm:max-w-lg md:max-w-xl rounded-3xl p-6 sm:p-8 relative shadow-2xl border border-gray-200 bg-white mx-4 sm:mx-auto">
-          {/* Close Button */}
-          <form method="dialog" className="absolute top-4 right-4">
-            <button className="btn btn-sm btn-circle btn-ghost text-gray-500 hover:text-gray-800 transition">
-              ✕
-            </button>
-          </form>
-
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 text-center">
-            Complete Your Order
-          </h2>
-
-          <form
-            onSubmit={handleSubmit(handelSeawdg)}
-            className="space-y-4 sm:space-y-6"
-            encType="multipart/form-data"
-          >
-            {/* Name */}
-            <div className="space-y-1">
-              <label className="font-medium text-gray-700 text-sm sm:text-base">
-                Your Name <span className="text-red-600">*</span>
-              </label>
-              <input
-                {...register("name", { required: "Your Name is required" })}
-                type="text"
-                defaultValue={user?.displayName}
-                readOnly
-                className="w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-orange-600 shadow-sm focus:ring-2 focus:ring-orange-400 focus:outline-none transition text-sm sm:text-base"
-              />
-              {errors.name && (
-                <p className="text-red-600 text-xs sm:text-sm">
-                  {errors.name.message}
-                </p>
-              )}
-            </div>
-
-            {/* Email */}
-            <div className="space-y-1">
-              <label className="font-medium text-gray-700 text-sm sm:text-base">
-                Your Email <span className="text-red-600">*</span>
-              </label>
-              <input
-                {...register("email", { required: "Your Email is required" })}
-                type="email"
-                defaultValue={user?.email}
-                readOnly
-                className="w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-orange-600 shadow-sm focus:ring-2 focus:ring-orange-400 focus:outline-none transition text-sm sm:text-base"
-              />
-              {errors.email && (
-                <p className="text-red-600 text-xs sm:text-sm">
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
-
-            {/* Phone Number */}
-            <div className="space-y-1">
-              <label className="font-medium text-gray-700 text-sm sm:text-base">
-                Phone Number <span className="text-red-600">*</span>
-              </label>
-              <input
-                {...register("phoneNumber", {
-                  required: "Phone Number is required",
-                  valueAsNumber: true,
-                })}
-                type="number"
-                placeholder="e.g. 017XXXXXXXX"
-                className="w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-orange-600 shadow-sm focus:ring-2 focus:ring-orange-400 focus:outline-none transition text-sm sm:text-base"
-              />
-              {errors.phoneNumber && (
-                <p className="text-red-600 text-xs sm:text-sm">
-                  {errors.phoneNumber.message}
-                </p>
-              )}
-            </div>
-
-            {/* Address */}
-            <div className="space-y-1">
-              <label className="font-medium text-gray-700 text-sm sm:text-base">
-                Your Address <span className="text-red-600">*</span>
-              </label>
-              <input
-                {...register("address", {
-                  required: "Please provide your address",
-                })}
-                type="text"
-                placeholder="Your full address"
-                className="w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-orange-600 shadow-sm focus:ring-2 focus:ring-orange-400 focus:outline-none transition text-sm sm:text-base"
-              />
-              {errors.address && (
-                <p className="text-red-600 text-xs sm:text-sm">
-                  {errors.address.message}
-                </p>
-              )}
-            </div>
-
-            {/* Submit Button */}
+      {/* Modal */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center "
+          aria-modal="true"
+          role="dialog"
+        >
+          <div className="bg-white rounded-3xl shadow-2xl border border-gray-200 w-full max-w-md sm:max-w-lg md:max-w-xl p-6 sm:p-8 relative animate-in duration-300">
+            {/* Close Button */}
             <button
-              type="submit"
-              className="w-full py-2.5 sm:py-3 rounded-full font-bold text-base sm:text-lg text-white bg-gradient-to-br from-orange-400 to-orange-600 shadow-lg hover:shadow-xl active:scale-95 transition"
+              onClick={closeModal}
+              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-all duration-200"
+              aria-label="Close modal"
             >
-              Order Now
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </button>
-          </form>
+
+            {/* Header */}
+            <div className="text-center mb-6 sm:mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 mb-4">
+                <svg
+                  className="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                Please Complete Your Order
+              </h2>
+              <p className="text-gray-500 text-sm mt-2">
+                Fill in your details to proceed
+              </p>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit(handelSeawdg)} className="space-y-5">
+              {/* Name Field */}
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 font-semibold text-gray-700 text-sm">
+                  <svg
+                    className="w-4 h-4 text-orange-500"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Your Name
+                  <span className="text-red-500">*</span>
+                </label>
+
+                <input
+                  {...register("name", { required: "Your Name is required" })}
+                  type="text"
+                  defaultValue={user?.displayName || ""}
+                  readOnly
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 text-gray-700 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:bg-white outline-none transition-all duration-200"
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-xs">{errors.name.message}</p>
+                )}
+              </div>
+
+              {/* Email Field */}
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 font-semibold text-gray-700 text-sm">
+                  <svg
+                    className="w-4 h-4 text-orange-500"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                  </svg>
+                  Your Email
+                  <span className="text-red-500">*</span>
+                </label>
+                <input
+                  {...register("email", { required: "Your Email is required" })}
+                  type="email"
+                  defaultValue={user?.email || ""}
+                  readOnly
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-gray-50 text-gray-700 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:bg-white outline-none transition-all duration-200"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-xs">{errors.email.message}</p>
+                )}
+              </div>
+
+              {/* Phone Number Field */}
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 font-semibold text-gray-700 text-sm">
+                  <svg
+                    className="w-4 h-4 text-orange-500"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                  </svg>
+                  Phone Number
+                  <span className="text-red-500">*</span>
+                </label>
+                <input
+                  {...register("phoneNumber", {
+                    required: "Phone Number is required",
+                    pattern: {
+                      value: /^[0-9]{10,15}$/,
+                      message: "Invalid phone number",
+                    },
+                  })}
+                  type="tel"
+                  placeholder="e.g. 017XXXXXXXX"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-white text-gray-700 placeholder:text-gray-400 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none transition-all duration-200"
+                />
+                {errors.phoneNumber && (
+                  <p className="text-red-500 text-xs">
+                    {errors.phoneNumber.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Address Field */}
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 font-semibold text-gray-700 text-sm">
+                  <svg
+                    className="w-4 h-4 text-orange-500"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Your Address
+                  <span className="text-red-500">*</span>
+                </label>
+                <input
+                  {...register("address", {
+                    required: "Please provide your address",
+                  })}
+                  type="text"
+                  placeholder="Your full address"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-white text-gray-700 placeholder:text-gray-400 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 outline-none transition-all duration-200"
+                />
+                {errors.address && (
+                  <p className="text-red-500 text-xs">
+                    {errors.address.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full mt-6 py-2 rounded-xl font-bold text-lg text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                Order Now
+              </button>
+            </form>
+          </div>
         </div>
-      </dialog>
+      )}
     </div>
   );
 };

@@ -7,78 +7,89 @@ import {
   FaEnvelope,
   FaUserShield,
   FaCalendarAlt,
-  FaCamera,
+  FaCheckCircle,
 } from "react-icons/fa";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import TextType from "../../../utils/TextType";
+import { Link } from "react-router";
 
 const Profile = () => {
   const { user } = useAuth();
-  console.log(user);
   const axioscehore = useAxiosSchore();
 
-  const {
-    data: usersas,
-    isLoading,
-    isFetching,
-  } = useQuery({
+  const { data: usersas, isLoading, isFetching } = useQuery({
     queryKey: ["profile", user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
       const res = await axioscehore.get(
         `loginRealTimerUser?email=${user?.email}`
       );
-      console.log(res.data);
       return res.data;
     },
   });
 
   if (isLoading || isFetching) return <LoadingSpinner />;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center px-4 py-8">
+    <div
+      className="min-h-screen flex items-center justify-center px-4 py-10
+      bg-gradient-to-br from-orange-50 via-slate-50 to-amber-50
+      dark:from-[#1e1e1e] dark:via-[#242424] dark:to-[#2a2a2a]"
+    >
       <div className="w-full max-w-2xl">
-        {/* Main Card */}
-        <div className="rounded-3xl bg-white shadow-xl overflow-hidden">
-          {/* Header Section with Cover */}
-          <div className="relative h-32 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+        {/* Card */}
+        <div
+          className="bg-white dark:bg-[#262626]
+          rounded-[28px]
+          border border-orange-100 dark:border-[#3a3a3a]
+          shadow-xl hover:shadow-2xl
+          transition-all duration-300 overflow-hidden"
+        >
+          {/* Cover */}
+          <div className="relative h-36 bg-gradient-to-r from-[#C2410C] to-orange-500">
             <div className="absolute -bottom-16 left-8">
               <img
                 src={usersas?.photoURL}
                 alt="Profile"
-                className="h-32 w-32 rounded-full border-4 border-white object-cover shadow-lg"
+                className="w-32 h-32 rounded-full object-cover
+                ring-4 ring-white dark:ring-[#262626]
+                shadow-lg transition hover:scale-105"
               />
             </div>
           </div>
 
-          {/* Profile Content */}
+          {/* Content */}
           <div className="pt-20 px-8 pb-8">
-            {/* Name & Role Section */}
-            <div className="flex items-start justify-between">
+            {/* Header */}
+            <div className="flex justify-between items-start gap-4">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  <h1 className=" text-xl md:text-2xl  leading-tight text-secondary font-semibold">
-                    <TextType
-                      text={`  ${usersas?.displayName}`}
-                      typingSpeed={70}
-                      deletingSpeed={40}
-                      pauseDuration={2000}
-                      loop={false}
-                      showCursor={false}
-                    />
-                  </h1>
+                <h1 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-gray-100">
+                  <TextType
+                    text={usersas?.displayName || "User Name"}
+                    typingSpeed={70}
+                    deletingSpeed={40}
+                    pauseDuration={2000}
+                    loop={false}
+                    showCursor={false}
+                  />
                 </h1>
-                <p className="mt-1 text-gray-600 flex items-center gap-2">
-                  <FaEnvelope className="text-gray-400" />
+
+                <p className="mt-2 text-sm flex items-center gap-2 text-slate-500 dark:text-gray-300">
+                  <FaEnvelope className="text-[#C2410C]" />
                   {usersas?.email}
                 </p>
               </div>
 
+              {/* Role */}
               <span
-                className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 ${
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full
+                text-sm font-medium border
+                ${
                   usersas?.role === "admin"
-                    ? "bg-purple-100 text-purple-700"
+                    ? "bg-orange-100/70 text-[#C2410C] border-orange-300 dark:bg-[#3a2418] dark:border-[#5a3a26]"
                     : usersas?.role === "librarian"
-                    ? "bg-blue-100 text-blue-700"
-                    : "bg-green-100 text-green-700"
+                    ? "bg-amber-100/70 text-amber-700 border-amber-300 dark:bg-[#393116] dark:border-[#5a4d1f]"
+                    : "bg-green-100/70 text-green-700 border-green-300 dark:bg-[#1f3a2a] dark:border-[#29503a]"
                 }`}
               >
                 <FaUserShield />
@@ -86,99 +97,67 @@ const Profile = () => {
               </span>
             </div>
 
-            {/* Divider */}
-            <div className="my-6 border-t border-gray-200"></div>
+            <div className="my-6 border-t border-gray-200 dark:border-[#3a3a3a]" />
 
-            {/* Information Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Account Created */}
-              <div className="bg-gray-50 rounded-xl p-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                    <FaCalendarAlt className="text-blue-600" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 font-medium">
-                      Account Created
-                    </p>
-                    <p className="text-sm font-semibold text-gray-900">
-                      {new Date(usersas?.crestAt).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </p>
-                  </div>
-                </div>
-              </div>
+            {/* Info Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <InfoCard
+                icon={<FaCalendarAlt />}
+                iconBg="bg-orange-100 dark:bg-[#3a2418]"
+                iconColor="text-[#C2410C]"
+                label="Account Created"
+                value={new Date(usersas?.crestAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              />
 
-              {/* User ID */}
-              <div className="bg-gray-50 rounded-xl p-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-indigo-100 flex items-center justify-center">
-                    <FaUser className="text-indigo-600" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 font-medium">User ID</p>
-                    <p className="text-sm font-semibold text-gray-900">
-                      #{usersas?._id?.slice(-8) || "N/A"}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <InfoCard
+                icon={<FaUser />}
+                iconBg="bg-amber-100 dark:bg-[#393116]"
+                iconColor="text-amber-700"
+                label="User ID"
+                value={`#${usersas?._id?.slice(-8)}`}
+              />
 
-              {/* Access Level */}
-              <div className="bg-gray-50 rounded-xl p-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-purple-100 flex items-center justify-center">
-                    <FaUserShield className="text-purple-600" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 font-medium">
-                      Access Level
-                    </p>
-                    <p className="text-sm font-semibold text-gray-900 capitalize">
-                      {usersas?.role}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <InfoCard
+                icon={<FaUserShield />}
+                iconBg="bg-orange-100 dark:bg-[#3a2418]"
+                iconColor="text-[#C2410C]"
+                label="Access Level"
+                value={usersas?.role}
+              />
 
-              {/* Status */}
-              <div className="bg-gray-50 rounded-xl p-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-5 h-5 text-green-600"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4L12 14.01l-3-3" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 font-medium">
-                      Account Status
-                    </p>
-                    <p className="text-sm font-semibold text-green-600">
-                      Active
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <InfoCard
+                icon={<FaCheckCircle />}
+                iconBg="bg-green-100 dark:bg-[#1f3a2a]"
+                iconColor="text-green-600"
+                label="Account Status"
+                value="Active"
+              />
             </div>
 
-            {/* Action Buttons */}
+            {/* Buttons */}
             <div className="mt-8 flex gap-4">
-              <button className="flex-1 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-3 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200">
+              <button
+                className="flex-1 rounded-xl py-3 font-semibold text-white
+                bg-gradient-to-r from-[#C2410C] to-orange-500
+                shadow-md hover:shadow-lg hover:scale-[1.03]
+                transition-all duration-200"
+              >
                 Update Profile
               </button>
-              <button className="px-6 rounded-xl border-2 border-gray-200 py-3 text-gray-700 font-semibold hover:bg-gray-50 transition-all duration-200">
+
+              <Link to="/deshbord/settings"
+                className="px-6 rounded-xl py-3 font-semibold
+                border border-orange-300 dark:border-[#5a3a26]
+                text-[#C2410C] dark:text-orange-400
+                hover:bg-orange-50 dark:hover:bg-[#2f2f2f]
+                transition"
+              >
                 Settings
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -186,5 +165,31 @@ const Profile = () => {
     </div>
   );
 };
+
+/* Reusable Info Card */
+const InfoCard = ({ icon, iconBg, iconColor, label, value }) => (
+  <div
+    className="bg-white dark:bg-[#2a2a2a]
+    border border-orange-100 dark:border-[#3a3a3a]
+    rounded-xl p-4 shadow-sm
+    hover:shadow-md hover:-translate-y-1
+    transition-all duration-300"
+  >
+    <div className="flex items-center gap-3">
+      <div
+        className={`w-10 h-10 ${iconBg} ${iconColor}
+        rounded-lg flex items-center justify-center`}
+      >
+        {icon}
+      </div>
+      <div>
+        <p className="text-xs text-slate-500 dark:text-gray-300">{label}</p>
+        <p className="text-sm font-semibold text-slate-800 dark:text-gray-100 capitalize">
+          {value}
+        </p>
+      </div>
+    </div>
+  </div>
+);
 
 export default Profile;
