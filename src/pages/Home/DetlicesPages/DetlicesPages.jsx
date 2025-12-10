@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useParams } from "react-router";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import { motion } from "framer-motion";
@@ -11,8 +11,10 @@ import TextType from "../../../utils/TextType";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import { toast } from "sonner";
+import ReviewCard from "./ReviewCard";
 
 const DetlicesPages = () => {
+  const reviewRefe = useRef();
   const { user } = useAuth();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -62,11 +64,54 @@ const DetlicesPages = () => {
       if (res.data.insertedId) {
         toast.success("Order Successfully ");
         setIsOpen(false);
+        reviewRefe.current.showModal();
       }
     });
   };
 
+  const handerewiews = (e) => {
+    e.preventDefault();
+    const reating = e.target.rating.value;
+    if (reating) {
+      const setReviewDataBase = {
+        bookId: id,
+        bookName: book.title,
+        bookImage: book.image,
+        bookPrice: book.price_sell,
+        bookWeight: book.weight,
+        bookPages: book.page_count,
+        reviewerEmail: user?.email,
+        reviewerName: user?.displayName,
+        reviewerPhoto: user?.photoURL,
+        reviewerRating: Number(reating),
+        reviewDate: new Date().toISOString(),
+      };
+      console.log(setReviewDataBase);
+      axioscehore.post("reviewUserNow", setReviewDataBase).then((res) => {
+        console.log(res.data);
+        if (res.data.acknowledged) {
+          reviewRefe.current.close();
+          toast.success("Thanks For Your Review");
+        }
+      });
+    }
+  };
+
+  const { data: reviewase, isLoading: reviewLoding } = useQuery({
+    queryKey: [id],
+    queryFn: async () => {
+      const res = await axioscehore.get(`detliseBookReview/${id}`);
+      console.log(res.data);
+      return res.data;
+    },
+  });
+
   if (isLoading || newLoding) return <LoadingSpinner></LoadingSpinner>;
+  if (reviewLoding) return <LoadingSpinner></LoadingSpinner>;
+
+  // Book wishlist: Allow users to add a book to wishlist from the book details page and users wishlisted book will be shown in the My Wishlist page on user dashboard
+
+  // Review/Rating: If a user ordered a book he/she can give the book a rating or review on the book details page, so that other users can see the ratings
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 pb-24 pt-20">
@@ -505,6 +550,29 @@ const DetlicesPages = () => {
           </motion.div>
         </div>
 
+        {/* reviewer Card */}
+        <div>
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-1.5 h-8 bg-gradient-to-b from-orange-600 to-red-500 rounded-full"></div>
+            <h2 className="text-3xl  font-black text-gray-900">
+              <TextType
+                text={`User Ratings for Books to Guide Readers`}
+                typingSpeed={70}
+                deletingSpeed={40}
+                pauseDuration={2000}
+                loop={false}
+                showCursor={false}
+              />
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4  gap-4 p-6">
+            {/* Review Card */}
+            {reviewase.map((review, i) => (
+              <ReviewCard key={i} review={review}></ReviewCard>
+            ))}
+          </div>
+        </div>
+
         {/* Related Books */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -513,8 +581,8 @@ const DetlicesPages = () => {
           className="mt-16"
         >
           <div className="flex items-center gap-4 mb-8">
-            <div className="w-1.5 h-12 bg-gradient-to-b from-violet-600 to-purple-600 rounded-full"></div>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900">
+            <div className="w-1.5 h-8 bg-gradient-to-b from-violet-600 to-purple-600 rounded-full"></div>
+            <h2 className="text-3xl  font-black text-gray-900">
               <TextType
                 text={"Related Category Books"}
                 typingSpeed={70}
@@ -538,7 +606,7 @@ const DetlicesPages = () => {
                   to={`/detlicesPages/${item._id}`}
                   className="group block bg-white rounded-3xl shadow-lg hover:shadow-2xl p-4 transition-all duration-300 border border-gray-100 hover:-translate-y-2"
                 >
-                  <div className="relative w-full aspect-[3/4] overflow-hidden rounded-2xl mb-4 bg-gray-100">
+                  <div className="relative w-full aspect-[4/4] overflow-hidden rounded-2xl mb-4 bg-gray-100">
                     <img
                       src={item?.image}
                       alt={item?.title}
@@ -784,6 +852,105 @@ const DetlicesPages = () => {
           </div>
         </div>
       )}
+
+      {/* Review */}
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <dialog ref={reviewRefe} className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box bg-gradient-to-br from-amber-50 via-white to-orange-50 border-2 border-amber-200 shadow-2xl max-w-md">
+          {/* Header Section */}
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full mb-4 shadow-lg">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-8 w-8 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                />
+              </svg>
+            </div>
+            <h3 className="font-bold text-2xl text-gray-800 mb-2">
+              Rate This Book
+            </h3>
+            <p className="text-sm text-gray-600">
+              Share your thoughts with other readers
+            </p>
+          </div>
+
+          {/* Rating Section */}
+          <div className="bg-white rounded-2xl p-6 shadow-inner border border-amber-100">
+            <form onSubmit={handerewiews}>
+              <div className="flex flex-col items-center gap-4">
+                <label className="text-gray-700 font-semibold text-base">
+                  How would you rate it?
+                </label>
+
+                {/* Star Rating */}
+                <div className="flex items-center gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <label key={star} className="cursor-pointer group">
+                      <input
+                        type="radio"
+                        name="rating"
+                        value={star}
+                        className="hidden peer"
+                      />
+                      <svg
+                        className="w-10 h-10 transition-all duration-200 fill-gray-300 peer-checked:fill-amber-400 group-hover:fill-amber-300 group-hover:scale-110"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                    </label>
+                  ))}
+                </div>
+
+                <p className="text-xs text-gray-500 text-center">
+                  Click on the stars to rate (1-5)
+                </p>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  className="btn bg-gradient-to-r rounded-lg from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white border-none shadow-lg hover:shadow-xl transition-all duration-300 mt-4 w-full"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  Submit Review
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Close Button */}
+          <div className="modal-action mt-6">
+            <form method="dialog">
+              <button className="btn btn-ghost hover:bg-amber-100 border border-amber-200">
+                Close
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };

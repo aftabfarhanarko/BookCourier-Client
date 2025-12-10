@@ -24,6 +24,7 @@ import UserRoute from "./UserRoute";
 import Invortorey from "../pages/dashboard/User/Invortorey";
 import SettingsComponent from "../pages/dashboard/Profile/SettingsComponent";
 import ProfileNavbar from "../pages/Home/ProfileNavbar";
+import NotFound404 from "../pages/NotFound404";
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
+      {
+        path: "*",
+        Component: NotFound404,
+      },
     ],
   },
   // Auth Layout
@@ -73,6 +78,10 @@ export const router = createBrowserRouter([
       {
         path: "/auth/rigester",
         element: <Rigester></Rigester>,
+      },
+      {
+        path: "*",
+        Component: NotFound404,
       },
     ],
   },
@@ -161,6 +170,14 @@ export const router = createBrowserRouter([
         path: "/deshbord/settings",
         element: <SettingsComponent></SettingsComponent>,
       },
+      {
+        path: "*",
+        Component: NotFound404,
+      },
     ],
+  },
+  {
+    path: "*",
+    Component: NotFound404,
   },
 ]);

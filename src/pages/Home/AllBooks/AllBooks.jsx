@@ -42,8 +42,8 @@ const AllBooks = () => {
 
   const handelSeawdg = (ol) => {
     const text = ol.search;
-    setPage(1); 
-    setSearch(text); 
+    setPage(1);
+    setSearch(text);
   };
 
   if (isLoading) return <LoadingSpinner></LoadingSpinner>;
@@ -54,6 +54,9 @@ const AllBooks = () => {
       </div>
     );
   }
+
+  // Kaj bake
+  // Search & Sort: In the all books page user can search a book by its name and sort the books by its price.
 
   return (
     <div className=" w-11/12 mx-auto">
@@ -96,7 +99,6 @@ const AllBooks = () => {
               </button>
             </label>
           </form>
-         
         </div>
       </div>
       <div className=" grid mx-auto  grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mt-15">
