@@ -152,18 +152,41 @@ const DashBordLayOut = () => {
             {/* LIBRARIAN */}
             {role === "librarian" && (
               <>
-                <li>
-                  <NavLink to="/deshbord/addbooks" className="menu-item">
+                <li
+                  
+                >
+                  <NavLink to="/deshbord/addbooks"   className={({ isActive }) =>
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                    }>
                     <GiWhiteBook className="w-6 h-6" /> Add Book
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/deshbord/myBooks" className="menu-item">
+                  <NavLink to="/deshbord/myBooks"   className={({ isActive }) =>
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                    }>
                     <GiBookAura className="w-6 h-6" /> My Books
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/deshbord/orderAllBooks" className="menu-item">
+                  <NavLink to="/deshbord/orderAllBooks"   className={({ isActive }) =>
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                    }>
                     <FaClipboardList className="w-6 h-6" /> Orders
                   </NavLink>
                 </li>
@@ -173,18 +196,40 @@ const DashBordLayOut = () => {
             {/* USER */}
             {role === "user" && (
               <>
-                <li>
-                  <NavLink to="/deshbord/userorder" className="menu-item">
+                <li
+                   >
+                  <NavLink to="/deshbord/userorder"  className={({ isActive }) =>
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                    }>
                     <Logs className="w-6 h-6" /> Orders
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/deshbord/paymenthistory" className="menu-item">
+                  <NavLink to="/deshbord/paymenthistory"  className={({ isActive }) =>
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                    }>
                     <CreditCard className="w-6 h-6" /> Payment History
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="" className="menu-item">
+                  <NavLink to="/"  className={({ isActive }) =>
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
+                    }>
                     <BrickWallShield className="w-6 h-6" /> Invoices
                   </NavLink>
                 </li>

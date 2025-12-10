@@ -13,7 +13,7 @@ import one9 from '../../assets/marqueyBook/mar10.jpg'
 
 const Marqey = () => {
   return (
-    <div>
+    <div className=" mb-15">
         <H1text>
             Our Some BookCourier Collections
         </H1text>

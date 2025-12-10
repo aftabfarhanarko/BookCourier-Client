@@ -30,15 +30,13 @@ const AllBooks = () => {
       const res = await axioscehore.get(
         `allbooks?one=Publish&tow=In Stock&limit=${limit}&skip=${skip}&search=${search}`
       );
-      // setAllBook(res?.data?.counts);
+      setAllBook(res?.data?.counts);
       // refetch();
       console.log(res.data);
 
       return res?.data?.result || [];
     },
-    onSuccess: (data) => {
-      setAllBook(data.counts);
-    },
+    
   });
 
   // console.log(data);

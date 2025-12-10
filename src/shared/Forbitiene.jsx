@@ -1,13 +1,15 @@
 import Lottie from "lottie-react";
 import React from "react";
 import { Link } from "react-router";
+import animationData from "../../public/loding.json";
 
 const Forbitiene = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen text-center p-4">
       <div className="w-64 h-64">
         <Lottie
-          //   animationData={animitis}
+          animationData={animationData}
+          className="w-50 h-50"
           loop={true}
           autoplay={true}
         />
