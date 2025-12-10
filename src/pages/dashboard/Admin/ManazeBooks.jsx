@@ -15,7 +15,7 @@ const ManazeBooks = () => {
   // Pasitionse
   const [page, setPage] = useState(1);
   const [allUser, setAllUser] = useState(0);
-  const limit = 13;
+  const limit = 10;
   const skip = (page - 1) * limit;
   const totalPage = Math.ceil(allUser / limit);
 
@@ -83,14 +83,25 @@ const ManazeBooks = () => {
     });
   };
 
+  const handelALlStatuse = async (publisher, id) => {
+    console.log(publisher, id);
+    const res = await axioscehore.patch(`updeatAdminAcrions/${id}`, {
+      publisher: publisher,
+    });
+    toast.success(`Succes Publisher Statuse in ${publisher}`);
+    refetch();
+    console.log(res.data);
+  };
 
+  const handelpublish = (id) => {
+    handelALlStatuse("Publish", id);
+    console.log("This is Publish Button", id);
+  };
+  const handelUnpublish = (id) => {
+    handelALlStatuse("UnPublish", id);
 
-// Show all the books that all the librarians added, Admin can publish / unpublish books and also delete a book. Deleting a book will also delete all the orders or that book
-
-
-
-
-
+    console.log("This is UnPublish Button", id);
+  };
 
   if (isFetching || isLoading) return <LoadingSpinner />;
   return (
@@ -121,9 +132,10 @@ const ManazeBooks = () => {
                 <th className="p-4">Availability Status</th>
                 <th className="p-4">Stock Qty</th>
                 <th className="p-4">Weight</th>
-                <th className="p-4">Rating Avg</th>
+                {/* <th className="p-4">Rating Avg</th> */}
                 <th className="p-4">Creat Time</th>
                 <th className="p-4">Actions</th>
+                <th className="p-4">Admin Set</th>
               </tr>
             </thead>
 
@@ -299,7 +311,7 @@ const ManazeBooks = () => {
                       {item.weight || "200"}g
                     </div>
                   </td>
-                  <td>
+                  {/* <td>
                     <div className="flex items-center gap-2">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -311,12 +323,12 @@ const ManazeBooks = () => {
                       </svg>
                       {item.rating_avg || 0} / 5
                     </div>
-                  </td>
+                  </td> */}
                   <td>
                     <div className="flex items-center gap-2">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-4 h-4 text-gray-600"
+                        className="w-5 h-5 text-gray-600"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -328,7 +340,7 @@ const ManazeBooks = () => {
                       {new Date(item.creatAt).toLocaleString()}
                     </div>
                   </td>
-                  <td className="p-4">
+                  <td>
                     <div className=" flex  items-center gap-2">
                       {/* Delete Button */}
                       <button
@@ -350,6 +362,55 @@ const ManazeBooks = () => {
                         </svg>
                         Delete
                       </button>
+                    </div>
+                  </td>
+                  <td className=" ">
+                    <div className="flex flex-col gap-1">
+                      {item.publisher === "Publish" ? (
+                        <button
+                          onClick={() => handelUnpublish(item._id)}
+                          className="flex items-center gap-2  px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-md shadow-md transition"
+                        >
+                          {/* X Mark SVG */}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={3}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                          Unpublish
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handelpublish(item._id)}
+                          className="flex items-center gap-2  px-3 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md shadow-md transition"
+                        >
+                          {/* Checkmark SVG */}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={3}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                          Publish
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>
