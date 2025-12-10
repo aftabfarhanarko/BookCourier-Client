@@ -10,6 +10,7 @@ import {
   Sun,
   Search,
   ChevronDown,
+  Heart,
 } from "lucide-react";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { GiSpellBook } from "react-icons/gi";
@@ -21,6 +22,7 @@ import { Link, NavLink } from "react-router";
 import { FiUser } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
 import { PiSignOutLight } from "react-icons/pi";
+import { motion } from "framer-motion";
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
@@ -40,6 +42,9 @@ export default function Navbar() {
   // if(!user){
   //   return <LoadingSpinner/>
   // }
+  // /whishList
+
+  const wishlistCount = 1;
 
   return (
     <nav
@@ -204,14 +209,37 @@ export default function Navbar() {
               )}
             </button>
 
-            {/* Notifications */}
-            <button
-              className={`p-2 rounded-lg ${hoverBg} ${textSecondary} hover:text-orange-500 transition-all duration-200 relative`}
-            >
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-orange-500 rounded-full"></span>
-            </button>
+            {/* Wishlist Button */}
+            <Link to="/deshbord/whishList">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className={`p-2 rounded-lg ${hoverBg} ${textSecondary} hover:text-red-500 transition-all duration-200 relative group`}
+              >
+                <motion.div
+                  whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <Heart className="w-5 h-5 group-hover:fill-red-500" />
+                </motion.div>
 
+                {/* Wishlist Count Badge */}
+                {wishlistCount > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 min-w-5 h-5 bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-bold rounded-full flex items-center justify-center px-1.5 shadow-lg"
+                  >
+                    {wishlistCount > 99 ? "99+" : wishlistCount}
+                  </motion.span>
+                )}
+
+                {/* Pulse Animation for New Addition */}
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-pink-500 rounded-full animate-ping opacity-75"></span>
+                )}
+              </motion.button>
+            </Link>
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

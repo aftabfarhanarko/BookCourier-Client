@@ -12,9 +12,11 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import { toast } from "sonner";
 import ReviewCard from "./ReviewCard";
+import { FaCheck } from "react-icons/fa";
 
 const DetlicesPages = () => {
   const reviewRefe = useRef();
+  // const [showWhisLise, setShowWhisLise] = useState(true);
   const { user } = useAuth();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -100,18 +102,59 @@ const DetlicesPages = () => {
   const { data: reviewase, isLoading: reviewLoding } = useQuery({
     queryKey: [id],
     queryFn: async () => {
-      const res = await axioscehore.get(`detliseBookReview/${id}`);
+      const res = await axioscehore.get(
+        `detliseBookReview/${id}?email=${user?.email}`
+      );
       console.log(res.data);
       return res.data;
     },
   });
+
+  const bookaddYourWishList = () => {
+    // console.log("Add Data From Whis List",book);
+    const setwhislistData = {
+      bookId: id,
+      bookName: book.title,
+      bookImage: book.image,
+      bookLanguage: book.language,
+      bookPrice: book.price_sell,
+      bookWeight: book.weight,
+      bookPages: book.page_count,
+      wishlisterEmail: user?.email,
+      wishlisterName: user?.displayName,
+      wishlisterPhoto: user?.photoURL,
+      // reviewerRating: Number(reating),
+      wishlistingDate: new Date().toISOString(),
+    };
+    console.log(setwhislistData);
+    axioscehore
+      .post(`whiseListerInfo?email=${user?.email}&id=${id}`, setwhislistData)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.message === "Book Allready Saved your WhisList") {
+          toast.warning("Book Allready Saved your WhisList");
+        }
+      });
+  };
+
+  const { data: cheackValue } = useQuery({
+    queryKey: ["find", id],
+    queryFn: async () => {
+      const res = await axioscehore.get(
+        `whisListdata?id=${id}?email=${user?.email}`
+      );
+      console.log("ase ki saved", res.data.checkBookId);
+      return res.data.checkBookId;
+    },
+  });
+  console.log(cheackValue);
 
   if (isLoading || newLoding) return <LoadingSpinner></LoadingSpinner>;
   if (reviewLoding) return <LoadingSpinner></LoadingSpinner>;
 
   // Book wishlist: Allow users to add a book to wishlist from the book details page and users wishlisted book will be shown in the My Wishlist page on user dashboard
 
-  // Review/Rating: If a user ordered a book he/she can give the book a rating or review on the book details page, so that other users can see the ratings
+  //Complet Now This Task ===>  Review/Rating: If a user ordered a book he/she can give the book a rating or review on the book details page, so that other users can see the ratings
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 pb-24 pt-20">
@@ -322,12 +365,34 @@ const DetlicesPages = () => {
                 </motion.button>
 
                 <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full py-1.5 px-6 rounded-2xl font-bold text-lg border-3 border-purple-600 text-purple-600 hover:bg-purple-50 transition-all duration-300 flex items-center justify-center gap-3"
+                  onClick={bookaddYourWishList}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full py-2 px-6 rounded-2xl font-bold text-lg bg-gradient-to-r from-orange-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl"
                 >
-                  <span className="text-xl">➕</span>
-                  Add to Cart
+                  {cheackValue === true ? (
+                    <p>
+                      <FaCheck /> All Readey Add
+                    </p>
+                  ) : (
+                    <>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                        />
+                      </svg>
+                      Add to Wishlist
+                    </>
+                  )}
                 </motion.button>
               </div>
 
@@ -551,28 +616,31 @@ const DetlicesPages = () => {
         </div>
 
         {/* reviewer Card */}
-        <div>
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-1.5 h-8 bg-gradient-to-b from-orange-600 to-red-500 rounded-full"></div>
-            <h2 className="text-3xl  font-black text-gray-900">
-              <TextType
-                text={`User Ratings for Books to Guide Readers`}
-                typingSpeed={70}
-                deletingSpeed={40}
-                pauseDuration={2000}
-                loop={false}
-                showCursor={false}
-              />
-            </h2>
+        {reviewase.length === 0 ? (
+          ""
+        ) : (
+          <div>
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-1.5 h-8 bg-gradient-to-b from-orange-600 to-red-500 rounded-full"></div>
+              <h2 className="text-3xl  font-black text-gray-900">
+                <TextType
+                  text={`User Ratings for Books to Guide Readers`}
+                  typingSpeed={70}
+                  deletingSpeed={40}
+                  pauseDuration={2000}
+                  loop={false}
+                  showCursor={false}
+                />
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4  gap-4 p-6">
+              {/* Review Card */}
+              {reviewase.map((review, i) => (
+                <ReviewCard key={i} review={review}></ReviewCard>
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4  gap-4 p-6">
-            {/* Review Card */}
-            {reviewase.map((review, i) => (
-              <ReviewCard key={i} review={review}></ReviewCard>
-            ))}
-          </div>
-        </div>
-
+        )}
         {/* Related Books */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
