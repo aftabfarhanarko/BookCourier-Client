@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import { Link, useParams } from "react-router";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
@@ -15,6 +15,7 @@ import ReviewCard from "./ReviewCard";
 import { FaCheck } from "react-icons/fa";
 
 const DetlicesPages = () => {
+  const queryClient = useQueryClient();
   const reviewRefe = useRef();
   // const [showWhisLise, setShowWhisLise] = useState(true);
   const { user } = useAuth();
@@ -154,6 +155,8 @@ const DetlicesPages = () => {
 
         checkValueRefetch();
       });
+
+    queryClient.invalidateQueries([user?.email, "whisListdata"]);
   };
 
   if (isLoading || newLoding) return <LoadingSpinner></LoadingSpinner>;
