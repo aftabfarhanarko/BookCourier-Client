@@ -25,6 +25,7 @@ import { PiSignOutLight } from "react-icons/pi";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSchore from "../../hooks/useAxiosSchore";
+import LoadingSpinner from "../../shared/LoadingSpinner ";
 
 export default function Navbar() {
   const axioscehore = useAxiosSchore();
@@ -40,7 +41,7 @@ export default function Navbar() {
   const hoverBg = darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100";
 
   const { user, userLogOut } = useAuth();
-  console.log(user?.photoURL);
+  // console.log(user?.photoURL);
 
   // Real Time Updeat Baki..... ?
   const { data: wishlistCount } = useQuery({
@@ -51,6 +52,26 @@ export default function Navbar() {
       return res?.data?.counts;
     },
   });
+
+  
+  const {
+    data: usersas,
+    isLoading,
+  } = useQuery({
+    queryKey: ["profile", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axioscehore.get(
+        `loginRealTimerUser?email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
+
+  
+  if(isLoading){
+    return <LoadingSpinner />
+  }
   return (
     <nav
       className={`${bgPrimary} border-b ${borderColor} shadow-sm transition-colors duration-300 sticky top-0 z-50    fixed `}
@@ -121,7 +142,7 @@ export default function Navbar() {
               >
                 {user ? (
                   <img
-                    src={user?.photoURL}
+                    src={usersas?.photoURL}
                     className="w-9 h-9 rounded-full"
                   ></img>
                 ) : (
@@ -141,13 +162,13 @@ export default function Navbar() {
                 <div
                   className={`absolute right-0 mt-2 w-56 ${bgPrimary} rounded-xl shadow-xl border ${borderColor} py-2 transition-all duration-200`}
                 >
-                  {user ? (
+                  {usersas ? (
                     <>
                       <div className={`px-5 py-5 border-b  ${borderColor}`}>
                         <p className={`font-semibold ${textPrimary}`}>
-                          {user?.displayName}
+                          {usersas?.displayName}
                         </p>
-                        <p className={`text-sm ${textMuted}`}>{user?.email}</p>
+                        <p className={`text-sm ${textMuted}`}>{usersas?.email}</p>
                       </div>
                       <Link
                         to="/profile2"

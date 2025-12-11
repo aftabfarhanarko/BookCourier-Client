@@ -23,7 +23,7 @@ const Profile = () => {
   const { user } = useAuth();
   const references = useRef();
   const axioscehore = useAxiosSchore();
-  const { handleSubmit, register , reset} = useForm();
+  const { handleSubmit, register, reset } = useForm();
 
   const {
     data: usersas,
@@ -71,18 +71,21 @@ const Profile = () => {
       photoURL: upphotos,
       profileUpdeatTime: new Date().toISOString(),
     };
-    
-    const res = await axioscehore.patch(`updeatCustomerProfile/${usersas?._id}`, updetProdileUser);
 
-    if(res.data.acknowledged){
+    const res = await axioscehore.patch(
+      `updeatCustomerProfile/${usersas?._id}?email=${usersas?.email}`,
+      updetProdileUser
+    );
+
+    if (res.data.acknowledged) {
       refetch();
       reset();
       references.current.close();
-      toast.success("Your Profile Updeat Successfully")
+      toast.success("Your Profile Updeat Successfully");
     }
 
     console.log(res.data);
-  
+
     console.log(updetProdileUser);
   };
 
@@ -185,8 +188,12 @@ const Profile = () => {
                 icon={<FaUserShield />}
                 iconBg="bg-orange-100 dark:bg-[#3a2418]"
                 iconColor="text-[#C2410C]"
-                label="Access Level"
-                value={usersas?.role}
+                label="Last Profile Updeat Time"
+                value={
+                  usersas?.profileUpdeatTime
+                    ? new Date(usersas.profileUpdeatTime).toLocaleString()
+                    : `${usersas?.displayName} Not Update Profile`
+                }
               />
 
               <InfoCard
