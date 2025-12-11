@@ -23,8 +23,11 @@ import { FiUser } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
 import { PiSignOutLight } from "react-icons/pi";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSchore from "../../hooks/useAxiosSchore";
 
 export default function Navbar() {
+  const axioscehore = useAxiosSchore();
   const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdown, setProfileDropdown] = useState(false);
@@ -39,13 +42,15 @@ export default function Navbar() {
   const { user, userLogOut } = useAuth();
   console.log(user?.photoURL);
 
-  // if(!user){
-  //   return <LoadingSpinner/>
-  // }
-  // /whishList
-
-  const wishlistCount = 1;
-
+  // Real Time Updeat Baki..... ?
+  const { data: wishlistCount } = useQuery({
+    queryKey: [user?.email, "whisListdata"],
+    queryFn: async () => {
+      const res = await axioscehore.get(`whisListdata?email=${user?.email}`);
+      console.log(res.data.counts);
+      return res?.data?.counts;
+    },
+  });
   return (
     <nav
       className={`${bgPrimary} border-b ${borderColor} shadow-sm transition-colors duration-300 sticky top-0 z-50    fixed `}

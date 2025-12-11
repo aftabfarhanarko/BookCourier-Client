@@ -12,6 +12,7 @@ import TextType from "../../../utils/TextType";
 const AllBooks = () => {
   const [search, setSearch] = useState("");
   const { register, handleSubmit } = useForm();
+  const [price, setPrice] = useState("");
   //   Pasitionse
   const [page, setPage] = useState(1);
   const [allBook, setAllBook] = useState(0);
@@ -31,14 +32,13 @@ const AllBooks = () => {
         `allBooksCollections?one=Publish&tow=In Stock&limit=${limit}&skip=${skip}&search=${search}`
       );
       setAllBook(res?.data?.counts);
-      // refetch();
       console.log(res.data);
 
       return res?.data?.result || [];
     },
   });
 
-  // console.log(data);
+  console.log(price);
 
   const handelSeawdg = (ol) => {
     const text = ol.search;
@@ -74,9 +74,9 @@ const AllBooks = () => {
         </h1>
 
         {/* Right side: Search + Sort */}
-        <div className="flex flex-col md:flex-row  w-full md:w-auto">
+        <div className="flex  flex-col  gap-5 md:gap-2 md:flex-row  w-full md:w-auto">
           {/* Search */}
-          <form onSubmit={handleSubmit(handelSeawdg)}>
+          <form onSubmit={handleSubmit(handelSeawdg)} className=" flex-1">
             <label className="relative w-full max-w-md md:max-w-xs">
               <IoMdSearch className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 h-5 w-5 text-gray-400" />
 
@@ -99,6 +99,34 @@ const AllBooks = () => {
               </button>
             </label>
           </form>
+
+          {/* Label */}
+          <label className="">
+            <select
+              onChange={(e) => setPrice(e.target.value)}
+              className="
+     select
+     w-40
+      px-4 py-2                
+      rounded-lg              
+      border border-gray-300
+      bg-white
+      focus:outline-none
+      focus:ring-2 focus:ring-orange-400
+      cursor-pointer
+      font-medium
+      transition-all duration-300
+    "
+            >
+              <option disabled={true}>Select Your Price</option>
+              <option value="100-200">৳100-200</option>
+              <option value="300-400">৳300-400</option>
+              <option value="500-600">৳500-600</option>
+              <option value="700-800">৳700-800</option>
+              <option value="900-1100">৳900-1100</option>
+              <option value="1200-2000">৳1200-৳2000</option>
+            </select>
+          </label>
         </div>
       </div>
       <div className=" grid mx-auto  grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mt-15">
@@ -119,7 +147,7 @@ const AllBooks = () => {
           className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
             page === 1
               ? "text-gray-400 cursor-not-allowed bg-base-300"
-              : "bg-gradient-to-br from-orange-400 to-orange-600 text-whitehover:opacity-90"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-whitehover:opacity-90 text-white"
           }`}
         >
           <FaArrowLeftLong /> Previous

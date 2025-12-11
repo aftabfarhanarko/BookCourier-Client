@@ -12,6 +12,7 @@ import {
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import TextType from "../../../utils/TextType";
 import { Link } from "react-router";
+import InfoCard from "./InfoCard";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -31,6 +32,10 @@ const Profile = () => {
       return res.data;
     },
   });
+
+  const handelUpdeatProfile = () => {
+    console.log("Profile");
+  };
 
   if (isLoading || isFetching) return <LoadingSpinner />;
 
@@ -145,7 +150,8 @@ const Profile = () => {
             {/* Buttons */}
             <div className="mt-8 flex gap-4">
               <button
-                className="flex-1 rounded-xl py-3 font-semibold text-white
+                onClick={handelUpdeatProfile}
+                className="flex-1 rounded-xl py-2 font-semibold text-white
                 bg-gradient-to-r from-[#C2410C] to-orange-500
                 shadow-md hover:shadow-lg hover:scale-[1.03]
                 transition-all duration-200"
@@ -155,7 +161,7 @@ const Profile = () => {
 
               <Link
                 to="/deshbord/settings"
-                className="px-6 rounded-xl py-3 font-semibold
+                className="px-6 rounded-xl py-2 font-semibold
                 border border-orange-300 dark:border-[#5a3a26]
                 text-[#C2410C] dark:text-orange-400
                 hover:bg-orange-50 dark:hover:bg-[#2f2f2f]
@@ -167,34 +173,31 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      {/* Ipdeat Profile */}
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <button
+        className="btn"
+        onClick={() => document.getElementById("my_modal_5").showModal()}
+      >
+        open modal
+      </button>
+      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Hello!</h3>
+          <p className="py-4">
+            Press ESC key or click the button below to close
+          </p>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
-
-/* Reusable Info Card */
-const InfoCard = ({ icon, iconBg, iconColor, label, value }) => (
-  <div
-    className="bg-white dark:bg-[#2a2a2a]
-    border border-orange-100 dark:border-[#3a3a3a]
-    rounded-xl p-4 shadow-sm
-    hover:shadow-md hover:-translate-y-1
-    transition-all duration-300"
-  >
-    <div className="flex items-center gap-3">
-      <div
-        className={`w-10 h-10 ${iconBg} ${iconColor}
-        rounded-lg flex items-center justify-center`}
-      >
-        {icon}
-      </div>
-      <div>
-        <p className="text-xs text-slate-500 dark:text-gray-300">{label}</p>
-        <p className="text-sm font-semibold text-slate-800 dark:text-gray-100 capitalize">
-          {value}
-        </p>
-      </div>
-    </div>
-  </div>
-);
 
 export default Profile;

@@ -152,6 +152,7 @@ const DetlicesPages = () => {
   if (isLoading || newLoding) return <LoadingSpinner></LoadingSpinner>;
   if (reviewLoding) return <LoadingSpinner></LoadingSpinner>;
 
+  // ai whish list er kaj korta chilam
   // Book wishlist: Allow users to add a book to wishlist from the book details page and users wishlisted book will be shown in the My Wishlist page on user dashboard
 
   //Complet Now This Task ===>  Review/Rating: If a user ordered a book he/she can give the book a rating or review on the book details page, so that other users can see the ratings
@@ -363,6 +364,9 @@ const DetlicesPages = () => {
                     →
                   </span>
                 </motion.button>
+
+{/* AI Khna velidetions er kaj baki acha  */}
+
 
                 <motion.button
                   onClick={bookaddYourWishList}
