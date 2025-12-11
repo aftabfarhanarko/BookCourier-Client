@@ -139,7 +139,7 @@ const DashBordLayOut = () => {
               <>
                 <li className="pt-1">
                   <NavLink
-                    to="/deshbord/librarian"
+                    to="/deshbord/libraian"
                     className={({ isActive }) =>
                       `flex gap-3 px-4 py-1.5 rounded-xl
                       ${isActive && "bg-gray-800 text-white"}`
@@ -201,7 +201,7 @@ const DashBordLayOut = () => {
               <>
                 <li className="pt-1">
                   <NavLink
-                    to="  /deshbord/userDashbord"
+                    to="/deshbord/user"
                     className={({ isActive }) =>
                       `flex gap-3 px-4 py-1.5 rounded-xl
                       ${isActive && "bg-gray-800 text-white"}`

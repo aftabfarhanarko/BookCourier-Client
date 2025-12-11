@@ -13,9 +13,9 @@ import Marqey from "./Marqey";
 const Home = () => {
   return (
     <div>
-     <section className=" mt-6">
-       <Banner></Banner>
-     </section>
+      <section className=" mt-6">
+        <Banner></Banner>
+      </section>
       <div className=" w-11/12 mx-auto">
         <section className=" mt-30">
           <PremiumBook></PremiumBook>
@@ -35,10 +35,10 @@ const Home = () => {
         <section className=" mt-30">
           <Cousebooksconires></Cousebooksconires>
         </section>
-        <section className=" w-10/12 mx-auto mt-30">
+        <section className=" w-11/12 mx-auto mt-30">
           <WhyChooseBook></WhyChooseBook>
         </section>
-        <section className=" mt-30">
+        <section className=" ">
           <Marqey></Marqey>
         </section>
       </div>

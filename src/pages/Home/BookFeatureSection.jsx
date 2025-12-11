@@ -39,7 +39,7 @@ const BookFeatureSection = () => {
           >
             {/* Tilt Hover + Scroll Reveal Image */}
             <motion.img
-              src="/public/banner2.jpg"
+              src="/newfullbanner2.jpg"
               alt="main"
               className="
    h-[300px] md:h-[400px] 

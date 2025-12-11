@@ -25,7 +25,7 @@ const ManazeBooks = () => {
       const res = await axioscehore.get(
         `allbooks?email=${user?.email}&limit=${limit}&skip=${skip}`
       );
-      console.log(res.data);
+      // console.log(res.data);
       setAllUser(res.data.counts);
       return res.data.result || [];
     },

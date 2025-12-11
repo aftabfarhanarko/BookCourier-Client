@@ -140,15 +140,6 @@ export const router = createBrowserRouter([
           </UserRoute>
         ),
       },
-      
-      {
-        path: "/deshbord/userDashbord",
-        element: (
-          <UserRoute>
-            <UserDashBord></UserDashBord>
-          </UserRoute>
-        ),
-      },
       {
         path: "/deshbord/myBooks",
         element: (
@@ -198,6 +189,22 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+      {
+        path: "/deshbord/user",
+        element: (
+         <UserRoute>
+          <UserDashBord></UserDashBord>
+         </UserRoute>
+        ),
+      },
+      {
+        path: "/deshbord/libraian",
+        element: (
+        <LibrarianRoute>
+          <LibrarianDashBord></LibrarianDashBord>
+        </LibrarianRoute>
+        ),
+      },
 
 
       {
@@ -220,12 +227,7 @@ export const router = createBrowserRouter([
           </UserRoute>
         ),
       },
-      // {
-      //   path: "/deshbord/whishList",
-      //   element: (
-         
-      //   ),
-      // },
+     
       {
         path: "*",
         Component: NotFound404,

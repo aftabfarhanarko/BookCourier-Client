@@ -1,351 +1,244 @@
-import React, { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import TextType from "../../utils/TextType";
+
+import React, { useState } from "react";
 import top1 from "../../assets/bannerimg/top1.jpg";
 import top2 from "../../assets/bannerimg/top4.jpg";
 import top3 from "../../assets/bannerimg/top5.jpg";
 import top4 from "../../assets/bannerimg/top6.webp";
+import { Star, ShoppingCart, TrendingUp, Eye, BadgeCheck } from "lucide-react";
 
-const BookFicher = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: false,
-    });
-  }, []);
+const PremiumBookShowcase = () => {
+  const [hoveredCard, setHoveredCard] = useState(null);
+
+  const books = [
+    {
+      id: 1,
+      name: "Old Man The Say",
+      price: "$249",
+      rating: 5,
+      sold: "12,090",
+      image:
+        "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=600&fit=crop",
+      badge: "Bestseller",
+    },
+    {
+      id: 2,
+      name: "The More",
+      price: "$899",
+      rating: 4,
+      sold: "3,090",
+      image:
+        "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop",
+      badge: "Popular",
+    },
+    {
+      id: 3,
+      name: "The Best Novels",
+      price: "$399",
+      rating: 3,
+      sold: "7,090",
+      image:
+        "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=600&fit=crop",
+      badge: "Trending",
+    },
+    {
+      id: 4,
+      name: "Old Man",
+      price: "$249",
+      rating: 5,
+      sold: "12,090",
+      image:
+        "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=600&fit=crop",
+      badge: "Hot Deal",
+    },
+  ];
+
+  const renderStars = (rating) => {
+    return [...Array(5)].map((_, i) => (
+      <Star
+        key={i}
+        className={`w-4 h-4 ${
+          i < rating ? "fill-orange-400 text-orange-400" : "text-gray-300"
+        }`}
+      />
+    ));
+  };
+
   return (
-    <div>
-      <section className=" py-12 px-6 md:px-16">
-        <div className=" md:w-10/12  mx-auto flex flex-col md:flex-row  justify-between items-start md:items-center gap-10">
-          {/* Left Text Content */}
-          <div className="md:flex-1 max-w-xl">
-            <p className=" text-primary uppercase text-xs font-semibold mb-3">
-              WELCOME
-            </p>
-            <h2 className=" text-2xl md:text-3xl leading-tight  text-secondary font-semibold">
-              <TextType
-                text={"Top Selling Books in BookCourier Library"}
-                typingSpeed={80}
-                deletingSpeed={50}
-                pauseDuration={2000}
-                loop={true}
-                showCursor={false}
-                // cursorCharacter="|"
-              />
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 py-16 px-4 sm:px-6 lg:px-8">
+      <div className=" md:max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 mb-16">
+          {/* Left Content */}
+          <div className="flex-1 max-w-xl space-y-6">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 to-amber-100 px-4 py-2 rounded-full">
+              <TrendingUp className="w-4 h-4 text-orange-600" />
+              <span className="text-orange-700 text-xs font-bold uppercase tracking-wider">
+                Welcome
+              </span>
+            </div>
+
+            <h2 className="text-4xl sm:text-5xl  font-bold text-gray-900 leading-tight">
+              Top Selling Books in{" "}
+              <span className="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
+                BookCourier
+              </span>{" "}
+              Library
             </h2>
 
-            <p className="text-gray-600 mb-6 mt-3">
+            <p className="text-lg text-gray-600 leading-relaxed">
               Explore the books that our readers enjoy the most. These top picks
               have been loved and bought again and again. Find your next great
-              read from the crowd’s favorites!
+              read from the crowd's favorites!
             </p>
-            {/* <button className="bg-yellow-400 hover:bg-yellow-500 text-white px-6 py-3 rounded-full font-medium transition">
-              About Us
-            </button> */}
+
+            {/* Stats */}
+            <div className="flex gap-8 pt-4">
+              <div className="space-y-1">
+                <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
+                  1000+
+                </div>
+                <div className="text-sm text-gray-500">Happy Readers</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
+                  50K+
+                </div>
+                <div className="text-sm text-gray-500">Books Sold</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
+                  4.9★
+                </div>
+                <div className="text-sm text-gray-500">Average Rating</div>
+              </div>
+            </div>
           </div>
 
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 mx-auto sm:grid-cols-2 gap-8 md:flex-1 ">
-            <div
-              data-aos="fade-up"
-              data-aos-delay="200"
-              className="bg-white border  border-base-300 rounded-2xl shadow-[0_10px_15px_rgba(0,0,0,0.1),0_4px_6px_rgba(0,0,0,0.06)] overflow-hidden hover:shadow-[0_15px_25px_rgba(0,0,0,0.15),0_8px_10px_rgba(0,0,0,0.1)] transition-shadow duration-300 w-[300px] mx-auto"
-            >
-              {/* Image container */}
-              <div className="relative w-full h-44 overflow-hidden rounded-t-2xl group">
-                {/* Tick mark */}
-                <div className="absolute top-4 right-4 bg-green-600 rounded-full p-3 shadow-lg z-20 flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-
-                {/* Image */}
-                <img
-                  src={top3}
-                  alt="Product Image"
-                  className="w-full h-full py-3  object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
-                />
-
-                {/* View Now button */}
-                <button
-                  className="absolute inset-0 bg-black/30 backdrop-blur-sm text-white font-semibold text-sm flex items-center justify-center rounded-t-2xl opacity-0 transition-opacity duration-300 cursor-pointer gap-2 group-hover:opacity-100"
-                  onClick={() => alert("View Now clicked!")}
-                  aria-label="View details"
+          {/* Right Content - Book Cards */}
+          <div className="flex-1 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+              {books.map((book, index) => (
+                <div
+                  key={book.id}
+                  onMouseEnter={() => setHoveredCard(book.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                  className="group relative bg-white rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
+                  style={{
+                    animation: `fadeInUp 0.6s ease-out ${index * 0.15}s both`,
+                  }}
                 >
-                  View Now
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
+                  {/* Gradient Border Effect */}
+                  <div className="absolute inset-0  opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl blur-xl -z-10"></div>
+
+                  {/* Badge */}
+                  <div className="absolute top-4 left-4 z-20">
+                    <div className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
+                      <BadgeCheck className="w-3 h-3" />
+                      {book.badge}
+                    </div>
+                  </div>
+
+                  {/* Verified Badge */}
+                  <div className="absolute top-4 right-4 z-20">
+                    <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-full p-2.5 shadow-lg transform group-hover:rotate-12 transition-transform duration-300">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={3}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Image Container */}
+                  <div className="relative h-64 overflow-hidden bg-gradient-to-br from-orange-50 to-amber-50">
+                    <img
+                      src={book.image}
+                      alt={book.name}
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2"
                     />
-                  </svg>
-                </button>
-              </div>
 
-              {/* Card content */}
-              <div className="p-2 px-4 space-y-1 border-t  border-base-300">
-                <h1 className="text-lg font-extrabold text-gray-900 tracking-tight">
-                  Name: Old Man The Say
-                </h1>
+                    {/* Overlay with Actions */}
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-center gap-3 transition-all duration-500 ${
+                        hoveredCard === book.id ? "opacity-100" : "opacity-0"
+                      }`}
+                    >
+                      <button className="bg-white text-orange-600 p-3 rounded-full shadow-lg hover:bg-orange-600 hover:text-white transition-all duration-300 transform hover:scale-110">
+                        <Eye className="w-5 h-5" />
+                      </button>
+                      <button className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 font-semibold flex items-center gap-2">
+                        <ShoppingCart className="w-5 h-5" />
+                        Buy Now
+                      </button>
+                    </div>
+                  </div>
 
-                <p className="text-lg font-semibold text-red-600">
-                  Price: $249
-                </p>
-                <p className="text-yellow-500 font-semibold text-md">
-                  Rating: ★★★★★☆
-                </p>
-                <p className="text-gray-400 text-xs tracking-wide">
-                  Total Sold: 12090
-                </p>
-              </div>
-            </div>
+                  {/* Content */}
+                  <div className="p-6 space-y-3">
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors duration-300">
+                      {book.name}
+                    </h3>
 
-            <div
-              data-aos="fade-up"
-              data-aos-delay="400"
-              className="bg-white border  border-base-300 rounded-2xl shadow-[0_10px_15px_rgba(0,0,0,0.1),0_4px_6px_rgba(0,0,0,0.06)] overflow-hidden hover:shadow-[0_15px_25px_rgba(0,0,0,0.15),0_8px_10px_rgba(0,0,0,0.1)] transition-shadow duration-300 w-[300px] mx-auto"
-            >
-              {/* Image container */}
-              <div className="relative w-full h-44 overflow-hidden rounded-t-2xl group">
-                {/* Tick mark */}
-                <div className="absolute top-4 right-4 bg-green-600 rounded-full p-3 shadow-lg z-20 flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-1">
+                        <p className="text-2xl font-extrabold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                          {book.price}
+                        </p>
+                        <div className="flex items-center gap-1">
+                          {renderStars(book.rating)}
+                        </div>
+                      </div>
+
+                      <div className="text-right">
+                        <div className="text-xs text-gray-500 mb-1">
+                          Total Sold
+                        </div>
+                        <div className="text-lg font-bold text-orange-600">
+                          {book.sold}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="pt-2">
+                      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-full transition-all duration-1000"
+                          style={{ width: `${(book.rating / 5) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-                {/* Image */}
-                <img
-                  src={top1}
-                  alt="Product Image"
-                  className="w-full py-3 h-full object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
-                />
-
-                {/* View Now button */}
-                <button
-                  className="absolute inset-0 bg-black/30 backdrop-blur-sm text-white font-semibold text-sm flex items-center justify-center rounded-t-2xl opacity-0 transition-opacity duration-300 cursor-pointer gap-2 group-hover:opacity-100"
-                  onClick={() => alert("View Now clicked!")}
-                  aria-label="View details"
-                >
-                  View Now
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Card content */}
-              <div className="p-2 px-4 space-y-1 border-t  border-base-300">
-                <h1 className="text-lg font-extrabold text-gray-900 tracking-tight">
-                  Name: The More
-                </h1>
-
-                <p className="text-lg font-semibold text-red-600">
-                  Price: $899
-                </p>
-                <p className="text-yellow-500 font-semibold text-md">
-                  Rating: ★★★★☆
-                </p>
-                <p className="text-gray-400 text-xs tracking-wide">
-                  Total Sold: 3090
-                </p>
-              </div>
-            </div>
-
-            <div
-              data-aos="fade-up"
-              data-aos-delay="600"
-              className="bg-white border border-base-300 rounded-2xl shadow-[0_10px_15px_rgba(0,0,0,0.1),0_4px_6px_rgba(0,0,0,0.06)] overflow-hidden hover:shadow-[0_15px_25px_rgba(0,0,0,0.15),0_8px_10px_rgba(0,0,0,0.1)] transition-shadow duration-300 w-[300px] mx-auto"
-            >
-              {/* Image container */}
-              <div className="relative w-full h-44 overflow-hidden rounded-t-2xl group">
-                {/* Tick mark */}
-                <div className="absolute top-4 right-4 bg-green-600 rounded-full p-3 shadow-lg z-20 flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-
-                {/* Image */}
-                <img
-                  src={top2}
-                  alt="Product Image"
-                  className="w-full h-full py-3  object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
-                />
-
-                {/* View Now button */}
-                <button
-                  className="absolute inset-0 bg-black/30 backdrop-blur-sm text-white font-semibold text-sm flex items-center justify-center rounded-t-2xl opacity-0 transition-opacity duration-300 cursor-pointer gap-2 group-hover:opacity-100"
-                  onClick={() => alert("View Now clicked!")}
-                  aria-label="View details"
-                >
-                  View Now
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Card content */}
-              <div className="p-2 px-4 space-y-1  border-t  border-base-300">
-                <h1 className="text-lg font-extrabold text-gray-900 tracking-tight">
-                  Name: The Best Novels
-                </h1>
-
-                <p className="text-lg font-semibold text-red-600">
-                  Price: $399
-                </p>
-                <p className="text-yellow-500 font-semibold text-md">
-                  Rating: ★★★☆☆
-                </p>
-                <p className="text-gray-400 text-xs tracking-wide">
-                  Total Sold: 7090
-                </p>
-              </div>
-            </div>
-
-            <div 
-             data-aos="fade-up"
-          data-aos-delay="800"
-            className="bg-white border  border-base-300 rounded-2xl shadow-[0_10px_15px_rgba(0,0,0,0.1),0_4px_6px_rgba(0,0,0,0.06)] overflow-hidden hover:shadow-[0_15px_25px_rgba(0,0,0,0.15),0_8px_10px_rgba(0,0,0,0.1)] transition-shadow duration-300 w-[300px] mx-auto">
-              {/* Image container */}
-              <div className="relative w-full h-44 overflow-hidden rounded-t-2xl group">
-                {/* Tick mark */}
-                <div className="absolute top-4 right-4 bg-green-600 rounded-full p-3 shadow-lg z-20 flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={3}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-
-                {/* Image */}
-                <img
-                  src={top4}
-                  alt="Product Image"
-                  className="w-full h-full py-3  object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
-                />
-
-                {/* View Now button */}
-                <button
-                  className="absolute inset-0 bg-black/30 backdrop-blur-sm text-white font-semibold text-sm flex items-center justify-center rounded-t-2xl opacity-0 transition-opacity duration-300 cursor-pointer gap-2 group-hover:opacity-100"
-                  onClick={() => alert("View Now clicked!")}
-                  aria-label="View details"
-                >
-                  View Now
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Card content */}
-              <div className="p-2 px-4 space-y-1 border-t  border-base-300">
-                <h1 className="text-lg font-extrabold text-gray-900 tracking-tight">
-                  Name: Old Man
-                </h1>
-
-                <p className="text-lg font-semibold text-red-600">
-                  Price: $249
-                </p>
-                <p className="text-yellow-500 font-semibold text-md">
-                  Rating: ★★★★★☆
-                </p>
-                <p className="text-gray-400 text-xs tracking-wide">
-                  Total Sold: 12090
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </div>
-      </section>
+      </div>
+
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </div>
   );
 };
 
-export default BookFicher;
+export default PremiumBookShowcase;
