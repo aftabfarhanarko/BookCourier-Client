@@ -6,15 +6,18 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { Pagination, Autoplay } from "swiper/modules";
 
-import banner1 from "../../assets/bannerimg/banner1.jpg";
-import banner4 from "../../assets/bannerimg/banner4.jpg";
-import banner2 from "../../assets/bannerimg/banner3.jpg";
 import TextType from "../../utils/TextType";
 
+import bnner1 from "/newfullbanner.jpg";
+import bnner2 from "/public/newfullbanner2.jpg";
+import bnner3 from "/public/newbanner3.jpg";
+
 const Banner = () => {
+  const [typedDone, setTypedDone] = React.useState(false);
+
   return (
-    <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-900 ">
-      <div className="bg-gray-200 ">
+    <div className=" ">
+      <div className=" ">
         <Swiper
           loop={true}
           autoplay={{
@@ -30,171 +33,38 @@ const Banner = () => {
         >
           {/* Slide 1 */}
           <SwiperSlide>
-            <div className="flex flex-col-reverse px-5 md:px-15 md:flex-row items-center justify-between  mx-auto  py-16 gap-12 ">
-              {/* Text Section */}
-              <div className="md:w-1/2 space-y-8">
-                <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight drop-shadow-md">
-                  <TextType
-                    text={"Create Dynamic Banners With Elegant Animations"}
-                    typingSpeed={70}
-                    deletingSpeed={40}
-                    pauseDuration={2000}
-                    loop={true}
-                    showCursor={false}
-                    cursorCharacter="|"
-                  />
-                </h1>
-                <p className="text-lg md:text-xl text-gray-700 max-w-lg font-medium leading-relaxed">
-                  <TextType
-                    text={`Build beautifully animated hero sections effortlessly using React Swiper`}
-                    typingSpeed={70}
-                    deletingSpeed={40}
-                    pauseDuration={2000}
-                    loop={false}
-                    showCursor={false}
-                    cursorCharacter="|"
-                  />
-                </p>
+            <div
+              className="relative flex flex-col items-center justify-center text-center px-5 md:px-15 py-16 gap-6 mx-auto h-[700px] bg-center bg-cover"
+              style={{ backgroundImage: `url(${bnner1})` }}
+            >
+              {/* Overlay: full div with black bg and opacity */}
+              <div className="absolute inset-0 bg-black/40"></div>
 
-                <button className="px-12 py-2.5 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl">
-                  Discover More →
-                </button>
-              </div>
+              {/* Content - make sure this is above the overlay */}
+              <div className="relative z-10">
+  <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight drop-shadow-md min-h-[4.5rem]">
+  <TextType
+    text={"Create Dynamic Banners With Elegant Animations"}
+    typingSpeed={70}
+    deletingSpeed={40}
+    pauseDuration={2000}
+    loop={true}
+    showCursor={false}
+    cursorCharacter="|"
+  />
+</h1>
 
-              {/* Image Section */}
-              <div className="md:w-1/2 flex justify-center">
-                <img
-                  src={banner4}
-                  alt="Banner"
-                  className="w-[350px] md:w-[450px] rounded-3xl shadow-2xl transform transition-transform duration-700 hover:scale-105"
-                />
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="flex flex-col-reverse px-5 md:px-15 md:flex-row items-center justify-between  mx-auto py-16 gap-12 ">
-              {/* Text Section */}
-              <div className="md:w-1/2 space-y-8">
-                <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight drop-shadow-md">
-                  <TextType
-                    text={"Create Dynamic Banners With Elegant Animations"}
-                    typingSpeed={70}
-                    deletingSpeed={40}
-                    pauseDuration={2000}
-                    loop={true}
-                    showCursor={false}
-                    cursorCharacter="|"
-                  />
-                </h1>
-                <p className="text-lg md:text-xl text-gray-700 max-w-lg font-medium leading-relaxed">
-                  <TextType
-                    text={`Build beautifully animated hero sections effortlessly using React Swiper`}
-                    typingSpeed={70}
-                    deletingSpeed={40}
-                    pauseDuration={2000}
-                    loop={false}
-                    showCursor={false}
-                    cursorCharacter="|"
-                  />
-                </p>
+  <div>
+    <p className="text-lg md:text-xl my-4 text-white max-w-lg font-medium leading-relaxed">
+      Build beautifully animated hero sections effortlessly using React Swiper
+    </p>
 
-                <button className="px-12 py-2.5 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl">
-                  Discover More →
-                </button>
-              </div>
+    <button className="px-12 py-2.5 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl">
+      Discover More →
+    </button>
+  </div>
+</div>
 
-              {/* Image Section */}
-              <div className="md:w-1/2 flex justify-center">
-                <img
-                  src={banner4}
-                  alt="Banner"
-                  className="w-[350px] md:w-[450px] rounded-3xl shadow-2xl transform transition-transform duration-700 hover:scale-105"
-                />
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="flex flex-col-reverse px-5 md:px-15 md:flex-row items-center justify-between  mx-auto  py-16 gap-12 ">
-              {/* Text Section */}
-              <div className="md:w-1/2 space-y-8">
-                <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight drop-shadow-md">
-                  <TextType
-                    text={"Create Dynamic Banners With Elegant Animations"}
-                    typingSpeed={70}
-                    deletingSpeed={40}
-                    pauseDuration={2000}
-                    loop={true}
-                    showCursor={false}
-                    // cursorCharacter="|"
-                  />
-                </h1>
-                <p className="text-lg md:text-xl text-gray-700 max-w-lg font-medium leading-relaxed">
-                  <TextType
-                    text={`Build beautifully animated hero sections effortlessly using React Swiper`}
-                    typingSpeed={70}
-                    deletingSpeed={40}
-                    pauseDuration={2000}
-                    loop={false}
-                    showCursor={false}
-                    // cursorCharacter="|"
-                  />
-                </p>
-
-                <button className="px-12 py-2.5 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl">
-                  Discover More →
-                </button>
-              </div>
-
-              {/* Image Section */}
-              <div className="md:w-1/2 flex justify-center">
-                <img
-                  src={banner2}
-                  alt="Banner"
-                  className="w-[350px] md:w-[450px] rounded-3xl shadow-2xl transform transition-transform duration-700 hover:scale-105"
-                />
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="flex flex-col-reverse px-5 md:px-15 md:flex-row items-center justify-between  mx-auto  py-16 gap-12 ">
-              {/* Text Section */}
-              <div className="md:w-1/2 space-y-8">
-                <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight drop-shadow-md">
-                  <TextType
-                    text={"Create Dynamic Banners With Elegant Animations"}
-                    typingSpeed={70}
-                    deletingSpeed={40}
-                    pauseDuration={2000}
-                    loop={true}
-                    showCursor={false}
-                    // cursorCharacter="|"
-                  />
-                </h1>
-                <p className="text-lg md:text-xl text-gray-700 max-w-lg font-medium leading-relaxed">
-                  <TextType
-                    text={`Build beautifully animated hero sections effortlessly using React Swiper`}
-                    typingSpeed={70}
-                    deletingSpeed={40}
-                    pauseDuration={2000}
-                    loop={false}
-                    showCursor={false}
-                    // cursorCharacter="|"
-                  />
-                </p>
-
-                <button className="px-12 py-2.5 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl">
-                  Discover More →
-                </button>
-              </div>
-
-              {/* Image Section */}
-              <div className="md:w-1/2 flex justify-center">
-                <img
-                  src={banner1}
-                  alt="Banner"
-                  className="w-[350px] md:w-[450px] rounded-3xl shadow-2xl transform transition-transform duration-700 hover:scale-105"
-                />
-              </div>
             </div>
           </SwiperSlide>
 

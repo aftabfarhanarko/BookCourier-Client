@@ -27,10 +27,12 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSchore from "../../hooks/useAxiosSchore";
 import LoadingSpinner from "../../shared/LoadingSpinner ";
 import useRole from "../../hooks/useRole";
+import { IoIosLogOut } from "react-icons/io";
 
 export default function Navbar() {
   const axioscehore = useAxiosSchore();
-  const {role} = useRole();
+  const { role } = useRole();
+  const [show, setShow] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdown, setProfileDropdown] = useState(false);
@@ -49,17 +51,15 @@ export default function Navbar() {
   const { data: wishlistCount } = useQuery({
     queryKey: [user?.email, "whisListdata"],
     queryFn: async () => {
-      const res = await axioscehore.get(`whisListdataGetANndswr?email=${user?.email}`);
+      const res = await axioscehore.get(
+        `whisListdataGetANndswr?email=${user?.email}`
+      );
       console.log(res.data);
       return res?.data;
     },
   });
 
-  
-  const {
-    data: usersas,
-    isLoading,
-  } = useQuery({
+  const { data: usersas, isLoading } = useQuery({
     queryKey: ["profile", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -70,15 +70,14 @@ export default function Navbar() {
     },
   });
 
-  
-  if(isLoading){
-    return <LoadingSpinner />
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
   return (
     <nav
       className={`${bgPrimary} border-b ${borderColor} shadow-sm transition-colors duration-300 sticky top-0 z-50    fixed `}
     >
-      <div className=" w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className=" w-11/12 mx-auto py-0.5 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo Section */}
           <div className="flex items-center gap-3">
@@ -115,29 +114,8 @@ export default function Navbar() {
 
           {/* Right Section */}
           <div className="flex items-center gap1.5 md:gap-3">
-            {/* Search Bar */}
-            {/* <div className="hidden lg:flex items-center">
-              <div
-                className={`relative ${
-                  darkMode ? "bg-gray-800" : "bg-gray-100"
-                } rounded-lg`}
-              >
-                <Search
-                  className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 ${textMuted}`}
-                />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className={`pl-10 pr-4 py-2 ${
-                    darkMode
-                      ? "bg-gray-800 text-white"
-                      : "bg-gray-100 text-gray-900"
-                  } rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 w-64 transition-all`}
-                />
-              </div>
-            </div> */}
             {/* Profile Dropdown */}
-            <div className="relative">
+            <div className="relative hidden md:block ">
               <button
                 onClick={() => setProfileDropdown(!profileDropdown)}
                 className={`flex items-center gap-2 p-1 rounded-lg ${hoverBg} transition-all duration-200`}
@@ -145,10 +123,10 @@ export default function Navbar() {
                 {user ? (
                   <img
                     src={usersas?.photoURL}
-                    className="w-9 h-9 rounded-full"
+                    className="w-11 h-11 rounded-full"
                   ></img>
                 ) : (
-                  <div className="w-9 h-9 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                  <div className="w-11 h-11 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
                     <FiUser></FiUser>
                   </div>
                 )}
@@ -170,7 +148,9 @@ export default function Navbar() {
                         <p className={`font-semibold ${textPrimary}`}>
                           {usersas?.displayName}
                         </p>
-                        <p className={`text-sm ${textMuted}`}>{usersas?.email}</p>
+                        <p className={`text-sm ${textMuted}`}>
+                          {usersas?.email}
+                        </p>
                       </div>
                       <Link
                         to="/profile2"
@@ -236,10 +216,8 @@ export default function Navbar() {
                 <Moon className="w-5 h-5" />
               )}
             </button>
-            
-            {
-              
-            }
+
+            {}
             {/* Wishlist Button */}
             <Link to="/deshbord/whishList">
               <motion.button
@@ -288,8 +266,39 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className={`md:hidden py-4 border-t ${borderColor}`}>
+          <div className={`md:hidden py-4  pb-6 border-t ${borderColor}`}>
             <div className="space-y-1">
+              <div className="relative px-3 ">
+                <button
+                  onClick={() => setProfileDropdown(!profileDropdown)}
+                  className={`flex items-center gap-2 p-1 rounded-lg ${hoverBg} transition-all duration-200`}
+                >
+                  {user ? (
+                    <div>
+                      <img
+                        src={usersas?.photoURL}
+                        className="w-12 h-12 rounded-full"
+                      ></img>
+                    </div>
+                  ) : (
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                      <FiUser></FiUser>
+                    </div>
+                  )}
+                  <ChevronDown
+                    className={`w-4 h-4 ${textSecondary} hidden sm:block transition-transform duration-200 ${
+                      profileDropdown ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              </div>
+              <NavLink
+                to="/profile2"
+                className={`flex items-center gap-3 px-4 py-2 ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all`}
+              >
+                <User className="w-5 h-5" />
+                <span>Profile</span>
+              </NavLink>
               <NavLink
                 to="/"
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
@@ -311,6 +320,54 @@ export default function Navbar() {
                 <MdOutlineDashboardCustomize className="w-5 h-5" />
                 <span className="font-medium">Dashboard</span>
               </NavLink>
+              <NavLink
+                to="/settingse"
+                className={`flex items-center gap-3 px-4 py-2 ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all`}
+              >
+                <Settings className="w-5 h-5" />
+                <span>Settings</span>
+              </NavLink>
+              {user ? (
+                <>
+                  <div className=" px-4">
+                    <button
+                      onClick={() => userLogOut()}
+                      className="px-6 py-1.5 mt-2 gap-2 rounded-lg  font-semibold
+        bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90
+         shadow-lg transition-all flex items-center justify-center duration-300
+         hover:scale-105 w-35"
+                    >
+                      <IoIosLogOut className="w-5 h-5 md:w-4 md:h-4" />
+                      Logout
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className=" flex flex-col px-4 text-center gap-3 ">
+                  <Link
+                    to="/auth/login"
+                    className="px-6 py-[4px]  w-35 rounded-lg font-semibold text-[#e85d04]
+                            border-2 hover:border flex items-center gap-3 border-[#e85d04]
+                            transition-all duration-300
+                            hover:bg-gradient-to-r from-[#C2410C] to-[#e85d04]
+                            hover:text-white hover:scale-105"
+                  >
+                    <FaUserCheck className=" w-4 h-4" /> Login
+                  </Link>
+
+                  {/* REGISTER */}
+                  <Link
+                    to="/auth/rigester"
+                    className="px-6 py-1.5 mt-2 gap-2 rounded-lg  font-semibold
+        bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90
+         shadow-lg transition-all flex items-center justify-center duration-300
+         hover:scale-105 w-35"
+                  >
+                    <FaUserCog className="w-4 h-4 md:w-4 md:h-4" />
+                    Register
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}

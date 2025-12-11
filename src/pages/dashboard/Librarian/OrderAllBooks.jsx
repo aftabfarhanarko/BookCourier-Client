@@ -310,7 +310,7 @@ const OrderAllBooks = () => {
                           <line x1="15" y1="9" x2="9" y2="15" />
                           <line x1="9" y1="9" x2="15" y2="15" />
                         </svg>{" "}
-                        Did not pay
+                        Not pay
                       </span>
                     ) : (
                       <div className="flex items-center gap-2">
@@ -365,47 +365,51 @@ const OrderAllBooks = () => {
         </div>
       </div>
       {/* Pasitions */}
-      <div className="flex justify-between items-center px-6 py-4 mt-7 bg-white  border-t border-gray-200 dark:border-gray-300 rounded-b-2xl">
-        <button
-          disabled={page === 1}
-          onClick={() => setPage(page - 1)}
-          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
-            page === 1
-              ? "text-gray-400 cursor-not-allowed bg-base-300"
-              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
-          }`}
-        >
-          <FaArrowLeftLong /> Previous
-        </button>
+      {data.length < 11 ? (
+        <div className="flex justify-between items-center px-6 py-4 mt-7 bg-white  border-t border-gray-200 dark:border-gray-300 rounded-b-2xl">
+          <button
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+            className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+              page === 1
+                ? "text-gray-400 cursor-not-allowed bg-base-300"
+                : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+            }`}
+          >
+            <FaArrowLeftLong /> Previous
+          </button>
 
-        <div className="flex gap-2">
-          {Array.from({ length: totalPage }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setPage(i + 1)}
-              className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold transition ${
-                page === i + 1
-                  ? "bg-gradient-to-br from-orange-400 to-orange-600 text-white"
-                  : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-pink-50 hover:via-purple-50 hover:to-blue-50"
-              }`}
-            >
-              {i + 1}
-            </button>
-          ))}
+          <div className="flex gap-2">
+            {Array.from({ length: totalPage }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setPage(i + 1)}
+                className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold transition ${
+                  page === i + 1
+                    ? "bg-gradient-to-br from-orange-400 to-orange-600 text-white"
+                    : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-pink-50 hover:via-purple-50 hover:to-blue-50"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+
+          <button
+            disabled={page === totalPage}
+            onClick={() => setPage(page + 1)}
+            className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+              page === totalPage
+                ? "text-gray-400 cursor-not-allowed bg-base-300"
+                : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+            }`}
+          >
+            Next <FaArrowRightLong />
+          </button>
         </div>
-
-        <button
-          disabled={page === totalPage}
-          onClick={() => setPage(page + 1)}
-          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
-            page === totalPage
-              ? "text-gray-400 cursor-not-allowed bg-base-300"
-              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
-          }`}
-        >
-          Next <FaArrowRightLong />
-        </button>
-      </div>
+      ) : (
+        " "
+      )}
     </div>
   );
 };

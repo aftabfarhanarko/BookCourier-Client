@@ -282,7 +282,7 @@ const DashBordLayOut = () => {
 
           {/* ✅ BOTTOM FIXED */}
           <ul className="menu border-t border-gray-700 px-4 py-3">
-            <li>
+            {/* <li className=" mt-5">
               <NavLink
                 to="/deshbord/profileLoginUser"
                 className={({ isActive }) =>
@@ -296,8 +296,8 @@ const DashBordLayOut = () => {
               >
                 <CgProfile className="w-6 h-6" /> Profile
               </NavLink>
-            </li>
-            <li>
+            </li> */}
+            <li className=" mt-5">
               <NavLink
                 to="/deshbord/settings"
                 className={({ isActive }) =>
@@ -312,7 +312,7 @@ const DashBordLayOut = () => {
                 <CiSettings className="w-6 h-6" /> Settings
               </NavLink>
             </li>
-            <li>
+            <li className=" mt-5">
               <button
                 onClick={() => userLogOut()}
                 c

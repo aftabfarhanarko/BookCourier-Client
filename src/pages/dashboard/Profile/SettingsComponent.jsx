@@ -243,7 +243,7 @@ export default function SettingsComponent() {
                             : "bg-gradient-to-br from-orange-400 to-orange-600"
                         } flex items-center justify-center text-white text-3xl font-bold shadow-lg`}
                       >
-                        {user.photoURL ? (
+                        {user?.photoURL ? (
                           <img
                             src={user?.photoURL || "User"}
                             className=" w-24 h-24 rounded-full"

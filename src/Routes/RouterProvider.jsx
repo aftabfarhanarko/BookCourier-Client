@@ -43,7 +43,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/settingse",
-        element: <SettingsComponent></SettingsComponent>,
+        element: (
+          <PrivetRoute>
+            <SettingsComponent></SettingsComponent>
+          </PrivetRoute>
+        ),
       },
       {
         path: "/profile2",
@@ -170,15 +174,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/deshbord/settings",
-        element: <SettingsComponent></SettingsComponent>,
+        element: (
+          <PrivetRoute>
+            <SettingsComponent></SettingsComponent>
+          </PrivetRoute>
+        ),
       },
       {
         path: "/deshbord/whishList",
-         element:(
-           <UserRoute>
+        element: (
+          <UserRoute>
             <WishLise></WishLise>
           </UserRoute>
-         )
+        ),
       },
       {
         path: "*",
