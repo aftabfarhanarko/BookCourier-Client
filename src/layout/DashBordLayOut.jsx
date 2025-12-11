@@ -87,34 +87,20 @@ const DashBordLayOut = () => {
                 <HiOutlineHome className="w-6 h-6" /> Home
               </NavLink>
             </li>
-
-            {/* MOBILE CLOSE
-            <li className="md:hidden">
-              <button
-                onClick={() =>
-                  (document.getElementById("my-drawer-4").checked = false)
-                }
-                className="flex gap-3 items-center px-4 py-3 rounded-xl hover:bg-red-500/20"
-              >
-                <IoClose className="w-6 h-6 text-red-400" /> Close
-              </button>
-            </li> */}
-
-            <li className="pt-1">
-              <NavLink
-                to="/deshbord"
-                className={({ isActive }) =>
-                  `flex gap-3 px-4 py-1.5 rounded-xl
-                      ${isActive && "bg-gray-800 text-white"}`
-                }
-              >
-                <RiDashboardHorizontalLine className="w-6 h-6" /> Dashboard
-              </NavLink>
-            </li>
-
             {/* ADMIN */}
             {role === "admin" && (
               <>
+                <li className="pt-1">
+                  <NavLink
+                    to="/deshbord/admin"
+                    className={({ isActive }) =>
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${isActive && "bg-gray-800 text-white"}`
+                    }
+                  >
+                    <RiDashboardHorizontalLine className="w-6 h-6" /> Dashboard
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink
                     to="/deshbord/adminuserDataSloved"
@@ -148,10 +134,20 @@ const DashBordLayOut = () => {
                 </li>
               </>
             )}
-
             {/* LIBRARIAN */}
             {role === "librarian" && (
               <>
+                <li className="pt-1">
+                  <NavLink
+                    to="/deshbord/librarian"
+                    className={({ isActive }) =>
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${isActive && "bg-gray-800 text-white"}`
+                    }
+                  >
+                    <RiDashboardHorizontalLine className="w-6 h-6" /> Dashboard
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink
                     to="/deshbord/addbooks"
@@ -203,6 +199,17 @@ const DashBordLayOut = () => {
             {/* USER */}
             {role === "user" && (
               <>
+                <li className="pt-1">
+                  <NavLink
+                    to="  /deshbord/userDashbord"
+                    className={({ isActive }) =>
+                      `flex gap-3 px-4 py-1.5 rounded-xl
+                      ${isActive && "bg-gray-800 text-white"}`
+                    }
+                  >
+                    <RiDashboardHorizontalLine className="w-6 h-6" /> Dashboard
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink
                     to="/deshbord/userorder"

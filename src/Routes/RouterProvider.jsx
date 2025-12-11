@@ -26,6 +26,9 @@ import SettingsComponent from "../pages/dashboard/Profile/SettingsComponent";
 import ProfileNavbar from "../pages/Home/ProfileNavbar";
 import NotFound404 from "../pages/NotFound404";
 import WishLise from "../pages/Home/WishList/WishLise";
+import AdminDashBord from "../pages/dashboard/Admin/AdminDashBord";
+import LibrarianDashBord from "../pages/dashboard/Librarian/LibrarianDashBord";
+import UserDashBord from "../pages/dashboard/User/UserDashBord";
 
 export const router = createBrowserRouter([
   {
@@ -128,11 +131,21 @@ export const router = createBrowserRouter([
           </UserRoute>
         ),
       },
+      
       {
         path: "/deshbord/inventory",
         element: (
           <UserRoute>
             <Invortorey></Invortorey>
+          </UserRoute>
+        ),
+      },
+      
+      {
+        path: "/deshbord/userDashbord",
+        element: (
+          <UserRoute>
+            <UserDashBord></UserDashBord>
           </UserRoute>
         ),
       },
@@ -152,6 +165,15 @@ export const router = createBrowserRouter([
           </LibrarianRoute>
         ),
       },
+      // {
+      //   path: "/deshbord/librarian",
+      //   element: (
+      //     <LibrarianRoute>
+      //       <LibrarianDashBord>
+      //     </LibrarianRoute>
+      //   ),
+      // },
+
       {
         path: "/deshbord/adminuserDataSloved",
         element: (
@@ -168,6 +190,16 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+      {
+        path: "/deshbord/admin",
+        element: (
+          <AdminRoute>
+            <AdminDashBord></AdminDashBord>
+          </AdminRoute>
+        ),
+      },
+
+
       {
         path: "/deshbord/profileLoginUser",
         element: <Profile></Profile>,
@@ -188,6 +220,12 @@ export const router = createBrowserRouter([
           </UserRoute>
         ),
       },
+      // {
+      //   path: "/deshbord/whishList",
+      //   element: (
+         
+      //   ),
+      // },
       {
         path: "*",
         Component: NotFound404,
