@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
         path: "/profile2",
         element: (
           <PrivetRoute>
-            <ProfileNavbar></ProfileNavbar>
+            <Profile></Profile>
           </PrivetRoute>
         ),
       },

@@ -13,7 +13,11 @@ export default function WishlistCard() {
   const { user } = useAuth();
   const axioscehore = useAxiosSchore();
 
-  const { data: wishlist,refetch, isLoading } = useQuery({
+  const {
+    data: wishlist,
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["whishlist", user?.email],
     queryFn: async () => {
       const res = await axioscehore.get(`whisListdata?email=${user?.email}`);
@@ -32,7 +36,7 @@ export default function WishlistCard() {
   };
 
   const handleRemove = (whish) => {
-      Swal.fire({
+    Swal.fire({
       title: "Confirm Whish List Book Delete",
       text: `Are you sure you want to delete this ${whish?.bookName}? This action cannot be undone.`,
       icon: "warning",
@@ -84,24 +88,23 @@ export default function WishlistCard() {
     });
   };
 
-  if(isLoading){
-    return <LoadingSpinner/>
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
 
   return (
     <div className="min-h-screen  p-6">
-
       <div className=" mx-auto">
-         <h1 className=" mb-8 text-2xl md:text-3xl leading-tight text-secondary font-bold">
-        <TextType
-          text={`My Wishlist`}
-          typingSpeed={70}
-          deletingSpeed={40}
-          pauseDuration={2000}
-          loop={false}
-          showCursor={false}
-        />
-      </h1>
+        <h1 className=" mb-8 text-2xl md:text-3xl leading-tight text-secondary font-bold">
+          <TextType
+            text={`My Wishlist`}
+            typingSpeed={70}
+            deletingSpeed={40}
+            pauseDuration={2000}
+            loop={false}
+            showCursor={false}
+          />
+        </h1>
         <h1 className="text-3xl  text-gray-800"></h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
