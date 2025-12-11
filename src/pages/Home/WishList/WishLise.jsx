@@ -20,9 +20,11 @@ export default function WishlistCard() {
   } = useQuery({
     queryKey: ["whishlist", user?.email],
     queryFn: async () => {
-      const res = await axioscehore.get(`whisListdata?email=${user?.email}`);
+      const res = await axioscehore.get(
+        `customeraddyourwhishlist?email=${user?.email}`
+      );
       console.log(res.data);
-      return res.data.result;
+      return res.data;
     },
   });
 

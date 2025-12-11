@@ -27,8 +27,12 @@ const DetlicesPages = () => {
     formState: { errors },
   } = useForm();
 
-  // Load Single Book
-  const { data: book = {}, isLoading: newLoding } = useQuery({
+  // Load Single Book Detlices
+  const {
+    data: book = {},
+    isLoading: newLoding,
+    refetch,
+  } = useQuery({
     queryKey: ["book", id],
     queryFn: async () => {
       const res = await axioscehore.get(`/oneBooks/${id}`);
@@ -36,7 +40,7 @@ const DetlicesPages = () => {
     },
   });
 
-  // Load Related Books
+  // Load Related Catagorey Books
   const { data: relatedBooks = [], isLoading } = useQuery({
     queryKey: ["related", book?.category],
     enabled: !!book?.category,
@@ -52,7 +56,7 @@ const DetlicesPages = () => {
   const closeModal = () => setIsOpen(false);
 
   const handelSeawdg = (customerInfo) => {
-    console.log(customerInfo);
+    // console.log(customerInfo);
     const orderInfo = {
       name: customerInfo.name,
       email: customerInfo.email,
@@ -71,6 +75,7 @@ const DetlicesPages = () => {
     });
   };
 
+  // Review Data set
   const handerewiews = (e) => {
     e.preventDefault();
     const reating = e.target.rating.value;
@@ -90,7 +95,8 @@ const DetlicesPages = () => {
       };
       console.log(setReviewDataBase);
       axioscehore.post("reviewUserNow", setReviewDataBase).then((res) => {
-        console.log(res.data);
+        refetch();
+        // console.log(res.data);
         if (res.data.acknowledged) {
           reviewRefe.current.close();
           toast.success("Thanks For Your Review");
@@ -110,8 +116,19 @@ const DetlicesPages = () => {
     },
   });
 
+  const { data: checkValue, refetch: checkValueRefetch } = useQuery({
+    queryKey: ["find", id, user?.email],
+    enabled: !!id && !!user?.email, // Prevent empty calls
+    queryFn: async () => {
+      const res = await axioscehore.get(
+        `findthisBookSavedornot?id=${id}&email=${user?.email}`
+      );
+
+      return res?.data;
+    },
+  });
+
   const bookaddYourWishList = () => {
-    // console.log("Add Data From Whis List",book);
     const setwhislistData = {
       bookId: id,
       bookName: book.title,
@@ -123,39 +140,24 @@ const DetlicesPages = () => {
       wishlisterEmail: user?.email,
       wishlisterName: user?.displayName,
       wishlisterPhoto: user?.photoURL,
-      // reviewerRating: Number(reating),
       wishlistingDate: new Date().toISOString(),
     };
-    console.log(setwhislistData);
+
     axioscehore
       .post(`whiseListerInfo?email=${user?.email}&id=${id}`, setwhislistData)
       .then((res) => {
-        console.log(res.data);
         if (res.data.message === "Book Allready Saved your WhisList") {
-          toast.warning("Book Allready Saved your WhisList");
+          toast.warning("Already on Wishlist!");
+        } else {
+          toast.success("Added to Wishlist!");
         }
+
+        checkValueRefetch();
       });
   };
 
-  const { data: cheackValue } = useQuery({
-    queryKey: ["find", id],
-    queryFn: async () => {
-      const res = await axioscehore.get(
-        `whisListdata?id=${id}?email=${user?.email}`
-      );
-      console.log("ase ki saved", res.data.checkBookId);
-      return res.data.checkBookId;
-    },
-  });
-  console.log(cheackValue);
-
   if (isLoading || newLoding) return <LoadingSpinner></LoadingSpinner>;
   if (reviewLoding) return <LoadingSpinner></LoadingSpinner>;
-
-  // ai whish list er kaj korta chilam
-  // Book wishlist: Allow users to add a book to wishlist from the book details page and users wishlisted book will be shown in the My Wishlist page on user dashboard
-
-  //Complet Now This Task ===>  Review/Rating: If a user ordered a book he/she can give the book a rating or review on the book details page, so that other users can see the ratings
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 pb-24 pt-20">
@@ -365,39 +367,37 @@ const DetlicesPages = () => {
                   </span>
                 </motion.button>
 
-{/* AI Khna velidetions er kaj baki acha  */}
+                {/* AI Khna velidetions er kaj baki acha  */}
 
-
-                <motion.button
-                  onClick={bookaddYourWishList}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full py-2 px-6 rounded-2xl font-bold text-lg bg-gradient-to-r from-orange-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl"
-                >
-                  {cheackValue === true ? (
-                    <p>
-                      <FaCheck /> All Readey Add
-                    </p>
-                  ) : (
-                    <>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                        />
-                      </svg>
-                      Add to Wishlist
-                    </>
-                  )}
-                </motion.button>
+                {!isLoading && checkValue?.saved === false && (
+                  <motion.button
+                    onClick={bookaddYourWishList}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full py-2 px-6 rounded-2xl font-bold text-lg bg-gradient-to-r from-orange-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                      />
+                    </svg>
+                    Add to Wishlist
+                  </motion.button>
+                )}
+                {!isLoading && checkValue?.saved === true && (
+                  <button className="w-full py-2 px-6 rounded-2xl font-bold text-lg bg-green-600 text-white flex items-center justify-center gap-2 shadow-lg">
+                    ✔ Already in Wishlist
+                  </button>
+                )}
               </div>
 
               {/* Trust Badges */}

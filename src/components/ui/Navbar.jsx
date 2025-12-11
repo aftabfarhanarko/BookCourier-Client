@@ -26,9 +26,11 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSchore from "../../hooks/useAxiosSchore";
 import LoadingSpinner from "../../shared/LoadingSpinner ";
+import useRole from "../../hooks/useRole";
 
 export default function Navbar() {
   const axioscehore = useAxiosSchore();
+  const {role} = useRole();
   const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdown, setProfileDropdown] = useState(false);
@@ -47,9 +49,9 @@ export default function Navbar() {
   const { data: wishlistCount } = useQuery({
     queryKey: [user?.email, "whisListdata"],
     queryFn: async () => {
-      const res = await axioscehore.get(`whisListdata?email=${user?.email}`);
-      console.log(res.data.counts);
-      return res?.data?.counts;
+      const res = await axioscehore.get(`whisListdataGetANndswr?email=${user?.email}`);
+      console.log(res.data);
+      return res?.data;
     },
   });
 
@@ -234,7 +236,10 @@ export default function Navbar() {
                 <Moon className="w-5 h-5" />
               )}
             </button>
-
+            
+            {
+              
+            }
             {/* Wishlist Button */}
             <Link to="/deshbord/whishList">
               <motion.button
@@ -266,6 +271,7 @@ export default function Navbar() {
                 )}
               </motion.button>
             </Link>
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
