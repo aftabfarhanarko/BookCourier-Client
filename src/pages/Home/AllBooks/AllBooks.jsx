@@ -26,10 +26,10 @@ const AllBooks = () => {
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ["Publish", "In Stock", page, search],
+    queryKey: ["Publish", "In Stock", page, search, price],
     queryFn: async () => {
       const res = await axioscehore.get(
-        `allBooksCollections?one=Publish&tow=In Stock&limit=${limit}&skip=${skip}&search=${search}`
+        `allBooksCollections?one=Publish&tow=In Stock&limit=${limit}&skip=${skip}&search=${search}&sort=${price}`
       );
       setAllBook(res?.data?.counts);
       console.log(res.data);
@@ -38,7 +38,7 @@ const AllBooks = () => {
     },
   });
 
-  console.log(price);
+  console.log(price, books);
 
   const handelSeawdg = (ol) => {
     const text = ol.search;
@@ -119,12 +119,12 @@ const AllBooks = () => {
     "
             >
               <option disabled={true}>Select Your Price</option>
-              <option value="100-200">৳100-200</option>
-              <option value="300-400">৳300-400</option>
-              <option value="500-600">৳500-600</option>
+              <option value="low">Low to High</option>
+              <option value="high">High to Low</option>
+              {/* <option value="500-600">৳500-600</option>
               <option value="700-800">৳700-800</option>
               <option value="900-1100">৳900-1100</option>
-              <option value="1200-2000">৳1200-৳2000</option>
+              <option value="1200-2000">৳1200-৳2000</option> */}
             </select>
           </label>
         </div>

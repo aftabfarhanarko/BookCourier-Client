@@ -150,7 +150,7 @@ const AdminDashboard = () => {
           />
           <StatCard
             icon={TrendingUp}
-            title="Total Payment Success"
+            title="Payment Success"
             value={stats.totalRented}
             subtitle="All Time"
             bgColor="bg-purple-100"

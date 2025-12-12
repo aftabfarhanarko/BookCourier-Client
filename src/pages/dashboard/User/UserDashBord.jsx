@@ -28,11 +28,12 @@ import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import { NavLink } from "react-router";
+import LoadingSpinner from "../../../shared/LoadingSpinner ";
 
 const UserDashBord = () => {
   const { user } = useAuth();
   const axioscehore = useAxiosSchore();
-  const { data: userData } = useQuery({
+  const { data: userData, isLoading } = useQuery({
     queryKey: ["UserdashbordData"],
     queryFn: async () => {
       const res = await axioscehore.get(
@@ -42,12 +43,7 @@ const UserDashBord = () => {
     },
   });
   console.log(userData);
-//   totalBooksRented: 2;
-//   totalDeliveryuserBook: 1;
-//   totalOrder: 5;
-//   totalpendinguserBook: 4;
-//   totalshippeduserBook: 0;
-  // Sample data - in real app, this would come from API
+
   const [stats] = useState({
     totalOrders: userData?.totalOrder,
     delivered: userData?.totalDeliveryuserBook,
@@ -148,6 +144,9 @@ const UserDashBord = () => {
     </div>
   );
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
   return (
     <div className="min-h-screen bg-gray-50 p-3 sm:p-4 md:p-6">
       <div className="max-w-7xl mx-auto">
@@ -376,9 +375,7 @@ const UserDashBord = () => {
             <Package className="w-5 h-5 mr-2" />
             Track Orders
           </button>
-          <button
-          
-          className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center sm:col-span-2 lg:col-span-1">
+          <button className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center sm:col-span-2 lg:col-span-1">
             <Calendar className="w-5 h-5 mr-2" />
             Rental History
           </button>

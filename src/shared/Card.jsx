@@ -108,27 +108,27 @@ const Card = ({ book }) => {
             className="text-lg font-semibold text-gray-900 truncate"
             title={book.title}
           >
-         Name:   {book.title}
+            Name: {book.title}
           </h2>
 
-          {/* Language */} 
+          {/* Language */}
           <p className="text-xs text-gray-700">Language : {book.language}</p>
 
           {/* Rating */}
           <p className="text-[12px] text-yellow-500 font-medium">
-            Rating :  ⭐ {book.rating_avg || 0} / 5
+            Rating : ⭐ {book.rating_avg || 0} / 5
           </p>
 
           {/* Price */}
-          <p className="text-gray-900 font-semibold text-base mt-1">
-            MRP : {" "}
-            <span className="line-through text-red-500 mr-2">
-              ৳ {book.price_mrp}
-            </span>
-            <span className="text-green-600 font-bold">
-              ৳ {Math.floor(book.price_mrp * 0.85)}
-            </span>
-          </p>
+          <div className="text-gray-900 font-semibold text-base mt-1">
+            {/* MRP */}
+            <p className="text-red-500 line-through">MRP: ৳ {book.price_mrp}</p>
+
+            {/* Sell Price */}
+            <p className="text-green-600 font-bold">
+              Sell Price: ৳ {Math.floor(book.price_sell)}
+            </p>
+          </div>
 
           {/* View Details Button */}
           <button

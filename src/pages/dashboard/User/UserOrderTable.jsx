@@ -32,7 +32,7 @@ const UserOrderTable = () => {
         `orderlist?email=${user?.email}&limit=${limit}&skip=${skip}`
       );
       console.log(res.data);
-      
+
       setAllUser(res.data.counts || []);
       return res?.data?.result || [];
     },
@@ -126,8 +126,9 @@ const UserOrderTable = () => {
     console.log("All Boks Informations", bookInfo);
     // console.log(orderData.sellerInfo.sellerName);
   };
-  if (isLoading || isFetching || !user?.email)
+  if (isLoading || isFetching || !user?.email) {
     return <LoadingSpinner></LoadingSpinner>;
+  }
 
   return (
     <div>

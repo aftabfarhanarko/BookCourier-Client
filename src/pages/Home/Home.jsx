@@ -18,7 +18,7 @@ const Home = () => {
         <Banner></Banner>
       </section>
       <div className=" w-11/12 mx-auto">
-      {/* <section className=" mt-30">
+        {/* <section className=" mt-30">
           <MewSections></MewSections>
         </section> */}
         <section className=" mt-30">
@@ -33,17 +33,18 @@ const Home = () => {
         <section className=" mt-30">
           <BookFicher></BookFicher>
         </section>
-        <section className=" mt-30">
-          <MapNow></MapNow>
-        </section>
+
         <section className=" mt-30">
           <Cousebooksconires></Cousebooksconires>
         </section>
-        
+
         <section className=" w-11/12 mx-auto mt-30">
           <WhyChooseBook></WhyChooseBook>
         </section>
-        <section className=" ">
+        <section className=" mt-30">
+          <MapNow></MapNow>
+        </section>
+        <section className=" mt-30 ">
           <Marqey></Marqey>
         </section>
       </div>
