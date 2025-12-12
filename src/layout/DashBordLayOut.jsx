@@ -1,6 +1,6 @@
 import { NavLink, Link, Outlet, Navigate } from "react-router";
 
-import { FaBookReader } from "react-icons/fa";
+import { FaBookReader, FaUserCheck } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 import { CiSettings, CiUser } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
@@ -53,9 +53,16 @@ const DashBordLayOut = () => {
           </div>
 
           {/* Avatar */}
-          <div>
-            <div className="w-10 h-10 rounded-full ring ring-orange-500 flex items-center justify-center">
-              <CiUser className="w-6 h-6 text-orange-500" />
+          <div className=" pr-7">
+            <div className="w-12 h-12 rounded-full ring ring-orange-500 flex items-center justify-center">
+              {user ? (
+                <img
+                  src={user?.photoURL}
+                  className=" w-12 h-12 rounded-full border border-orange-500"
+                ></img>
+              ) : (
+                <CiUser className="w-7 h-7 text-orange-500" />
+              )}
             </div>
           </div>
         </nav>
