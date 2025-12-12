@@ -6,8 +6,10 @@ import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import { toast } from "sonner";
 import TextType from "../../../utils/TextType";
 import { GiSpellBook } from "react-icons/gi";
+import { useNavigate } from "react-router";
 
 const AddBookLibery = () => {
+  const naviget = useNavigate();
   const {
     register,
     handleSubmit,
@@ -43,13 +45,13 @@ const AddBookLibery = () => {
     };
 
     axioscehore.post("book", savedDatabase).then((res) => {
+      if (res.data.acknowledged) {
+        toast.success("Books Creat Successfully");
+        naviget("/deshbord/myBooks")
+      }
       console.log(res.data);
-      toast.success("Books Creat Successfully");
     });
   };
-
-
-  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50">
