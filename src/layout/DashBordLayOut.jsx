@@ -21,7 +21,6 @@ const DashBordLayOut = () => {
   const { user, loding, userLogOut } = useAuth();
   const { role, roleLoding } = useRole();
   // console.log(role);
-  
 
   if (loding || roleLoding) {
     return <LoadingSpinner></LoadingSpinner>;
@@ -104,7 +103,11 @@ const DashBordLayOut = () => {
                     to="/deshbord/admin"
                     className={({ isActive }) =>
                       `flex gap-3 px-4 py-1.5 rounded-xl
-                      ${isActive && "bg-gray-800 text-white"}`
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
                     }
                   >
                     <RiDashboardHorizontalLine className="w-6 h-6" /> Dashboard
@@ -151,7 +154,11 @@ const DashBordLayOut = () => {
                     to="/deshbord/libraian"
                     className={({ isActive }) =>
                       `flex gap-3 px-4 py-1.5 rounded-xl
-                      ${isActive && "bg-gray-800 text-white"}`
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
                     }
                   >
                     <RiDashboardHorizontalLine className="w-6 h-6" /> Dashboard
@@ -213,7 +220,11 @@ const DashBordLayOut = () => {
                     to="/deshbord/user"
                     className={({ isActive }) =>
                       `flex gap-3 px-4 py-1.5 rounded-xl
-                      ${isActive && "bg-gray-800 text-white"}`
+                      ${
+                        isActive
+                          ? "bg-orange-500 text-white"
+                          : "hover:bg-gray-800"
+                      }`
                     }
                   >
                     <RiDashboardHorizontalLine className="w-6 h-6" /> Dashboard
