@@ -20,16 +20,18 @@ const ManazeBooks = () => {
   const totalPage = Math.ceil(allUser / limit);
 
   const { data, isLoading, isFetching, refetch } = useQuery({
-    queryKey: ["admin", page],
+    queryKey: ["allbooksdatafind", page],
     queryFn: async () => {
       const res = await axioscehore.get(
-        `allbooks?email=${user?.email}&limit=${limit}&skip=${skip}`
+        `allbooksdatafind?email=${user?.email}&limit=${limit}&skip=${skip}`
       );
       // console.log(res.data);
       setAllUser(res.data.counts);
       return res.data.result || [];
     },
   });
+  console.log(data);
+  
 
   const handelDeletNow = (items) => {
     console.log(items);

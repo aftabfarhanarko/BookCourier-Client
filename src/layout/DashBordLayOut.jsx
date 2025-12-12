@@ -20,6 +20,8 @@ import useRole from "../hooks/useRole";
 const DashBordLayOut = () => {
   const { user, loding, userLogOut } = useAuth();
   const { role, roleLoding } = useRole();
+  // console.log(role);
+  
 
   if (loding || roleLoding) {
     return <LoadingSpinner></LoadingSpinner>;

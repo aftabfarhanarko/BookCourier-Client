@@ -112,7 +112,7 @@ const DetlicesPages = () => {
       const res = await axioscehore.get(
         `detliseBookReview/${id}?email=${user?.email}`
       );
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
     },
   });
@@ -156,7 +156,7 @@ const DetlicesPages = () => {
         checkValueRefetch();
       });
 
-    queryClient.invalidateQueries([user?.email, "whisListdata"]);
+    queryClient.invalidateQueries(["whisListdata", user?.email]);
   };
 
   if (isLoading || newLoding) return <LoadingSpinner></LoadingSpinner>;

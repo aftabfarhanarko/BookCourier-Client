@@ -29,6 +29,7 @@ import WishLise from "../pages/Home/WishList/WishLise";
 import AdminDashBord from "../pages/dashboard/Admin/AdminDashBord";
 import LibrarianDashBord from "../pages/dashboard/Librarian/LibrarianDashBord";
 import UserDashBord from "../pages/dashboard/User/UserDashBord";
+import AutoRedirectDashboard from "../pages/dashboard/AutoRedirectDashboard/AutoRedirectDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -95,145 +96,42 @@ export const router = createBrowserRouter([
     ],
   },
   // Dashbord
-  {
-    path: "/deshbord",
-    element: (
-      <PrivetRoute>
-        <DashBordLayOut></DashBordLayOut>{" "}
-      </PrivetRoute>
-    ),
-    children: [
-      {
-        path: "/deshbord/addbooks",
-        element: (
-          <LibrarianRoute>
-            <AddBookLibery></AddBookLibery>
-          </LibrarianRoute>
-        ),
-      },
-      {
-        path: "/deshbord/userorder",
-        element: (
-          <UserRoute>
-            <UserOrderTable></UserOrderTable>
-          </UserRoute>
-        ),
-      },
-      {
-        path: "/deshbord/pymentSuccess",
-        element: <PaymentSuccess></PaymentSuccess>,
-      },
-      {
-        path: "/deshbord/paymenthistory",
-        element: (
-          <UserRoute>
-            <PaymentHistory></PaymentHistory>
-          </UserRoute>
-        ),
-      },
-      
-      {
-        path: "/deshbord/inventory",
-        element: (
-          <UserRoute>
-            <Invortorey></Invortorey>
-          </UserRoute>
-        ),
-      },
-      {
-        path: "/deshbord/myBooks",
-        element: (
-          <LibrarianRoute>
-            <MyBooks></MyBooks>
-          </LibrarianRoute>
-        ),
-      },
-      {
-        path: "/deshbord/orderAllBooks",
-        element: (
-          <LibrarianRoute>
-            <OrderAllBooks></OrderAllBooks>
-          </LibrarianRoute>
-        ),
-      },
-      // {
-      //   path: "/deshbord/librarian",
-      //   element: (
-      //     <LibrarianRoute>
-      //       <LibrarianDashBord>
-      //     </LibrarianRoute>
-      //   ),
-      // },
+ {
+  path: "/deshbord",
+  element: (
+    <PrivetRoute>
+      <DashBordLayOut />
+    </PrivetRoute>
+  ),
+  children: [
+    {
+      index: true,
+      element: <AutoRedirectDashboard />
+    },
 
-      {
-        path: "/deshbord/adminuserDataSloved",
-        element: (
-          <AdminRoute>
-            <AlluserData></AlluserData>
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "/deshbord/manazeBooks",
-        element: (
-          <AdminRoute>
-            <ManazeBooks></ManazeBooks>
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "/deshbord/admin",
-        element: (
-          <AdminRoute>
-            <AdminDashBord></AdminDashBord>
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "/deshbord/user",
-        element: (
-         <UserRoute>
-          <UserDashBord></UserDashBord>
-         </UserRoute>
-        ),
-      },
-      {
-        path: "/deshbord/libraian",
-        element: (
-        <LibrarianRoute>
-          <LibrarianDashBord></LibrarianDashBord>
-        </LibrarianRoute>
-        ),
-      },
+    { path: "addbooks", element: <LibrarianRoute><AddBookLibery /></LibrarianRoute> },
+    { path: "userorder", element: <UserRoute><UserOrderTable /></UserRoute> },
+    { path: "pymentSuccess", element: <PaymentSuccess /> },
+    { path: "paymenthistory", element: <UserRoute><PaymentHistory /></UserRoute> },
+    { path: "inventory", element: <UserRoute><Invortorey /></UserRoute> },
+    { path: "myBooks", element: <LibrarianRoute><MyBooks /></LibrarianRoute> },
+    { path: "orderAllBooks", element: <LibrarianRoute><OrderAllBooks /></LibrarianRoute> },
 
+    { path: "adminuserDataSloved", element: <AdminRoute><AlluserData /></AdminRoute> },
+    { path: "manazeBooks", element: <AdminRoute><ManazeBooks /></AdminRoute> },
 
-      {
-        path: "/deshbord/profileLoginUser",
-        element: <Profile></Profile>,
-      },
-      {
-        path: "/deshbord/settings",
-        element: (
-          <PrivetRoute>
-            <SettingsComponent></SettingsComponent>
-          </PrivetRoute>
-        ),
-      },
-      {
-        path: "/deshbord/whishList",
-        element: (
-          <UserRoute>
-            <WishLise></WishLise>
-          </UserRoute>
-        ),
-      },
-     
-      {
-        path: "*",
-        Component: NotFound404,
-      },
-    ],
-  },
+    { path: "admin", element: <AdminRoute><AdminDashBord /></AdminRoute> },
+    { path: "user", element: <UserRoute><UserDashBord /></UserRoute> },
+    { path: "libraian", element: <LibrarianRoute><LibrarianDashBord /></LibrarianRoute> },
+
+    { path: "profileLoginUser", element: <Profile /> },
+    { path: "settings", element: <PrivetRoute><SettingsComponent /></PrivetRoute> },
+    { path: "whishList", element: <UserRoute><WishLise /></UserRoute> },
+
+    { path: "*", Component: NotFound404 }
+  ],
+},
+
   {
     path: "*",
     Component: NotFound404,

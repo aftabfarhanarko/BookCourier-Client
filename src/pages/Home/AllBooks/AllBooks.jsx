@@ -32,13 +32,13 @@ const AllBooks = () => {
         `allBooksCollections?one=Publish&tow=In Stock&limit=${limit}&skip=${skip}&search=${search}&sort=${price}`
       );
       setAllBook(res?.data?.counts);
-      console.log(res.data);
+      // console.log(res.data);
 
       return res?.data?.result || [];
     },
   });
 
-  console.log(price, books);
+  // console.log(price, books);
 
   const handelSeawdg = (ol) => {
     const text = ol.search;
@@ -118,18 +118,14 @@ const AllBooks = () => {
       transition-all duration-300
     "
             >
-              <option disabled={true}>Select Your Price</option>
+              <option disabled={true}>Select Any Option</option>
               <option value="low">Low to High</option>
               <option value="high">High to Low</option>
-              {/* <option value="500-600">৳500-600</option>
-              <option value="700-800">৳700-800</option>
-              <option value="900-1100">৳900-1100</option>
-              <option value="1200-2000">৳1200-৳2000</option> */}
             </select>
           </label>
         </div>
       </div>
-      <div className=" grid mx-auto  grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mt-15">
+      <div className=" grid mx-auto  items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mt-15">
         {books.length === 0 ? (
           <PageNotFOund></PageNotFOund>
         ) : (

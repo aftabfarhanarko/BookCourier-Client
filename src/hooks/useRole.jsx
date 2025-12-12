@@ -1,21 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import useAuth from "./useAuth";
 import useAxiosSchore from "./useAxiosSchore";
 
 const useRole = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const axioscehore = useAxiosSchore();
-  const { data: role = "user", isLoading: roleLoding } = useQuery({
-    queryKey: ["user-role"],
+
+  const { data: role, isLoading: roleLoading } = useQuery({
+    queryKey: ["role-findnow", user?.email],
+    enabled: !!user?.email && !loading,
     queryFn: async () => {
-      const res = await axioscehore.get(`role-findnow?email=${user?.email}`);
-      console.log(res);
-      return res.data;
+      const res = await axioscehore.get(`role-findnow?email=${user.email}`);
+      return res.data.role;
     },
   });
 
-  return { roleLoding, role };
+  return { role, roleLoading };
 };
 
 export default useRole;

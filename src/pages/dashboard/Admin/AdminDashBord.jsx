@@ -15,6 +15,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { CiClock2 } from "react-icons/ci";
+import { Wallet } from 'lucide-react';
 
 import {
   Users,
@@ -32,14 +33,14 @@ import LoadingSpinner from "../../../shared/LoadingSpinner ";
 
 const AdminDashboard = () => {
   const axioscehore = useAxiosSchore();
-  const { data: admin, isLoading } = useQuery({
+  const { data: admin } = useQuery({
     queryKey: ["adminDeshbordData"],
     queryFn: async () => {
       const res = await axioscehore.get("admindeshborderdata");
       return res.data;
     },
   });
-  console.log(admin);
+  // console.log(admin);
   // Sample data - in real app, this would come from API
   const stats = {
     totalUsers: admin?.userCounts ?? 0,
@@ -50,15 +51,23 @@ const AdminDashboard = () => {
     revenue: 45280,
   };
 
-  // Monthly data for charts
-  const monthlyData = [
-    { month: "Jan", users: 85, books: 245, rented: 180 },
-    { month: "Feb", users: 92, books: 280, rented: 210 },
-    { month: "Mar", users: 108, books: 320, rented: 245 },
-    { month: "Apr", users: 125, books: 385, rented: 290 },
-    { month: "May", users: 142, books: 420, rented: 335 },
-    { month: "Jun", users: 158, books: 465, rented: 380 },
-  ];
+  const { data: creat } = useQuery({
+    queryKey: ["registeruserData"],
+    queryFn: async () => {
+      const res = await axioscehore.get("/userCreatTimeALlfind");
+      return res.data;
+    },
+  });
+
+  // console.log(creat);
+
+  // Convert creat array to chart-friendly format
+  const monthlyData = creat?.map((item) => ({
+    month: item.date, // or convert to month name if needed
+    users: item.userCount, // use actual user count
+    books: item.bookCount, // use actual book count
+    rented: 1, // keep static placeholder if needed
+  }));
 
   const categoryData = [
     { name: "Programming", value: 1250, color: "#3b82f6" }, // Blue
@@ -79,9 +88,23 @@ const AdminDashboard = () => {
     { status: "Pending", value: stats.pendingDelivery, color: "#f59e0b" },
   ];
 
+  const { data: collections } = useQuery({
+    queryKey: ["resentBooksUserOrderCollections"],
+    queryFn: async () => {
+      const res = await axioscehore.get("resentBooksUserOrderCollections");
+      return res.data;
+    },
+  });
 
+  const { data: paymentAmount } = useQuery({
+    queryKey: ["tatalPaymentAllBooks"],
+    queryFn: async () => {
+      const res = await axioscehore.get("tatalPaymentAllBooks");
+      return res.data;
+    },
+  });
 
-
+  console.log(paymentAmount);
 
   const StatCard = ({
     icon: Icon,
@@ -113,10 +136,6 @@ const AdminDashboard = () => {
     </div>
   );
 
-
-//     if(isLoading){
-//     return <LoadingSpinner/>
-//   }
   return (
     <div className="min-h-screen bg-gray-50 p-3 sm:p-4 md:p-6">
       <div className="max-w-7xl mx-auto">
@@ -251,7 +270,7 @@ const AdminDashboard = () => {
           {/* Monthly Revenue Bar Chart */}
           <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
-              Monthly Book Rentals
+              Daily Added Books
             </h2>
             <div className="w-full overflow-x-auto">
               <ResponsiveContainer width="100%" height={250} minWidth={300}>
@@ -269,9 +288,9 @@ const AdminDashboard = () => {
                   />
                   <Legend wrapperStyle={{ fontSize: "12px" }} />
                   <Bar
-                    dataKey="rented"
-                    fill="#8b5cf6"
-                    name="Rented Books"
+                    dataKey="books" // <-- show added books per day
+                    fill="#10b981" // green color for added books
+                    name="Added Books" // updated label
                     radius={[8, 8, 0, 0]}
                   />
                 </BarChart>
@@ -279,110 +298,236 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Delivery Status and Revenue */}
           <div className="space-y-4 sm:space-y-6">
-            {/* Delivery Status Pie */}
-            <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
-                Delivery Status
-              </h2>
-              <div className="w-full overflow-x-auto">
-                <ResponsiveContainer width="100%" height={180} minWidth={250}>
-                  <PieChart>
-                    <Pie
-                      data={deliveryData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={40}
-                      outerRadius={70}
-                      fill="#8884d8"
-                      paddingAngle={5}
-                      dataKey="value"
-                      label={({ status, value }) => `${status}: ${value}`}
-                    >
-                      {deliveryData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip contentStyle={{ fontSize: "12px" }} />
-                  </PieChart>
-                </ResponsiveContainer>
+            {/* Revenue Card */}
+            <div className="">
+              {/* Revenue Card */}
+              <div className="relative bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 rounded-3xl p-6 shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-3xl hover:scale-[1.02]">
+                {/* Background Pattern with Animation */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32 animate-pulse"></div>
+                  <div
+                    className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-24 -translate-x-24 animate-pulse"
+                    style={{ animationDelay: "1s" }}
+                  ></div>
+                </div>
+
+                {/* Content */}
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between">
+                    {/* Left Side - Main Info */}
+                    <div className="flex-1">
+                      {/* Icon */}
+                      <div className="inline-flex items-center justify-center w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl mb-4 transition-transform duration-300 hover:scale-110">
+                        <DollarSign
+                          className="w-7 h-7 text-white animate-pulse"
+                          strokeWidth={2.5}
+                        />
+                      </div>
+
+                      {/* Label */}
+                      <p className="text-white/90 text-sm font-medium mb-2 tracking-wide">
+                        Total Earnings
+                      </p>
+
+                      {/* Amount with Animation */}
+                      <h2 className="text-white text-4xl font-bold mb-3 transition-all duration-300 hover:scale-105">
+                        ৳ {paymentAmount?.totalAmount}
+                      </h2>
+
+                      {/* Increase Badge */}
+                      <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/30">
+                        <TrendingUp className="w-4 h-4 text-white" />
+                        <span className="text-white text-sm font-semibold">
+                          23% increase this month
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Right Side - Stats */}
+                    <div className="flex flex-col gap-3 ml-6">
+                      {/* Total Transactions */}
+
+                      <div className="bg-white/15 backdrop-blur-sm rounded-xl px-4 py-3 min-w-[160px] flex items-center gap-3 transition-all duration-300 hover:bg-white/25">
+                        {/* Icon */}
+                        <div className="inline-flex items-center justify-center w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg">
+                        <Wallet  className="w-5 h-5 text-white" />
+                         
+                        </div>
+
+                        {/* Info */}
+                        <div className="flex-1">
+                          <p className="text-white/80 text-xs font-medium mb-1">
+                            Total Payments Customer
+                          </p>
+                          <p className="text-white text-2xl font-bold">
+                            {paymentAmount?.totalPayment}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/15 backdrop-blur-sm rounded-xl px-4 py-3 min-w-[160px] flex items-center gap-3 transition-all duration-300 hover:bg-white/25">
+                        {/* Icon */}
+                        <div className="inline-flex items-center justify-center w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg">
+                          <Users
+                            className="w-5 h-5 text-white"
+                            strokeWidth={2}
+                          />
+                        </div>
+
+                        {/* Info */}
+                        <div className="flex-1">
+                          <p className="text-white/80 text-xs font-medium mb-1">
+                            Active Users
+                          </p>
+                          <p className="text-white text-2xl font-bold">
+                            {paymentAmount?.totalUsers}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom Stats Row */}
+                  <div className="grid grid-cols-3 gap-3 mt-6 pt-4 border-t border-white/20">
+                    <div className="text-center">
+                      <p className="text-white/70 text-xs mb-1">Total Books</p>
+                      <p className="text-white text-lg font-bold">
+                        {paymentAmount?.totalBooks}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-white/70 text-xs mb-1">
+                        Total Orders Books
+                      </p>
+                      <p className="text-white text-lg font-bold">
+                        {paymentAmount?.totalOrders}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-white/70 text-xs mb-1">
+                        This Month Sell Amount
+                      </p>
+                      <p className="text-white text-lg font-bold">
+                        ৳ {paymentAmount?.totalAmount}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Decorative Elements with Animation */}
+                <div
+                  className="absolute bottom-4 right-4 w-24 h-24 border-4 border-white/10 rounded-full animate-spin"
+                  style={{ animationDuration: "8s" }}
+                ></div>
+                <div
+                  className="absolute top-1/2 right-8 w-2 h-2 bg-white/30 rounded-full animate-bounce"
+                  style={{ animationDelay: "0.5s" }}
+                ></div>
+                <div
+                  className="absolute top-1/3 right-16 w-3 h-3 bg-white/20 rounded-full animate-bounce"
+                  style={{ animationDelay: "1s" }}
+                ></div>
               </div>
             </div>
+          </div>
+        </div>
 
-            {/* Revenue Card */}
-            <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg shadow-md p-4 sm:p-6 text-white">
-              <div className="flex items-center justify-between">
-                <div className="flex-1 min-w-0">
-                  <p className="text-blue-100 text-xs sm:text-sm font-medium mb-1">
-                    Total Revenue
-                  </p>
-                  <h3 className="text-3xl sm:text-4xl font-bold truncate">
-                    ৳{stats.revenue.toLocaleString()}
-                  </h3>
-                  <p className="text-blue-100 text-xs sm:text-sm mt-2">
-                    23% increase this month
-                  </p>
-                </div>
-                <div className="bg-white bg-opacity-20 p-3 sm:p-4 rounded-full flex-shrink-0 ml-2">
-                  <DollarSign className="w-8 h-8 sm:w-10 sm:h-10" />
-                </div>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+          {/* Recent Activity */}
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 flex flex-col h-full">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
+              Recent Activity
+            </h2>
+            <div className="space-y-2 sm:space-y-3 flex-1 overflow-y-auto">
+              {collections?.map((item, index) => {
+                let activity = {};
+
+                if (item.type === "latestUser") {
+                  activity = {
+                    icon: Users,
+                    text: `New user registration: ${item.displayName}`,
+                    time: "Just now",
+                    color: "text-blue-600",
+                  };
+                } else if (item.type === "latestBook") {
+                  activity = {
+                    icon: BookOpen,
+                    text: `New book added: "${item.title}"`,
+                    time: "Just now",
+                    color: "text-green-600",
+                  };
+                } else if (item.type === "latestDeliveredOrder") {
+                  activity = {
+                    icon: CheckCircle,
+                    text: `Delivery completed: Order #${item.order?._id.slice(
+                      -4
+                    )}`,
+                    time: "Just now",
+                    color: "text-emerald-600",
+                  };
+                } else if (item.type === "latestPayment") {
+                  activity = {
+                    icon: DollarSign,
+                    text: `Payment received: ৳${item.payment?.amount || 0}`,
+                    time: "Just now",
+                    color: "text-yellow-500",
+                  };
+                }
+
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center p-2 sm:p-3 hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    <activity.icon
+                      className={`${activity.color} w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3 flex-shrink-0`}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-gray-800 text-xs sm:text-sm font-medium truncate">
+                        {activity.text}
+                      </p>
+                    </div>
+                    <span className="text-gray-400 text-xs ml-2 flex-shrink-0">
+                      {activity.time}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Delivery Status Pie */}
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 flex flex-col h-full">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
+              Delivery or Pending All Books
+            </h2>
+            <div className="w-full flex-1 flex items-center justify-center">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={deliveryData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={40}
+                    outerRadius={70}
+                    fill="#8884d8"
+                    paddingAngle={5}
+                    dataKey="value"
+                    label={({ status, value }) => `${status}: ${value}`}
+                  >
+                    {deliveryData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip contentStyle={{ fontSize: "12px" }} />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
           </div>
         </div>
 
         {/* Recent Activity */}
-        <div className="mt-6 sm:mt-8 bg-white rounded-lg shadow-md p-4 sm:p-6">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
-            Recent Activity
-          </h2>
-          <div className="space-y-2 sm:space-y-3">
-            {[
-              {
-                icon: Users,
-                text: "New user registration: Mohammad Rahim",
-                time: "5 mins ago",
-                color: "text-blue-600",
-              },
-              {
-                icon: BookOpen,
-                text: 'New book added: "The Great Gatsby"',
-                time: "15 mins ago",
-                color: "text-green-600",
-              },
-              {
-                icon: Package,
-                text: 'Book rented: "To Kill a Mockingbird"',
-                time: "30 mins ago",
-                color: "text-purple-600",
-              },
-              {
-                icon: CheckCircle,
-                text: "Delivery completed: Order #1234",
-                time: "1 hour ago",
-                color: "text-emerald-600",
-              },
-            ].map((activity, index) => (
-              <div
-                key={index}
-                className="flex items-center p-2 sm:p-3 hover:bg-gray-50 rounded-lg transition-colors"
-              >
-                <activity.icon
-                  className={`${activity.color} w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3 flex-shrink-0`}
-                />
-                <div className="flex-1 min-w-0">
-                  <p className="text-gray-800 text-xs sm:text-sm font-medium truncate">
-                    {activity.text}
-                  </p>
-                </div>
-                <span className="text-gray-400 text-xs ml-2 flex-shrink-0">
-                  {activity.time}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );

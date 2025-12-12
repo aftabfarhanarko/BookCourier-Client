@@ -70,7 +70,7 @@ const Rigester = () => {
           password: res?.user?.password || "12453hgfgyusf%44hgv",
           photoURL: res?.user?.photoURL,
         };
-        console.log(savedDatabase);
+        // console.log(savedDatabase);
         
         axioShore.post(`ucustomer`, savedDatabase).then((res) => {
           console.log(res.data);

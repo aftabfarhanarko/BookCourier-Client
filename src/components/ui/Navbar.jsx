@@ -26,13 +26,10 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSchore from "../../hooks/useAxiosSchore";
 import LoadingSpinner from "../../shared/LoadingSpinner ";
-import useRole from "../../hooks/useRole";
 import { IoIosLogOut } from "react-icons/io";
 
 export default function Navbar() {
   const axioscehore = useAxiosSchore();
-  const { role } = useRole();
-  const [show, setShow] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdown, setProfileDropdown] = useState(false);
@@ -49,12 +46,12 @@ export default function Navbar() {
 
   // Real Time Updeat Baki..... ?
   const { data: wishlistCount } = useQuery({
-    queryKey: [user?.email, "whisListdata"],
+    queryKey: ["whisListdata", user?.email],
     queryFn: async () => {
       const res = await axioscehore.get(
         `whisListdataGetANndswr?email=${user?.email}`
       );
-      console.log(res.data);
+      // console.log(res.data);
       return res?.data;
     },
   });
@@ -70,9 +67,7 @@ export default function Navbar() {
     },
   });
 
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
+
   return (
     <nav
       className={`${bgPrimary} border-b ${borderColor} shadow-sm transition-colors duration-300 sticky top-0 z-50    fixed `}
