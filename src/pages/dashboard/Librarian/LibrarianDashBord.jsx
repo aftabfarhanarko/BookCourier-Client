@@ -237,57 +237,16 @@ const LibrarianDashboard = () => {
           />
         </div>
 
-        {/* Secondary Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
-          <div className="bg-gradient-to-br from-orange-500 to-red-600 rounded-lg shadow-md p-4 sm:p-6 text-white">
-            <div className="flex items-center justify-between">
-              <div className="flex-1 min-w-0">
-                <p className="text-orange-100 text-xs sm:text-sm font-medium mb-1">
-                  Pending Orders
-                </p>
-                <h3 className="text-3xl sm:text-4xl font-bold">
-                  {stats.pendingOrders}
-                </h3>
-                <p className="text-orange-100 text-xs sm:text-sm mt-2">
-                  Need attention
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-20 p-3 sm:p-4 rounded-full flex-shrink-0 ml-2">
-                <AlertCircle className="w-8 h-8 sm:w-10 sm:h-10" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg shadow-md p-4 sm:p-6 text-white">
-            <div className="flex items-center justify-between">
-              <div className="flex-1 min-w-0">
-                <p className="text-indigo-100 text-xs sm:text-sm font-medium mb-1">
-                  Active Listings
-                </p>
-                <h3 className="text-3xl sm:text-4xl font-bold">
-                  {stats.activeListings}
-                </h3>
-                <p className="text-indigo-100 text-xs sm:text-sm mt-2">
-                  Available for rent
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-20 p-3 sm:p-4 rounded-full flex-shrink-0 ml-2">
-                <Package className="w-8 h-8 sm:w-10 sm:h-10" />
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-          {/* Books Added Over Time */}
+          {/* Earnings Trend */}
           <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
-              Monthly Books Added
+              Earnings Trend
             </h2>
             <div className="w-full overflow-x-auto">
               <ResponsiveContainer width="100%" height={250} minWidth={300}>
-                <BarChart data={booksAddedData}>
+                <AreaChart data={booksAddedData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                   <XAxis dataKey="month" tick={{ fontSize: 10 }} />
                   <YAxis tick={{ fontSize: 10 }} />
@@ -300,13 +259,15 @@ const LibrarianDashboard = () => {
                     }}
                   />
                   <Legend wrapperStyle={{ fontSize: "12px" }} />
-                  <Bar
-                    dataKey="books"
-                    fill="#3b82f6"
-                    name="Books Added"
-                    radius={[8, 8, 0, 0]}
+                  <Area
+                    type="monotone"
+                    dataKey="earnings"
+                    stroke="#10b981"
+                    fill="#10b981"
+                    fillOpacity={0.6}
+                    name="Earnings (৳)"
                   />
-                </BarChart>
+                </AreaChart>
               </ResponsiveContainer>
             </div>
           </div>
@@ -342,39 +303,6 @@ const LibrarianDashboard = () => {
 
         {/* Earnings & Categories */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-          {/* Earnings Trend */}
-          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
-              Earnings Trend
-            </h2>
-            <div className="w-full overflow-x-auto">
-              <ResponsiveContainer width="100%" height={250} minWidth={300}>
-                <AreaChart data={booksAddedData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                  <XAxis dataKey="month" tick={{ fontSize: 10 }} />
-                  <YAxis tick={{ fontSize: 10 }} />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#fff",
-                      border: "1px solid #e5e7eb",
-                      borderRadius: "8px",
-                      fontSize: "12px",
-                    }}
-                  />
-                  <Legend wrapperStyle={{ fontSize: "12px" }} />
-                  <Area
-                    type="monotone"
-                    dataKey="earnings"
-                    stroke="#10b981"
-                    fill="#10b981"
-                    fillOpacity={0.6}
-                    name="Earnings (৳)"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
           {/* Book Categories */}
           <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
@@ -401,6 +329,38 @@ const LibrarianDashboard = () => {
                   </Pie>
                   <Tooltip contentStyle={{ fontSize: "12px" }} />
                 </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Books Added Over Time */}
+
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
+             Delayed Books Added
+            </h2>
+            <div className="w-full overflow-x-auto">
+              <ResponsiveContainer width="100%" height={250} minWidth={300}>
+                <BarChart data={booksAddedData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <XAxis dataKey="month" tick={{ fontSize: 10 }} />
+                  <YAxis tick={{ fontSize: 10 }} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "8px",
+                      fontSize: "12px",
+                    }}
+                  />
+                  <Legend wrapperStyle={{ fontSize: "12px" }} />
+                  <Bar
+                    dataKey="books"
+                    fill="#3b82f6"
+                    name="Books Added"
+                    radius={[8, 8, 0, 0]}
+                  />
+                </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
@@ -455,14 +415,20 @@ const LibrarianDashboard = () => {
             View My Books
           </button>
 
-          <button onClick={()=> naviget("/deshbord/orderAllBooks")} className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
+          <button
+            onClick={() => naviget("/deshbord/orderAllBooks")}
+            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
+          >
             <Package className="w-5 h-5 mr-2" />
             Manage Order Books
           </button>
 
-          <button onClick={()=> naviget("/books")} className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
+          <button
+            onClick={() => naviget("/books")}
+            className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
+          >
             <ClipboardClock className="w-5 h-5 mr-2" />
-           View ALl Books 
+            View ALl Books
           </button>
         </div>
       </div>
