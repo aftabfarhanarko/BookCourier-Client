@@ -40,14 +40,7 @@ const Profile = () => {
       return res.data;
     },
   });
-
-  const {data:userDta} = useQuery({
-    queryKey:["getUserInDatabase"],
-    queryFn: async () => {
-      const res = await axioscehore.get(`getUserInDatabase?email=${user?.email}`);
-      return res.data;
-    }
-  })
+  
 
   const handelUpdeatProfile = () => {
     // console.log("Profile");
@@ -71,7 +64,7 @@ const Profile = () => {
       upphotos = data?.data?.display_url;
     } else {
       // no new image → use old one
-      upphotos = userDta.photoURL;
+      upphotos = usersas.photoURL;
     }
     const updetProdileUser = {
       email: neawsa.email,
@@ -252,7 +245,7 @@ const Profile = () => {
             {/* Profile Image Preview */}
             <div className="flex items-center gap-4">
               <img
-                src={userDta?.photoURL}
+                src={user?.photoURL}
                 className="w-20 h-20 rounded-full object-cover border-2 border-orange-500"
               />
             </div>
@@ -278,7 +271,7 @@ const Profile = () => {
               <input
                 {...register("displayName")}
                 type="text"
-                defaultValue={userDta?.displayName}
+                defaultValue={user?.displayName}
                 className="input focus:outline-none border-2 rounded-lg w-full focus:border-orange-500"
                 placeholder="Enter display name"
               />
@@ -301,7 +294,7 @@ const Profile = () => {
               <input
                 type="email"
                 {...register("email")}
-                value={userDta?.email}
+                value={user?.email}
                 className="input focus:outline-none border-2 rounded-lg border-orange-500 w-full bg-gray-100"
               />
             </div>

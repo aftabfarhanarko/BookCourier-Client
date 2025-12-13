@@ -38,18 +38,17 @@ import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import { GiBookPile } from "react-icons/gi";
 
 import { GiBookAura } from "react-icons/gi";
+import CountUp from "react-countup";
 
 const AdminDashboard = () => {
   const axioscehore = useAxiosSchore();
   const { data: admin } = useQuery({
-    queryKey: ["adminDeshbordData"],
+    queryKey: ["adminDeshbordData",],
     queryFn: async () => {
       const res = await axioscehore.get("admindeshborderdata");
       return res.data;
     },
   });
-  console.log(admin);
-  // Sample data - in real app, this would come from API
   const stats = {
     totalUsers: admin?.userCounts ?? 0,
     totalBooks: admin?.allBookCount ?? 0,
@@ -71,14 +70,12 @@ const AdminDashboard = () => {
     },
   });
 
-  // console.log(creat);
-
   // Convert creat array to chart-friendly format
   const monthlyData = creat?.map((item) => ({
-    month: item.date, // or convert to month name if needed
-    users: item.userCount, // use actual user count
-    books: item.bookCount, // use actual book count
-    rented: item.books, // keep static placeholder if needed
+    month: item.date,
+    users: item.userCount,
+    books: item.bookCount,
+    rented: item.books,
   }));
 
   const categoryData = [
@@ -133,7 +130,15 @@ const AdminDashboard = () => {
             {title}
           </p>
           <h3 className="text-2xl sm:text-3xl font-bold text-gray-800">
-            {value.toLocaleString()}
+            {/* {value !== undefined && value !== null && (
+              <CountUp start={0} end={value} duration={2} />
+            )} */}
+            <CountUp
+              start={0}
+              end={Number(value.toLocaleString()) || 0}
+              duration={5}
+            />
+            +
           </h3>
           {subtitle && (
             <p className="text-xs text-gray-400 mt-1 truncate">{subtitle}</p>
@@ -321,7 +326,7 @@ const AdminDashboard = () => {
         {/* Revenue and Delivery Status */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Monthly Revenue Bar Chart */}
-          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-5">
             <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
               Daily Added Books
             </h2>
@@ -351,136 +356,131 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div className="space-y-4 sm:space-y-6">
+          <div className="space-y-5 sm:space-y-7">
             {/* Revenue Card */}
-            <div className="">
-              {/* Revenue Card */}
-              <div className="relative bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 rounded-3xl p-6 shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-3xl hover:scale-[1.02]">
-                {/* Background Pattern with Animation */}
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32 animate-pulse"></div>
-                  <div
-                    className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-24 -translate-x-24 animate-pulse"
-                    style={{ animationDelay: "1s" }}
-                  ></div>
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between">
-                    {/* Left Side - Main Info */}
-                    <div className="flex-1">
-                      {/* Icon */}
-                      <div className="inline-flex items-center justify-center w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl mb-4 transition-transform duration-300 hover:scale-110">
-                        <DollarSign
-                          className="w-7 h-7 text-white animate-pulse"
-                          strokeWidth={2.5}
-                        />
-                      </div>
-
-                      {/* Label */}
-                      <p className="text-white/90 text-sm font-medium mb-2 tracking-wide">
-                        Total Earnings
-                      </p>
-
-                      {/* Amount with Animation */}
-                      <h2 className="text-white text-4xl font-bold mb-3 transition-all duration-300 hover:scale-105">
-                        ৳ {paymentAmount?.totalAmount}
-                      </h2>
-
-                      {/* Increase Badge */}
-                      <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/30">
-                        <TrendingUp className="w-4 h-4 text-white" />
-                        <span className="text-white text-sm font-normal md:font-semibold">
-                          23% increase this month
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Right Side - Stats */}
-                    <div className="flex flex-col gap-3 ml-6">
-                      {/* Total Transactions */}
-
-                      <div className="bg-white/15 backdrop-blur-sm rounded-xl px-4 py-3 min-w-[160px] flex items-center gap-3 transition-all duration-300 hover:bg-white/25">
-                        {/* Icon */}
-                        <div className="inline-flex items-center justify-center w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg">
-                          <Wallet className="w-5 h-5 text-white" />
-                        </div>
-
-                        {/* Info */}
-                        <div className="flex-1">
-                          <p className="text-white/80 text-xs font-medium mb-1">
-                            Total Payments Customer
-                          </p>
-                          <p className="text-white text-2xl font-bold">
-                            {paymentAmount?.totalPayment}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="bg-white/15 backdrop-blur-sm rounded-xl px-4 py-3 min-w-[160px] flex items-center gap-3 transition-all duration-300 hover:bg-white/25">
-                        {/* Icon */}
-                        <div className="inline-flex items-center justify-center w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg">
-                          <Users
-                            className="w-5 h-5 text-white"
-                            strokeWidth={2}
-                          />
-                        </div>
-
-                        {/* Info */}
-                        <div className="flex-1">
-                          <p className="text-white/80 text-xs font-medium mb-1">
-                            Active Users
-                          </p>
-                          <p className="text-white text-2xl font-bold">
-                            {paymentAmount?.totalUsers}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bottom Stats Row */}
-                  <div className="grid grid-cols-3 gap-3 mt-6 pt-4 border-t border-white/20">
-                    <div className="text-center">
-                      <p className="text-white/70 text-xs mb-1">Total Books</p>
-                      <p className="text-white text-lg font-bold">
-                        {paymentAmount?.totalBooks}
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-white/70 text-xs mb-1">
-                        Total Orders Books
-                      </p>
-                      <p className="text-white text-lg font-bold">
-                        {paymentAmount?.totalOrders}
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-white/70 text-xs mb-1">
-                        This Month Sell Amount
-                      </p>
-                      <p className="text-white text-lg font-bold">
-                        ৳ {paymentAmount?.totalAmount}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Decorative Elements with Animation */}
+            {/* Revenue Card */}
+            <div className="relative bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 rounded-xl p-6 shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-3xl hover:scale-[1.02]">
+              {/* Background Pattern with Animation */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32 animate-pulse"></div>
                 <div
-                  className="absolute bottom-4 right-4 w-24 h-24 border-4 border-white/10 rounded-full animate-spin"
-                  style={{ animationDuration: "8s" }}
-                ></div>
-                <div
-                  className="absolute top-1/2 right-8 w-2 h-2 bg-white/30 rounded-full animate-bounce"
-                  style={{ animationDelay: "0.5s" }}
-                ></div>
-                <div
-                  className="absolute top-1/3 right-16 w-3 h-3 bg-white/20 rounded-full animate-bounce"
+                  className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-24 -translate-x-24 animate-pulse"
                   style={{ animationDelay: "1s" }}
                 ></div>
               </div>
+
+              {/* Content */}
+              <div className="relative z-10">
+                <div className="flex items-start justify-between">
+                  {/* Left Side - Main Info */}
+                  <div className="flex-1">
+                    {/* Icon */}
+                    <div className="inline-flex items-center justify-center w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl mb-4 transition-transform duration-300 hover:scale-110">
+                      <DollarSign
+                        className="w-7 h-7 text-white animate-pulse"
+                        strokeWidth={2.5}
+                      />
+                    </div>
+
+                    {/* Label */}
+                    <p className="text-white/90 text-sm font-medium mb-2 tracking-wide">
+                      Total Earnings
+                    </p>
+
+                    {/* Amount with Animation */}
+                    <h2 className="text-white text-4xl font-bold mb-3 transition-all duration-300 hover:scale-105">
+                      ৳ {paymentAmount?.totalAmount}
+                    </h2>
+
+                    {/* Increase Badge */}
+                    <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/30">
+                      <TrendingUp className="w-4 h-4 text-white" />
+                      <span className="text-white text-sm font-normal md:font-semibold">
+                        23% increase this month
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Right Side - Stats */}
+                  <div className="flex flex-col gap-3 ml-6">
+                    {/* Total Transactions */}
+
+                    <div className="bg-white/15 backdrop-blur-sm rounded-xl px-4 py-3 min-w-[160px] flex items-center gap-3 transition-all duration-300 hover:bg-white/25">
+                      {/* Icon */}
+                      <div className="inline-flex items-center justify-center w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg">
+                        <Wallet className="w-5 h-5 text-white" />
+                      </div>
+
+                      {/* Info */}
+                      <div className="flex-1">
+                        <p className="text-white/80 text-xs font-medium mb-1">
+                          Total Payments Customer
+                        </p>
+                        <p className="text-white text-2xl font-bold">
+                          {paymentAmount?.totalPayment}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="bg-white/15 backdrop-blur-sm rounded-xl px-4 py-3 min-w-[160px] flex items-center gap-3 transition-all duration-300 hover:bg-white/25">
+                      {/* Icon */}
+                      <div className="inline-flex items-center justify-center w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg">
+                        <Users className="w-5 h-5 text-white" strokeWidth={2} />
+                      </div>
+
+                      {/* Info */}
+                      <div className="flex-1">
+                        <p className="text-white/80 text-xs font-medium mb-1">
+                          Active Users
+                        </p>
+                        <p className="text-white text-2xl font-bold">
+                          {paymentAmount?.totalUsers}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Stats Row */}
+                <div className="grid grid-cols-3 gap-3 mt-6 pt-4 border-t border-white/20">
+                  <div className="text-center">
+                    <p className="text-white/70 text-xs mb-1">Total Books</p>
+                    <p className="text-white text-lg font-bold">
+                      {paymentAmount?.totalBooks}
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-white/70 text-xs mb-1">
+                      Total Orders Books
+                    </p>
+                    <p className="text-white text-lg font-bold">
+                      {paymentAmount?.totalOrders}
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-white/70 text-xs mb-1">
+                      This Month Sell Amount
+                    </p>
+                    <p className="text-white text-lg font-bold">
+                      ৳ {paymentAmount?.totalAmount}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Decorative Elements with Animation */}
+              <div
+                className="absolute bottom-4 right-4 w-24 h-24 border-4 border-white/10 rounded-full animate-spin"
+                style={{ animationDuration: "8s" }}
+              ></div>
+              <div
+                className="absolute top-1/2 right-8 w-2 h-2 bg-white/30 rounded-full animate-bounce"
+                style={{ animationDelay: "0.5s" }}
+              ></div>
+              <div
+                className="absolute top-1/3 right-16 w-3 h-3 bg-white/20 rounded-full animate-bounce"
+                style={{ animationDelay: "1s" }}
+              ></div>
             </div>
           </div>
         </div>
