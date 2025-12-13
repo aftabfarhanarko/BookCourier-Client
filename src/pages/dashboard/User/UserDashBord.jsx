@@ -93,10 +93,7 @@ const UserDashBord = () => {
     totalAmount: item.totalAmount,
   }));
 
-  // console.log(paymentOrderHistory);
-  // console.log(paymentChart);
-
-  // Recent orders
+ 
 
   const { data: orderCard } = useQuery({
     queryKey: ["orderUserLetest6Data", user?.email],
@@ -107,7 +104,6 @@ const UserDashBord = () => {
       return res.data;
     },
   });
-  console.log(orderCard);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -173,7 +169,7 @@ const UserDashBord = () => {
                 </span>
               </div>
               <span className="text-white font-bold text-sm">
-                {entry.name === "Amount" ? `$${entry.value}` : entry.value}
+                {entry.name === "Amount" ? `৳ ${entry.value}` : entry.value}
               </span>
             </div>
           ))}

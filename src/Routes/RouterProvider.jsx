@@ -21,9 +21,7 @@ import PrivetRoute from "./PrivetRoute";
 import LibrarianRoute from "./LibrarianRoute";
 import AdminRoute from "./AdminRoute";
 import UserRoute from "./UserRoute";
-import Invortorey from "../pages/dashboard/User/Invortorey";
 import SettingsComponent from "../pages/dashboard/Profile/SettingsComponent";
-import ProfileNavbar from "../pages/Home/ProfileNavbar";
 import NotFound404 from "../pages/NotFound404";
 import WishLise from "../pages/Home/WishList/WishLise";
 import AdminDashBord from "../pages/dashboard/Admin/AdminDashBord";
@@ -113,7 +111,6 @@ export const router = createBrowserRouter([
     { path: "userorder", element: <UserRoute><UserOrderTable /></UserRoute> },
     { path: "pymentSuccess", element: <PaymentSuccess /> },
     { path: "paymenthistory", element: <UserRoute><PaymentHistory /></UserRoute> },
-    { path: "inventory", element: <UserRoute><Invortorey /></UserRoute> },
     { path: "myBooks", element: <LibrarianRoute><MyBooks /></LibrarianRoute> },
     { path: "orderAllBooks", element: <LibrarianRoute><OrderAllBooks /></LibrarianRoute> },
 

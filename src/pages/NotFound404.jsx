@@ -24,7 +24,7 @@ const NotFound404 = () => {
 
       <Link
         to="/"
-        className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-3 rounded-lg shadow-lg transition"
+        className="inline-flex items-center gap-2 bg-gradient-to-br from-orange-400 to-orange-600 text-white font-semibold px-5 py-3 rounded-lg shadow-lg transition"
       >
         {/* Home Icon SVG */}
         <svg

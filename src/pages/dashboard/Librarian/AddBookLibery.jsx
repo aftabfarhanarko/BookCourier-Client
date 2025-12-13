@@ -45,11 +45,9 @@ const AddBookLibery = () => {
     };
 
     axioscehore.post("book", savedDatabase).then((res) => {
-      if (res.data.acknowledged) {
-        toast.success("Books Creat Successfully");
-        naviget("/deshbord/myBooks")
-      }
-      console.log(res.data);
+      toast.success("Books Creat Successfully");
+      naviget("/deshbord/myBooks")
+      
     });
   };
 

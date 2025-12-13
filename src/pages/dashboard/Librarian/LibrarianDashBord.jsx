@@ -25,16 +25,23 @@ import {
   TrendingUp,
   AlertCircle,
   Clock,
+  ChartNoAxesCombined,
+  ClipboardClock,
 } from "lucide-react";
+import { BookOpen } from "lucide-react";
+
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
+import CountUp from "react-countup";
+import { useNavigate } from "react-router";
 
 const LibrarianDashboard = () => {
   const { user } = useAuth();
   const axioscehore = useAxiosSchore();
+  const naviget = useNavigate();
   const { data: librarian } = useQuery({
-    queryKey: ["LibarianADdallbooksData"],
+    queryKey: ["LibarianADdallbooksData", user?.email],
     queryFn: async () => {
       const res = await axioscehore.get(
         `liberienDeshbord?email=${user?.email}`
@@ -42,27 +49,25 @@ const LibrarianDashboard = () => {
       return res.data;
     },
   });
+  const { data: collections } = useQuery({
+    queryKey: ["liberienAddBooksPrice", user?.email],
+    queryFn: async () => {
+      const res = await axioscehore.get(
+        `liberienAddBooksPrice?email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
 
- const stats = {
-  booksAdded: librarian?.totalLibrarianAddBooks ?? 0,
-  totalEarnings: 28450,
-  pendingPayment: librarian?.unpidePayment ?? 0,
-  booksDelivered: librarian?.totalDeliverylibrarianBook ?? 0,
-  booksShipped: librarian?.totalShippedlibrarianBook ?? 0,
-  pendingOrders: librarian?.totalPendinglibrarianBook ?? 0,
-  activeListings: 142,
-};
-
-
-  // Monthly books added
-  const booksAddedData = [
-    { month: "Jan", books: 12, earnings: 2400 },
-    { month: "Feb", books: 18, earnings: 3600 },
-    { month: "Mar", books: 25, earnings: 4800 },
-    { month: "Apr", books: 22, earnings: 4200 },
-    { month: "May", books: 30, earnings: 5850 },
-    { month: "Jun", books: 28, earnings: 5200 },
-  ];
+  const stats = {
+    booksAdded: librarian?.totalLibrarianAddBooks ?? 0,
+    totalEarnings: 2450,
+    pendingPayment: librarian?.unpidePayment ?? 0,
+    booksDelivered: librarian?.totalDeliverylibrarianBook ?? 0,
+    booksShipped: librarian?.totalShippedlibrarianBook ?? 0,
+    pendingOrders: librarian?.totalPendinglibrarianBook ?? 0,
+    activeListings: 142,
+  };
 
   // Delivery status distribution
   const deliveryStatusData = [
@@ -84,6 +89,15 @@ const LibrarianDashboard = () => {
     { name: "Self-Help", value: 284, color: "#a855f7" }, // Violet
     { name: "Other", value: 284, color: "#14b8a6" }, // Teal
   ];
+
+  console.log(collections);
+
+  // Monthly books added
+  const booksAddedData = (collections || []).map((items) => ({
+    month: items?.date,
+    books: items?.count,
+    earnings: 2400,
+  }));
 
   // Recent activities
   const recentActivities = [
@@ -134,7 +148,13 @@ const LibrarianDashboard = () => {
             {title}
           </p>
           <h3 className="text-2xl sm:text-3xl font-bold text-gray-800">
-            {isCurrency ? `৳${value.toLocaleString()}` : value.toLocaleString()}
+            <CountUp
+              start={0}
+              end={Number(value) || 0}
+              duration={2}
+              separator=","
+              prefix={isCurrency ? "৳" : ""}
+            />
           </h3>
           {subtitle && (
             <p className="text-xs text-gray-400 mt-1 truncate">{subtitle}</p>
@@ -170,7 +190,7 @@ const LibrarianDashboard = () => {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
           <StatCard
             icon={BookPlus}
             title="Books Added"
@@ -180,7 +200,7 @@ const LibrarianDashboard = () => {
             iconColor="text-blue-600"
           />
           <StatCard
-            icon={DollarSign}
+            icon={ChartNoAxesCombined}
             title="Total Earnings"
             value={stats.totalEarnings}
             subtitle={`Pending: ৳${stats.pendingPayment}`}
@@ -200,10 +220,20 @@ const LibrarianDashboard = () => {
             icon={Truck}
             title="Shipped"
             value={stats.booksShipped}
-            subtitle="In transit"
+            subtitle={`Books ${stats?.booksAdded}`}
             bgColor="bg-purple-100"
             iconColor="text-purple-600"
             badge={stats.booksShipped > 0 ? stats.booksShipped : null}
+          />
+
+          <StatCard
+            icon={ClipboardClock}
+            title="Pending Payment"
+            value={stats.pendingOrders}
+            subtitle={`Books Added ${stats?.booksAdded}`}
+            bgColor="bg-red-100"
+            iconColor="text-red-500"
+            badge={stats.pendingOrders > 0 ? stats.pendingOrders : null}
           />
         </div>
 
@@ -409,21 +439,30 @@ const LibrarianDashboard = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
+          <button
+            onClick={() => naviget("/deshbord/addbooks")}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
+          >
             <BookPlus className="w-5 h-5 mr-2" />
             Add New Book
           </button>
-          <button className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
-            <DollarSign className="w-5 h-5 mr-2" />
-            View Earnings
+
+          <button
+            onClick={() => naviget("/deshbord/myBooks")}
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
+          >
+            <BookOpen className="w-5 h-5 mr-2" />
+            View My Books
           </button>
-          <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
-            <Truck className="w-5 h-5 mr-2" />
-            Manage Shipments
+
+          <button onClick={()=> naviget("/deshbord/orderAllBooks")} className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
+            <Package className="w-5 h-5 mr-2" />
+            Manage Order Books
           </button>
-          <button className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
-            <Clock className="w-5 h-5 mr-2" />
-            Pending Orders
+
+          <button onClick={()=> naviget("/books")} className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
+            <ClipboardClock className="w-5 h-5 mr-2" />
+           View ALl Books 
           </button>
         </div>
       </div>
