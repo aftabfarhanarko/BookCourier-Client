@@ -41,8 +41,16 @@ const Profile = () => {
     },
   });
 
+  const {data:userDta} = useQuery({
+    queryKey:["getUserInDatabase"],
+    queryFn: async () => {
+      const res = await axioscehore.get(`getUserInDatabase?email=${user?.email}`);
+      return res.data;
+    }
+  })
+
   const handelUpdeatProfile = () => {
-    console.log("Profile");
+    // console.log("Profile");
     references.current.showModal();
   };
 
@@ -63,7 +71,7 @@ const Profile = () => {
       upphotos = data?.data?.display_url;
     } else {
       // no new image → use old one
-      upphotos = usersas.photoURL;
+      upphotos = userDta.photoURL;
     }
     const updetProdileUser = {
       email: neawsa.email,
@@ -89,7 +97,7 @@ const Profile = () => {
     console.log(updetProdileUser);
   };
 
-  console.log(usersas?._id);
+  // console.log(usersas?._id);
 
   if (isLoading || isFetching) return <LoadingSpinner />;
 
@@ -244,7 +252,7 @@ const Profile = () => {
             {/* Profile Image Preview */}
             <div className="flex items-center gap-4">
               <img
-                src={user?.photoURL}
+                src={userDta?.photoURL}
                 className="w-20 h-20 rounded-full object-cover border-2 border-orange-500"
               />
             </div>
@@ -270,7 +278,7 @@ const Profile = () => {
               <input
                 {...register("displayName")}
                 type="text"
-                defaultValue={user?.displayName}
+                defaultValue={userDta?.displayName}
                 className="input focus:outline-none border-2 rounded-lg w-full focus:border-orange-500"
                 placeholder="Enter display name"
               />
@@ -293,7 +301,7 @@ const Profile = () => {
               <input
                 type="email"
                 {...register("email")}
-                value={user?.email}
+                value={userDta?.email}
                 className="input focus:outline-none border-2 rounded-lg border-orange-500 w-full bg-gray-100"
               />
             </div>
