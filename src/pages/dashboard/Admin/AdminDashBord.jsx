@@ -14,8 +14,12 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { GiSpellBook } from "react-icons/gi";
+
+import { CiDeliveryTruck } from "react-icons/ci";
+
 import { CiClock2 } from "react-icons/ci";
-import { Wallet } from 'lucide-react';
+import { CheckCircle2, Wallet } from "lucide-react";
 
 import {
   Users,
@@ -26,10 +30,14 @@ import {
   Clock,
   DollarSign,
   Menu,
+  OctagonAlert,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
+import { GiBookPile } from "react-icons/gi";
+
+import { GiBookAura } from "react-icons/gi";
 
 const AdminDashboard = () => {
   const axioscehore = useAxiosSchore();
@@ -40,7 +48,7 @@ const AdminDashboard = () => {
       return res.data;
     },
   });
-  // console.log(admin);
+  console.log(admin);
   // Sample data - in real app, this would come from API
   const stats = {
     totalUsers: admin?.userCounts ?? 0,
@@ -48,13 +56,17 @@ const AdminDashboard = () => {
     totalRented: admin?.paymentCount ?? 0,
     totalDelivered: admin?.deliveryCount ?? 0,
     pendingDelivery: admin?.pendingBooks ?? 0,
+    shipdemendCOunts: admin?.shippedCount ?? 0,
+    paymentUnpaid: admin?.paymentUnpaid ?? 0,
+    publishBooks: admin?.publishBooks ?? 0,
+    unpublishBooks: admin?.unpublishBooks ?? 0,
     revenue: 45280,
   };
 
   const { data: creat } = useQuery({
     queryKey: ["registeruserData"],
     queryFn: async () => {
-      const res = await axioscehore.get("/userCreatTimeALlfind");
+      const res = await axioscehore.get("userCreatTimeALlfind");
       return res.data;
     },
   });
@@ -66,7 +78,7 @@ const AdminDashboard = () => {
     month: item.date, // or convert to month name if needed
     users: item.userCount, // use actual user count
     books: item.bookCount, // use actual book count
-    rented: 1, // keep static placeholder if needed
+    rented: item.books, // keep static placeholder if needed
   }));
 
   const categoryData = [
@@ -171,9 +183,17 @@ const AdminDashboard = () => {
             icon={TrendingUp}
             title="Payment Success"
             value={stats.totalRented}
-            subtitle="All Time"
+            subtitle={`Pending: ${stats.pendingDelivery}`}
             bgColor="bg-purple-100"
             iconColor="text-purple-600"
+          />
+          <StatCard
+            icon={OctagonAlert}
+            title="Payment Unpaid"
+            value={stats.pendingDelivery}
+            subtitle={`Pending: ${stats.pendingDelivery}`}
+            bgColor="bg-red-100"
+            iconColor="text-red-600"
           />
           <StatCard
             icon={CheckCircle}
@@ -184,12 +204,45 @@ const AdminDashboard = () => {
             iconColor="text-emerald-600"
           />
           <StatCard
+            icon={CiDeliveryTruck}
+            title="Shipped"
+            value={stats.shipdemendCOunts}
+            subtitle={`Pending: ${stats.shipdemendCOunts}`}
+            bgColor="bg-purple-100"
+            iconColor="text-purple-600"
+          />
+          <StatCard
             icon={CiClock2}
             title="Pending"
             value={stats.pendingDelivery}
             subtitle={`Pending: ${stats.pendingDelivery}`}
             bgColor="bg-red-100"
             iconColor="text-red-600"
+          />
+
+          <StatCard
+            icon={GiSpellBook}
+            title="Publish Books"
+            value={stats.publishBooks}
+            subtitle={` UnPublish Books: ${stats.unpublishBooks}`}
+            bgColor="bg-purple-100"
+            iconColor="text-purple-600"
+          />
+          <StatCard
+            icon={GiBookAura}
+            title=" UnPublish Books"
+            value={stats.unpublishBooks}
+            subtitle={`Publish Books: ${stats.publishBooks}`}
+            bgColor="bg-purple-100"
+            iconColor="text-purple-600"
+          />
+          <StatCard
+            icon={GiBookPile}
+            title="Total Category"
+            value={11}
+            subtitle={`Category Total : ${11}`}
+            bgColor="bg-orange-100"
+            iconColor="text-orange-600"
           />
         </div>
 
@@ -224,10 +277,10 @@ const AdminDashboard = () => {
                   />
                   <Line
                     type="monotone"
-                    dataKey="rented"
+                    dataKey="Books"
                     stroke="#10b981"
                     strokeWidth={2}
-                    name="Rentals"
+                    name="Books"
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -338,7 +391,7 @@ const AdminDashboard = () => {
                       {/* Increase Badge */}
                       <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full transition-all duration-300 hover:bg-white/30">
                         <TrendingUp className="w-4 h-4 text-white" />
-                        <span className="text-white text-sm font-semibold">
+                        <span className="text-white text-sm font-normal md:font-semibold">
                           23% increase this month
                         </span>
                       </div>
@@ -351,8 +404,7 @@ const AdminDashboard = () => {
                       <div className="bg-white/15 backdrop-blur-sm rounded-xl px-4 py-3 min-w-[160px] flex items-center gap-3 transition-all duration-300 hover:bg-white/25">
                         {/* Icon */}
                         <div className="inline-flex items-center justify-center w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg">
-                        <Wallet  className="w-5 h-5 text-white" />
-                         
+                          <Wallet className="w-5 h-5 text-white" />
                         </div>
 
                         {/* Info */}
@@ -437,7 +489,7 @@ const AdminDashboard = () => {
           {/* Recent Activity */}
           <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 flex flex-col h-full">
             <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
-              Recent Activity
+              Recent Activity User
             </h2>
             <div className="space-y-2 sm:space-y-3 flex-1 overflow-y-auto">
               {collections?.map((item, index) => {
@@ -446,30 +498,30 @@ const AdminDashboard = () => {
                 if (item.type === "latestUser") {
                   activity = {
                     icon: Users,
-                    text: `New user registration: ${item.displayName}`,
+                    text: `New user Names : ${item.displayName}`,
                     time: "Just now",
                     color: "text-blue-600",
                   };
                 } else if (item.type === "latestBook") {
                   activity = {
                     icon: BookOpen,
-                    text: `New book added: "${item.title}"`,
+                    text: `New book added name  : "${item.title}"`,
                     time: "Just now",
                     color: "text-green-600",
                   };
                 } else if (item.type === "latestDeliveredOrder") {
                   activity = {
                     icon: CheckCircle,
-                    text: `Delivery completed: Order #${item.order?._id.slice(
-                      -4
-                    )}`,
+                    text: `Delivery completed Order ID : #${item.order?._id}`,
                     time: "Just now",
                     color: "text-emerald-600",
                   };
                 } else if (item.type === "latestPayment") {
                   activity = {
                     icon: DollarSign,
-                    text: `Payment received: ৳${item.payment?.amount || 0}`,
+                    text: `Last Payment received: ৳${
+                      item.payment?.amount || 0
+                    }`,
                     time: "Just now",
                     color: "text-yellow-500",
                   };
