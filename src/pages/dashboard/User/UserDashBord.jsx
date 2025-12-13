@@ -23,18 +23,21 @@ import {
   BookOpen,
   TrendingUp,
   Calendar,
+  Link,
+  CircleDollarSign,
 } from "lucide-react";
 
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import CountUp from "react-countup";
 
 const UserDashBord = () => {
   const { user } = useAuth();
   const axioscehore = useAxiosSchore();
+  const naviget = useNavigate();
   const { data: userData, isLoading } = useQuery({
     queryKey: ["UserdashbordData", user?.email],
     queryFn: async () => {
@@ -90,44 +93,21 @@ const UserDashBord = () => {
     totalAmount: item.totalAmount,
   }));
 
-  console.log(paymentOrderHistory);
-  console.log(paymentChart);
+  // console.log(paymentOrderHistory);
+  // console.log(paymentChart);
 
   // Recent orders
-  const recentOrders = [
-    {
-      id: "#1234",
-      book: "The Great Gatsby",
-      status: "Delivered",
-      date: "2024-06-10",
-      color: "text-green-600",
-      bgColor: "bg-green-100",
+
+  const { data: orderCard } = useQuery({
+    queryKey: ["orderUserLetest6Data", user?.email],
+    queryFn: async () => {
+      const res = await axioscehore.get(
+        `orderUserLetest6Data?email=${user?.email}`
+      );
+      return res.data;
     },
-    {
-      id: "#1233",
-      book: "To Kill a Mockingbird",
-      status: "Shipped",
-      date: "2024-06-12",
-      color: "text-blue-600",
-      bgColor: "bg-blue-100",
-    },
-    {
-      id: "#1232",
-      book: "1984",
-      status: "Pending",
-      date: "2024-06-13",
-      color: "text-yellow-600",
-      bgColor: "bg-yellow-100",
-    },
-    {
-      id: "#1231",
-      book: "Pride and Prejudice",
-      status: "Delivered",
-      date: "2024-06-08",
-      color: "text-green-600",
-      bgColor: "bg-green-100",
-    },
-  ];
+  });
+  console.log(orderCard);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -203,10 +183,7 @@ const UserDashBord = () => {
     return null;
   };
 
-  const gradientColors = [
-    "url(#colorPayments)",
-    "url(#colorAmount)",
-  ];
+  const gradientColors = ["url(#colorPayments)", "url(#colorAmount)"];
 
   return (
     <div className="min-h-screen bg-gray-50 p-3 sm:p-4 md:p-6">
@@ -323,7 +300,7 @@ const UserDashBord = () => {
         {/* Active Rentals & Quick Stats */}
         <div className="sm:gap-6 mb-6 sm:mb-8">
           {/* Active Rentals Card */}
-          <div className="w-full p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-xl">
+          <div className="w-full p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-md">
             <div className="mb-6">
               <h2 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                 Payment Analytics
@@ -333,7 +310,7 @@ const UserDashBord = () => {
               </p>
             </div>
 
-            <div className="w-full overflow-x-auto bg-white rounded-xl shadow-inner p-4">
+            <div className="w-full overflow-x-auto bg-white rounded-xl p-4">
               <ResponsiveContainer width="100%" height={300} minWidth={300}>
                 <BarChart
                   data={paymentOrderHistory}
@@ -341,13 +318,33 @@ const UserDashBord = () => {
                   barGap={8}
                 >
                   <defs>
-                    <linearGradient id="colorPayments" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="colorPayments"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="0%" stopColor="#6366f1" stopOpacity={1} />
-                      <stop offset="100%" stopColor="#4f46e5" stopOpacity={0.8} />
+                      <stop
+                        offset="100%"
+                        stopColor="#4f46e5"
+                        stopOpacity={0.8}
+                      />
                     </linearGradient>
-                    <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="colorAmount"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="0%" stopColor="#f97316" stopOpacity={1} />
-                      <stop offset="100%" stopColor="#ea580c" stopOpacity={0.8} />
+                      <stop
+                        offset="100%"
+                        stopColor="#ea580c"
+                        stopOpacity={0.8}
+                      />
                     </linearGradient>
                   </defs>
 
@@ -422,6 +419,9 @@ const UserDashBord = () => {
               <thead>
                 <tr className="border-b border-gray-200">
                   <th className="text-left py-3 px-2 sm:px-4 text-xs sm:text-sm font-semibold text-gray-600">
+                    Srl
+                  </th>
+                  <th className="text-left py-3 px-2 sm:px-4 text-xs sm:text-sm font-semibold text-gray-600">
                     Order ID
                   </th>
                   <th className="text-left py-3 px-2 sm:px-4 text-xs sm:text-sm font-semibold text-gray-600">
@@ -436,26 +436,76 @@ const UserDashBord = () => {
                 </tr>
               </thead>
               <tbody>
-                {recentOrders.map((order, index) => (
+                {orderCard.map((order, index) => (
                   <tr
                     key={index}
                     className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
                   >
                     <td className="py-3 px-2 sm:px-4 text-xs sm:text-sm font-medium text-gray-800">
-                      {order.id}
+                      {index + 1}
+                    </td>
+                    <td className="py-3 px-2 sm:px-4 text-xs sm:text-sm font-medium text-gray-800">
+                      # {order._id}
                     </td>
                     <td className="py-3 px-2 sm:px-4 text-xs sm:text-sm text-gray-600 truncate max-w-xs">
-                      {order.book}
+                      {order.book?.title}
                     </td>
                     <td className="py-3 px-2 sm:px-4 text-xs sm:text-sm text-gray-500 hidden sm:table-cell">
-                      {order.date}
+                      {new Date(order?.orderTime).toLocaleString()}
+                      {/* {order.date} */}
                     </td>
-                    <td className="py-3 px-2 sm:px-4">
-                      <span
-                        className={`${order.bgColor} ${order.color} px-2 py-1 rounded-full text-xs font-medium`}
+
+                    <td>
+                      <div
+                        className={`flex items-center gap-2 font-semibold ${
+                          order.ordered_Status === "pending"
+                            ? "text-orange-500"
+                            : order.ordered_Status === "shipped"
+                            ? "text-blue-500"
+                            : "text-green-600"
+                        }`}
                       >
-                        {order.status}
-                      </span>
+                        {order.ordered_Status === "pending" ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                          </svg>
+                        ) : order.ordered_Status === "shipped" ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <rect x="1" y="3" width="15" height="13" />
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                            <circle cx="5.5" cy="18.5" r="2.5" />
+                            <circle cx="18.5" cy="18.5" r="2.5" />
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                          </svg>
+                        )}
+                        {order.ordered_Status}
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -466,17 +516,26 @@ const UserDashBord = () => {
 
         {/* Quick Actions */}
         <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-          <button className="bg-orange-400 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
+          <button
+            onClick={() => naviget("/books")}
+            className="bg-orange-400 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
+          >
             <BookOpen className="w-5 h-5 mr-2" />
             Browse Books
           </button>
-          <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
+          <button
+            onClick={() => naviget("/deshbord/userorder")}
+            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
+          >
             <Package className="w-5 h-5 mr-2" />
-            Track Orders
+            Yours Orders
           </button>
-          <button className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center sm:col-span-2 lg:col-span-1">
-            <Calendar className="w-5 h-5 mr-2" />
-            Rental History
+          <button
+            onClick={() => naviget("/deshbord/paymenthistory")}
+            className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center sm:col-span-2 lg:col-span-1"
+          >
+            <CircleDollarSign className="w-5 h-5 mr-2" />
+            Payment History
           </button>
         </div>
       </div>
