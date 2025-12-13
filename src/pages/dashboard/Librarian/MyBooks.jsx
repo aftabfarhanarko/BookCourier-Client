@@ -463,7 +463,7 @@ const MyBooks = () => {
       </dialog>
 
       {/* Pasitions */}
-      {data.length < 11 ? (
+     
         <div className="flex justify-between items-center px-6 py-4 mt-7 bg-white  border-t border-gray-200 dark:border-gray-300 rounded-b-2xl">
           <button
             disabled={page === 1}
@@ -505,9 +505,7 @@ const MyBooks = () => {
             Next <FaArrowRightLong />
           </button>
         </div>
-      ) : (
-        " "
-      )}
+     
     </div>
   );
 };

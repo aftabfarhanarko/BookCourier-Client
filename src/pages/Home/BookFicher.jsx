@@ -65,7 +65,7 @@ const PremiumBookShowcase = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen   px-4 sm:px-6 lg:px-8">
       <div className=" md:max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 mb-16">
           {/* Left Content */}
@@ -77,11 +77,10 @@ const PremiumBookShowcase = () => {
               </span>
             </div>
 
-            <h2 className="text-4xl sm:text-5xl  font-bold text-gray-900 leading-tight">
+            <h2 className="text-3xl   font-bold text-primary leading-tight">
               Top Selling Books in{" "}
-              <span className="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
                 BookCourier
-              </span>{" "}
+         {" "}
               Library
             </h2>
 

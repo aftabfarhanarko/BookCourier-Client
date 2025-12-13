@@ -1,5 +1,4 @@
 import React, { use, useState, useRef } from "react";
-import H1text from "../../utils/H1text";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet/dist/leaflet.css";
@@ -13,7 +12,7 @@ const HomeMap = () => {
   const weaerhouse = use(data);
   const mapRef = useRef(null);
 
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false); // Changed to false for light mode default
   const [loading, setLoading] = useState(true);
 
   const centerBD = [23.685, 90.3563];
@@ -26,58 +25,56 @@ const HomeMap = () => {
   };
 
   return (
-    <section className=" ">
-      <div className="max-w-7xl mx-auto px-4 md:px-10">
+    <section className="w-full">
+      {/* Full width container */}
+      <div className="w-full px-4 md:px-10">
         {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-10"
+          className="text-center mb-10 max-w-4xl mx-auto"
         >
-          <H1text className="text-white">
+          <h1 className="text-3xl text-primary font-bold  mb-4">
             Bangladesh All Book Delivery Coverage Districts
-          </H1text>
-          <div className="mt-3">
-            <Ptext>
-              Our warehouses cover major districts across Bangladesh.
-            </Ptext>
-          </div>
+          </h1>
+           <Ptext>
+             Our warehouses cover major districts across Bangladesh.
+           </Ptext>
+          
         </motion.div>
 
-        {/* Map Card */}
+        {/* Map Card - Full Width */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7 }}
-          className="relative rounded-3xl overflow-hidden shadow-2xl"
+          className="relative w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-700"
         >
-          {/* Toggle Button */}
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="absolute top-5 right-5 z-[1000] bg-white/90 px-4 py-2 rounded-lg text-sm font-semibold shadow"
-          >
-            {darkMode ? "Light Map" : "Dark Map"}
-          </button>
+         
 
           {/* Skeleton Loader */}
           {loading && (
-            <div className="absolute inset-0 z-50 bg-gray-800 animate-pulse flex items-center justify-center">
-              <p className="text-white">Loading Map...</p>
+            <div className="absolute inset-0 z-50 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 animate-pulse flex items-center justify-center">
+              <div className="text-center">
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4"></div>
+                <p className="text-white text-lg font-semibold">Loading Map...</p>
+              </div>
             </div>
           )}
 
-          <div className="h-[450px] md:h-[650px] ">
+          {/* Map Container - Full Width */}
+          <div className="h-[500px] md:h-[700px] w-full">
             <MapContainer
               center={centerBD}
-              zoom={7}
+              zoom={8}
               minZoom={6}
               scrollWheelZoom={false}
               className="h-full w-full"
               whenReady={() => setLoading(false)}
               ref={mapRef}
             >
-              {/* Tile */}
+              {/* Tile Layer */}
               <TileLayer
                 url={
                   darkMode
@@ -86,14 +83,14 @@ const HomeMap = () => {
                 }
               />
 
-              {/* Delivery Radius (Bangladesh coverage feel) */}
+              {/* Delivery Radius */}
               <Circle
                 center={centerBD}
                 radius={350000}
                 pathOptions={{
-                  color: "#16a34a",
-                  fillColor: "#22c55e",
-                  fillOpacity: 0.08,
+                  color: darkMode ? "#16a34a" : "#059669",
+                  fillColor: darkMode ? "#22c55e" : "#10b981",
+                  fillOpacity: darkMode ? 0.08 : 0.12,
                 }}
               />
 
@@ -111,17 +108,17 @@ const HomeMap = () => {
                     }}
                   >
                     <Popup>
-                      <div className="text-sm space-y-1">
-                        <p className="font-bold">{item.district}</p>
+                      <div className="text-sm space-y-1 p-2">
+                        <p className="font-bold text-lg text-gray-800">{item.district}</p>
                         <p className="text-gray-600">
-                          Areas: {item.covered_area.join(", ")}
+                          <span className="font-semibold">Areas:</span> {item.covered_area.join(", ")}
                         </p>
                         <p
                           className={`font-semibold ${
                             item.status ? "text-green-600" : "text-red-500"
                           }`}
                         >
-                          Status: {item.status ? "Open" : "Closed"}
+                          Status: {item.status ? "✓ Open" : "✗ Closed"}
                         </p>
                       </div>
                     </Popup>

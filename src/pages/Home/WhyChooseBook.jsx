@@ -43,7 +43,7 @@ const ModernFAQ = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="  mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - FAQ Items */}
@@ -95,7 +95,7 @@ const ModernFAQ = () => {
               </span>
             </div>
 
-            <h1 className="text-4xl   font-bold text-gray-900 leading-tight">
+            <h1 className="text-3xl   font-bold text-gray-900 leading-tight">
               Have any{" "}
               <span className="bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">
                 questions?

@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import { motion } from "framer-motion";
 import { GoDuplicate } from "react-icons/go";
@@ -17,7 +17,7 @@ import { FaCheck } from "react-icons/fa";
 const DetlicesPages = () => {
   const queryClient = useQueryClient();
   const reviewRefe = useRef();
-  // const [showWhisLise, setShowWhisLise] = useState(true);
+  const naviget = useNavigate();
   const { user } = useAuth();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -66,6 +66,9 @@ const DetlicesPages = () => {
       book,
     };
 
+
+    
+
     axioscehore.post("ordernow", orderInfo).then((res) => {
       console.log(res.data);
       if (res.data.insertedId) {
@@ -75,7 +78,6 @@ const DetlicesPages = () => {
       }
     });
   };
-
   // Review Data set
   const handerewiews = (e) => {
     e.preventDefault();
@@ -101,6 +103,7 @@ const DetlicesPages = () => {
         if (res.data.acknowledged) {
           reviewRefe.current.close();
           toast.success("Thanks For Your Review");
+          naviget("/deshbord/userorder")
         }
       });
     }

@@ -95,6 +95,8 @@ const UserOrderTable = () => {
   };
 
   const handelPaymentSession = (orderData) => {
+    console.log("Order Books", orderData);
+    
     const bookInfo = {
       customerName: orderData.name,
       bookID: orderData?._id,
@@ -109,9 +111,9 @@ const UserOrderTable = () => {
       bookAuthor: orderData.book.author,
       bookPrice: orderData.book.price_sell,
 
-      // Seller Mapping
-      sellerName: user?.displayName,
-      sellerEmail: user?.email,
+      //  Changes korci ai khna actay 
+      sellerName:orderData?.book?.sellerInfo?.sellerName,
+      sellerEmail: orderData?.book?.sellerInfo?.sellerEmail,
 
       // Status
       orderStatus: orderData.ordered_Status,
@@ -120,11 +122,9 @@ const UserOrderTable = () => {
 
     axioscehore.post(`creat-payment-session`, bookInfo).then((res) => {
       window.location.assign(res.data.url);
-      console.log(res);
+      // console.log(res);
     });
 
-    console.log("All Boks Informations", bookInfo);
-    // console.log(orderData.sellerInfo.sellerName);
   };
   if (isLoading || isFetching || !user?.email) {
     return <LoadingSpinner></LoadingSpinner>;

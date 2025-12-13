@@ -90,46 +90,66 @@ const LibrarianDashboard = () => {
     { name: "Other", value: 284, color: "#14b8a6" }, // Teal
   ];
 
-  console.log(collections);
+  // console.log(collections);
 
   // Monthly books added
+
+  const { data: earninges } = useQuery({
+    queryKey: ["liberienPaymentSummary", user?.email],
+    queryFn: async () => {
+      const res = await axioscehore.get(
+        `liberienPaymentSummary?email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
+  // dailyPayments
+  console.log();
+  const chartTaka = (earninges?.dailyPayments || []).map((item) => ({
+    month: item?.date,
+    earnings: item?.dailyAmount,
+    // totalPayments: item?.totalPayments,
+  }));
+
   const booksAddedData = (collections || []).map((items) => ({
     month: items?.date,
     books: items?.count,
     earnings: 2400,
   }));
 
+  console.log("Total Books", booksAddedData);
+
   // Recent activities
-  const recentActivities = [
-    {
-      icon: BookPlus,
-      text: 'Added new book: "The Alchemist"',
-      time: "10 mins ago",
-      color: "text-blue-600",
-      bgColor: "bg-blue-100",
-    },
-    {
-      icon: DollarSign,
-      text: "Payment received: ৳850",
-      time: "25 mins ago",
-      color: "text-green-600",
-      bgColor: "bg-green-100",
-    },
-    {
-      icon: Truck,
-      text: "Book shipped: Order #5432",
-      time: "1 hour ago",
-      color: "text-purple-600",
-      bgColor: "bg-purple-100",
-    },
-    {
-      icon: CheckCircle,
-      text: "Delivery confirmed: Order #5421",
-      time: "2 hours ago",
-      color: "text-emerald-600",
-      bgColor: "bg-emerald-100",
-    },
-  ];
+  // const recentActivities = [
+  //   {
+  //     icon: BookPlus,
+  //     text: 'Added new book: "The Alchemist"',
+  //     time: "10 mins ago",
+  //     color: "text-blue-600",
+  //     bgColor: "bg-blue-100",
+  //   },
+  //   {
+  //     icon: DollarSign,
+  //     text: "Payment received: ৳850",
+  //     time: "25 mins ago",
+  //     color: "text-green-600",
+  //     bgColor: "bg-green-100",
+  //   },
+  //   {
+  //     icon: Truck,
+  //     text: "Book shipped: Order #5432",
+  //     time: "1 hour ago",
+  //     color: "text-purple-600",
+  //     bgColor: "bg-purple-100",
+  //   },
+  //   {
+  //     icon: CheckCircle,
+  //     text: "Delivery confirmed: Order #5421",
+  //     time: "2 hours ago",
+  //     color: "text-emerald-600",
+  //     bgColor: "bg-emerald-100",
+  //   },
+  // ];
 
   const StatCard = ({
     icon: Icon,
@@ -202,7 +222,7 @@ const LibrarianDashboard = () => {
           <StatCard
             icon={ChartNoAxesCombined}
             title="Total Earnings"
-            value={stats.totalEarnings}
+            value={earninges?.totalAmount}
             subtitle={`Pending: ৳${stats.pendingPayment}`}
             bgColor="bg-green-100"
             iconColor="text-green-600"
@@ -246,7 +266,7 @@ const LibrarianDashboard = () => {
             </h2>
             <div className="w-full overflow-x-auto">
               <ResponsiveContainer width="100%" height={250} minWidth={300}>
-                <AreaChart data={booksAddedData}>
+                <AreaChart data={chartTaka}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                   <XAxis dataKey="month" tick={{ fontSize: 10 }} />
                   <YAxis tick={{ fontSize: 10 }} />
@@ -269,7 +289,8 @@ const LibrarianDashboard = () => {
                   />
                 </AreaChart>
               </ResponsiveContainer>
-            </div>
+            </div>{" "}
+            aim chart a bosey daw
           </div>
 
           {/* Delivery Status */}
@@ -337,7 +358,7 @@ const LibrarianDashboard = () => {
 
           <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
             <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
-             Delayed Books Added
+              Delayed Books Added
             </h2>
             <div className="w-full overflow-x-auto">
               <ResponsiveContainer width="100%" height={250} minWidth={300}>
@@ -367,7 +388,7 @@ const LibrarianDashboard = () => {
         </div>
 
         {/* Recent Activities */}
-        <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 sm:mb-8">
+        {/* <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 sm:mb-8">
           <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
             Recent Activities
           </h2>
@@ -395,7 +416,7 @@ const LibrarianDashboard = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">

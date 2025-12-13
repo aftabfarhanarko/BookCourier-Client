@@ -19,6 +19,8 @@ const AddBookLibery = () => {
   const { user } = useAuth();
   const axioscehore = useAxiosSchore();
   const handleBook = async (book) => {
+    console.log("ADdd");
+    
     const bookImage = book.images[0];
     const photo = await imagesBB(bookImage);
     const savedDatabase = {
@@ -47,6 +49,8 @@ const AddBookLibery = () => {
     axioscehore.post("book", savedDatabase).then((res) => {
       toast.success("Books Creat Successfully");
       naviget("/deshbord/myBooks")
+      console.log(res.data);
+      
       
     });
   };
