@@ -132,7 +132,7 @@ const UserOrderTable = () => {
 
   return (
     <div>
-      <h1 className=" text-2xl md:text-3xl leading-tight text-secondary font-semibold">
+      <h1 className=" text-2xl md:text-3xl leading-tight text-primary font-semibold">
         <TextType
           text={` My All Order List`}
           typingSpeed={70}

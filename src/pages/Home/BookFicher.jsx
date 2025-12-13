@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Star, ShoppingCart, TrendingUp, Eye, BadgeCheck } from "lucide-react";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
+import CountUp from "react-countup";
 const PremiumBookShowcase = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -26,8 +28,14 @@ const PremiumBookShowcase = () => {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, [theme]);
-
   const isDark = theme === "dark";
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: false,
+    });
+  }, []);
 
   const books = [
     {
@@ -84,7 +92,7 @@ const PremiumBookShowcase = () => {
   };
 
   return (
-    <div className={`min-h-screen px-4 sm:px-6 lg:px-8 ${isDark ? '' : ''}`}>
+    <div className={`min-h-screen px-4 sm:px-6 lg:px-8 ${isDark ? "" : ""}`}>
       <div className="md:max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 mb-16">
           {/* Left Content */}
@@ -100,7 +108,11 @@ const PremiumBookShowcase = () => {
               Top Selling Books in BookCourier Library
             </h2>
 
-            <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
+            <p
+              className={`text-lg ${
+                isDark ? "text-gray-300" : "text-gray-600"
+              } leading-relaxed`}
+            >
               Explore the books that our readers enjoy the most. These top picks
               have been loved and bought again and again. Find your next great
               read from the crowd's favorites!
@@ -110,21 +122,39 @@ const PremiumBookShowcase = () => {
             <div className="flex gap-8 pt-4">
               <div className="space-y-1">
                 <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-                  1000+
+                   <CountUp start={0} end={1000} duration={5} /> +
                 </div>
-                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Happy Readers</div>
+                <div
+                  className={`text-sm ${
+                    isDark ? "text-gray-400" : "text-gray-500"
+                  }`}
+                >
+                  Happy Readers
+                </div>
               </div>
               <div className="space-y-1">
                 <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-                  50K+
+                     <CountUp start={0} end={ 50} duration={5} /> K+
                 </div>
-                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Books Sold</div>
+                <div
+                  className={`text-sm ${
+                    isDark ? "text-gray-400" : "text-gray-500"
+                  }`}
+                >
+                  Books Sold
+                </div>
               </div>
               <div className="space-y-1">
                 <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-                  4.9★
+                   <CountUp start={0} end={4} duration={5} /> .9★
                 </div>
-                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Average Rating</div>
+                <div
+                  className={`text-sm ${
+                    isDark ? "text-gray-400" : "text-gray-500"
+                  }`}
+                >
+                  Average Rating
+                </div>
               </div>
             </div>
           </div>
@@ -138,7 +168,7 @@ const PremiumBookShowcase = () => {
                   onMouseEnter={() => setHoveredCard(book.id)}
                   onMouseLeave={() => setHoveredCard(null)}
                   className={`group relative ${
-                    isDark ? 'bg-gray-800' : 'bg-white'
+                    isDark ? "bg-gray-800" : "bg-white"
                   } rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2`}
                   style={{
                     animation: `fadeInUp 0.6s ease-out ${index * 0.15}s both`,
@@ -201,15 +231,18 @@ const PremiumBookShowcase = () => {
 
                   {/* Content */}
                   <div className="p-6 space-y-3">
-                    <h3 className={`text-xl font-bold ${
-                      isDark ? 'text-white' : 'text-gray-900'
-                    } group-hover:text-orange-600 transition-colors duration-300`}>
+                    <h3
+                      className={`text-xl font-bold ${
+                        isDark ? "text-white" : "text-gray-900"
+                      } group-hover:text-orange-600 transition-colors duration-300`}
+                    >
                       {book.name}
                     </h3>
 
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
                         <p className="text-2xl font-extrabold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                          
                           {book.price}
                         </p>
                         <div className="flex items-center gap-1">
@@ -218,9 +251,11 @@ const PremiumBookShowcase = () => {
                       </div>
 
                       <div className="text-right">
-                        <div className={`text-xs ${
-                          isDark ? 'text-gray-400' : 'text-gray-500'
-                        } mb-1`}>
+                        <div
+                          className={`text-xs ${
+                            isDark ? "text-gray-400" : "text-gray-500"
+                          } mb-1`}
+                        >
                           Total Sold
                         </div>
                         <div className="text-lg font-bold text-orange-600">
@@ -231,9 +266,11 @@ const PremiumBookShowcase = () => {
 
                     {/* Progress Bar */}
                     <div className="pt-2">
-                      <div className={`h-2 ${
-                        isDark ? 'bg-gray-700' : 'bg-gray-200'
-                      } rounded-full overflow-hidden`}>
+                      <div
+                        className={`h-2 ${
+                          isDark ? "bg-gray-700" : "bg-gray-200"
+                        } rounded-full overflow-hidden`}
+                      >
                         <div
                           className="h-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-full transition-all duration-1000"
                           style={{ width: `${(book.rating / 5) * 100}%` }}

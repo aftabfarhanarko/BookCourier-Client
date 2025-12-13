@@ -68,7 +68,7 @@ export default function Navbar() {
     },
   });
 
-  const { data: usersas, isLoading } = useQuery({
+  const { data: usersas } = useQuery({
     queryKey: ["profile", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -272,6 +272,7 @@ export default function Navbar() {
               )}
             </button>
           </div>
+          
         </div>
 
         {/* Mobile Menu */}

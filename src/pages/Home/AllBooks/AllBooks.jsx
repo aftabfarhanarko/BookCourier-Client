@@ -82,7 +82,7 @@ const AllBooks = () => {
     <div className={`w-11/12 mx-auto ${isDark ? '' : ''}`}>
       <div className="mt-20 flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-0">
         {/* Heading */}
-        <h1 className="text-2xl text-center md:text-left md:text-3xl font-semibold text-secondary leading-tight">
+        <h1 className="text-2xl text-center md:text-left md:text-3xl font-semibold text-primary leading-tight">
           <TextType
             text={`All Books (${allBook})`}
             typingSpeed={70}

@@ -97,7 +97,7 @@ export default function WishlistCard() {
   return (
     <div className="min-h-screen  p-6">
       <div className=" mx-auto">
-        <h1 className=" mb-8 text-2xl md:text-3xl leading-tight text-secondary font-bold">
+        <h1 className=" mb-8 text-2xl md:text-3xl leading-tight text-primary font-bold">
           <TextType
             text={`My Wishlist`}
             typingSpeed={70}

@@ -72,7 +72,7 @@ const PremiumBook = () => {
 
             {/* Number */}
             <p className="mt-4 text-3xl font-extrabold text-primary">
-              <CountUp start={0} end={7000} duration={5} />+
+              <CountUp start={0} end={7000} duration={5} /> +
             </p>
 
             {/* Title */}
@@ -115,7 +115,7 @@ const PremiumBook = () => {
 
             {/* Number */}
             <p className="mt-4 text-3xl font-extrabold text-primary">
-              <CountUp start={0} end={6068} duration={5} />+
+              <CountUp start={0} end={6068} duration={5} /> +
             </p>
 
             {/* Title */}
@@ -158,7 +158,7 @@ const PremiumBook = () => {
 
             {/* Number */}
             <p className="mt-4 text-3xl font-extrabold text-primary">
-              <CountUp start={0} end={998} duration={5} />+
+              <CountUp start={0} end={998} duration={5} /> +
             </p>
 
             {/* Title */}
@@ -202,7 +202,7 @@ const PremiumBook = () => {
 
             {/* Number */}
             <p className="mt-4 text-3xl font-extrabold text-primary">
-              <CountUp start={0} end={5368} duration={5} />+
+              <CountUp start={0} end={5368} duration={5} /> +
             </p>
 
             {/* Title */}

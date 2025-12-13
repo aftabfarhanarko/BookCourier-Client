@@ -32,8 +32,6 @@ const BookFeatureSection = () => {
         w-full
         rounded-2xl
         backdrop-blur-xl 
-        bg-white/20 
-        border border-white/30
         relative z-10 overflow-hidden
       "
           >

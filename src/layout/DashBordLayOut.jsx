@@ -36,7 +36,7 @@ const DashBordLayOut = () => {
       {/* ================= CONTENT ================= */}
       <div className="drawer-content flex flex-col h-screen">
         {/* ✅ FIXED NAVBAR */}
-        <nav className="navbar fixed top-0  right-0 z-50 md:z-10 bg-base-300 px-4 shadow-md flex justify-between">
+        <nav className="navbar fixed top-0  py-3 right-0 z-50 md:z-10 bg-base-300 px-4 shadow-md flex justify-between">
           <div className="flex items-center gap-3 md:pl-60">
             {/* Toggle Button */}
             <label
@@ -85,11 +85,9 @@ const DashBordLayOut = () => {
             <li>
               <NavLink
                 to="/"
-                className={({ isActive }) =>
-                  `flex gap-3 items-center px-4 py-1 md:mt-0 mt-18 rounded-xl
-                  ${
-                    isActive ? "bg-orange-500 text-white" : "hover:bg-gray-800"
-                  }`
+                className={() =>
+                  `flex gap-3 items-center px-4 py-1.5 bg-orange-500 text-white md:mt-0 mt-18 rounded-xl
+                  `
                 }
               >
                 <HiOutlineHome className="w-6 h-6" /> Home

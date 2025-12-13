@@ -33,7 +33,7 @@ const PaymentHistory = () => {
     return <LoadingSpinner></LoadingSpinner>;
   return (
     <div>
-      <h1 className=" text-2xl md:text-3xl leading-tight text-secondary font-semibold">
+      <h1 className=" text-2xl md:text-3xl leading-tight text-primary font-semibold">
         <TextType
           text={` Payment History`}
           typingSpeed={70}
