@@ -35,7 +35,6 @@ const PaymentSuccess = () => {
         className="
   max-w-xl 
   mx-auto 
-  bg-white 
   shadow-2xl 
   rounded-3xl 
   p-5 

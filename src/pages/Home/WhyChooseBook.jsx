@@ -1,8 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
 const ModernFAQ = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    // Listen for theme changes from localStorage
+    const handleStorageChange = () => {
+      setTheme(localStorage.getItem("theme") || "light");
+    };
+
+    // Check for theme changes
+    const interval = setInterval(() => {
+      const currentTheme = localStorage.getItem("theme") || "light";
+      if (currentTheme !== theme) {
+        setTheme(currentTheme);
+      }
+    }, 100);
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [theme]);
+
+  const isDark = theme === "dark";
 
   const faqs = [
     {
@@ -43,15 +68,17 @@ const ModernFAQ = () => {
   ];
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      <div className="  mx-auto">
+    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${isDark ? '' : ''}`}>
+      <div className="mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - FAQ Items */}
           <div className="order-2 lg:order-1 space-y-4">
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100"
+                className={`group ${
+                  isDark ? "bg-gray-800 border-gray-700" : "bg-white border-gray-100"
+                } rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border`}
               >
                 <button
                   onClick={() =>
@@ -59,7 +86,11 @@ const ModernFAQ = () => {
                   }
                   className="w-full text-left p-6 flex items-center justify-between gap-4 focus:outline-none"
                 >
-                  <span className="font-semibold text-lg text-gray-800 group-hover:text-orange-500 transition-colors duration-200">
+                  <span
+                    className={`font-semibold text-lg ${
+                      isDark ? "text-white" : "text-gray-800"
+                    } group-hover:text-orange-500 transition-colors duration-200`}
+                  >
                     {faq.question}
                   </span>
                   <ChevronDown
@@ -78,7 +109,11 @@ const ModernFAQ = () => {
                 >
                   <div className="px-6 pb-6 pt-0">
                     <div className="h-px bg-gradient-to-r from-indigo-200 to-purple-200 mb-4"></div>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p
+                      className={`${
+                        isDark ? "text-gray-300" : "text-gray-600"
+                      } leading-relaxed`}
+                    >
                       {faq.answer}
                     </p>
                   </div>
@@ -95,16 +130,18 @@ const ModernFAQ = () => {
               </span>
             </div>
 
-            <h1 className="text-3xl   font-bold text-gray-900 leading-tight">
+            <h1 className="text-3xl font-bold text-primary leading-tight">
               Have any{" "}
-              <span className="bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">
-                questions?
-              </span>
+              <span className="bg-clip-text text-primary">questions?</span>
               <br />
               Find answers here.
             </h1>
 
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <p
+              className={`text-lg leading-relaxed ${
+                isDark ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
               Learn the correct procedure for collecting your library ticket
               book to ensure a smooth and hassle-free experience. Follow these
               steps carefully to avoid any delays or issues during the process.
@@ -119,19 +156,49 @@ const ModernFAQ = () => {
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 pt-8">
-              <div className="text-center p-4 bg-white rounded-xl shadow-md">
+              <div
+                className={`text-center p-4 ${
+                  isDark ? "bg-gray-800" : "bg-white"
+                } rounded-xl shadow-md`}
+              >
                 <div className="text-3xl font-bold text-indigo-600">
                   {faqs.length}
                 </div>
-                <div className="text-sm text-gray-500 mt-1">FAQs</div>
+                <div
+                  className={`text-sm ${
+                    isDark ? "text-gray-400" : "text-gray-500"
+                  } mt-1`}
+                >
+                  FAQs
+                </div>
               </div>
-              <div className="text-center p-4 bg-white rounded-xl shadow-md">
+              <div
+                className={`text-center p-4 ${
+                  isDark ? "bg-gray-800" : "bg-white"
+                } rounded-xl shadow-md`}
+              >
                 <div className="text-3xl font-bold text-purple-600">24/7</div>
-                <div className="text-sm text-gray-500 mt-1">Support</div>
+                <div
+                  className={`text-sm ${
+                    isDark ? "text-gray-400" : "text-gray-500"
+                  } mt-1`}
+                >
+                  Support
+                </div>
               </div>
-              <div className="text-center p-4 bg-white rounded-xl shadow-md">
+              <div
+                className={`text-center p-4 ${
+                  isDark ? "bg-gray-800" : "bg-white"
+                } rounded-xl shadow-md`}
+              >
                 <div className="text-3xl font-bold text-pink-600">100%</div>
-                <div className="text-sm text-gray-500 mt-1">Helpful</div>
+                <div
+                  className={`text-sm ${
+                    isDark ? "text-gray-400" : "text-gray-500"
+                  } mt-1`}
+                >
+                  Helpful
+                </div>
               </div>
             </div>
           </div>

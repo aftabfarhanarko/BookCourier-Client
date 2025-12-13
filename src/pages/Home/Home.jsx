@@ -8,7 +8,7 @@ import LetasCard from "./LetasCard";
 import MapNow from "./MapNow";
 import Cousebooksconires from "./Cousebooksconires";
 import Marqey from "./Marqey";
-import MewSections from "./NewSections/MewSections";
+// import MewSections from "./NewSections/MewSections";
 // import { Typed } from 'react-typed';
 
 const Home = () => {

@@ -97,7 +97,7 @@ const Profile = () => {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4 py-10
-      bg-gradient-to-br from-orange-50 via-slate-50 to-amber-50
+     
       "
     >
       <div className="w-full max-w-2xl">

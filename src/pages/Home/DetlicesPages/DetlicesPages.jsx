@@ -66,9 +66,6 @@ const DetlicesPages = () => {
       book,
     };
 
-
-    
-
     axioscehore.post("ordernow", orderInfo).then((res) => {
       console.log(res.data);
       if (res.data.insertedId) {
@@ -103,7 +100,7 @@ const DetlicesPages = () => {
         if (res.data.acknowledged) {
           reviewRefe.current.close();
           toast.success("Thanks For Your Review");
-          naviget("/deshbord/userorder")
+          naviget("/deshbord/userorder");
         }
       });
     }
@@ -166,7 +163,7 @@ const DetlicesPages = () => {
   if (reviewLoding) return <LoadingSpinner></LoadingSpinner>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 pb-24 pt-20">
+    <div className="min-h-screen  pb-24 pt-20">
       {/* Hero Background Pattern */}
       <div className="fixed inset-0 -z-10 opacity-30">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
@@ -632,7 +629,7 @@ const DetlicesPages = () => {
           <div>
             <div className="flex items-center gap-4 mb-8">
               <div className="w-1.5 h-8 bg-gradient-to-b from-orange-600 to-red-500 rounded-full"></div>
-              <h2 className="text-3xl  font-black text-gray-900">
+              <h2 className="text-3xl  font-black  text-primary">
                 <TextType
                   text={`User Ratings for Books to Guide Readers`}
                   typingSpeed={70}
@@ -660,7 +657,7 @@ const DetlicesPages = () => {
         >
           <div className="flex items-center gap-4 mb-8">
             <div className="w-1.5 h-8 bg-gradient-to-b from-violet-600 to-purple-600 rounded-full"></div>
-            <h2 className="text-3xl  font-black text-gray-900">
+            <h2 className="text-3xl  font-black   text-primary">
               <TextType
                 text={"Related Category Books"}
                 typingSpeed={70}

@@ -1,14 +1,33 @@
-import TextType from "../../utils/TextType";
-
-import React, { useState } from "react";
-import top1 from "../../assets/bannerimg/top1.jpg";
-import top2 from "../../assets/bannerimg/top4.jpg";
-import top3 from "../../assets/bannerimg/top5.jpg";
-import top4 from "../../assets/bannerimg/top6.webp";
+import React, { useState, useEffect } from "react";
 import { Star, ShoppingCart, TrendingUp, Eye, BadgeCheck } from "lucide-react";
 
 const PremiumBookShowcase = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    // Listen for theme changes from localStorage
+    const handleStorageChange = () => {
+      setTheme(localStorage.getItem("theme") || "light");
+    };
+
+    // Check for theme changes
+    const interval = setInterval(() => {
+      const currentTheme = localStorage.getItem("theme") || "light";
+      if (currentTheme !== theme) {
+        setTheme(currentTheme);
+      }
+    }, 100);
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [theme]);
+
+  const isDark = theme === "dark";
 
   const books = [
     {
@@ -65,8 +84,8 @@ const PremiumBookShowcase = () => {
   };
 
   return (
-    <div className="min-h-screen   px-4 sm:px-6 lg:px-8">
-      <div className=" md:max-w-7xl mx-auto">
+    <div className={`min-h-screen px-4 sm:px-6 lg:px-8 ${isDark ? '' : ''}`}>
+      <div className="md:max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 mb-16">
           {/* Left Content */}
           <div className="flex-1 max-w-xl space-y-6">
@@ -77,14 +96,11 @@ const PremiumBookShowcase = () => {
               </span>
             </div>
 
-            <h2 className="text-3xl   font-bold text-primary leading-tight">
-              Top Selling Books in{" "}
-                BookCourier
-         {" "}
-              Library
+            <h2 className="text-3xl font-bold text-primary leading-tight">
+              Top Selling Books in BookCourier Library
             </h2>
 
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
               Explore the books that our readers enjoy the most. These top picks
               have been loved and bought again and again. Find your next great
               read from the crowd's favorites!
@@ -96,19 +112,19 @@ const PremiumBookShowcase = () => {
                 <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
                   1000+
                 </div>
-                <div className="text-sm text-gray-500">Happy Readers</div>
+                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Happy Readers</div>
               </div>
               <div className="space-y-1">
                 <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
                   50K+
                 </div>
-                <div className="text-sm text-gray-500">Books Sold</div>
+                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Books Sold</div>
               </div>
               <div className="space-y-1">
                 <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
                   4.9★
                 </div>
-                <div className="text-sm text-gray-500">Average Rating</div>
+                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Average Rating</div>
               </div>
             </div>
           </div>
@@ -121,13 +137,15 @@ const PremiumBookShowcase = () => {
                   key={book.id}
                   onMouseEnter={() => setHoveredCard(book.id)}
                   onMouseLeave={() => setHoveredCard(null)}
-                  className="group relative bg-white rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
+                  className={`group relative ${
+                    isDark ? 'bg-gray-800' : 'bg-white'
+                  } rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2`}
                   style={{
                     animation: `fadeInUp 0.6s ease-out ${index * 0.15}s both`,
                   }}
                 >
                   {/* Gradient Border Effect */}
-                  <div className="absolute inset-0  opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl blur-xl -z-10"></div>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl blur-xl -z-10"></div>
 
                   {/* Badge */}
                   <div className="absolute top-4 left-4 z-20">
@@ -183,7 +201,9 @@ const PremiumBookShowcase = () => {
 
                   {/* Content */}
                   <div className="p-6 space-y-3">
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors duration-300">
+                    <h3 className={`text-xl font-bold ${
+                      isDark ? 'text-white' : 'text-gray-900'
+                    } group-hover:text-orange-600 transition-colors duration-300`}>
                       {book.name}
                     </h3>
 
@@ -198,7 +218,9 @@ const PremiumBookShowcase = () => {
                       </div>
 
                       <div className="text-right">
-                        <div className="text-xs text-gray-500 mb-1">
+                        <div className={`text-xs ${
+                          isDark ? 'text-gray-400' : 'text-gray-500'
+                        } mb-1`}>
                           Total Sold
                         </div>
                         <div className="text-lg font-bold text-orange-600">
@@ -209,7 +231,9 @@ const PremiumBookShowcase = () => {
 
                     {/* Progress Bar */}
                     <div className="pt-2">
-                      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div className={`h-2 ${
+                        isDark ? 'bg-gray-700' : 'bg-gray-200'
+                      } rounded-full overflow-hidden`}>
                         <div
                           className="h-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-full transition-all duration-1000"
                           style={{ width: `${(book.rating / 5) * 100}%` }}

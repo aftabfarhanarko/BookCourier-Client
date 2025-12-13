@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Menu,
   X,
@@ -29,10 +29,25 @@ import LoadingSpinner from "../../shared/LoadingSpinner ";
 import { IoIosLogOut } from "react-icons/io";
 
 export default function Navbar() {
+  const { user, userLogOut } = useAuth();
   const axioscehore = useAxiosSchore();
-  const [darkMode, setDarkMode] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdown, setProfileDropdown] = useState(false);
+
+  // THEME STATE
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [darkMode, setDarkMode] = useState(theme === "dark");
+
+  useEffect(() => {
+    const html = document.documentElement;
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    setDarkMode(theme === "dark");
+  }, [theme]);
+
+  const handleThemeToggle = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   const bgPrimary = darkMode ? "bg-gray-900" : "bg-white";
   const textPrimary = darkMode ? "text-white" : "text-gray-900";
@@ -40,9 +55,6 @@ export default function Navbar() {
   const textMuted = darkMode ? "text-gray-400" : "text-gray-600";
   const borderColor = darkMode ? "border-gray-800" : "border-gray-200";
   const hoverBg = darkMode ? "hover:bg-gray-800" : "hover:bg-gray-100";
-
-  const { user, userLogOut } = useAuth();
-  // console.log(user?.photoURL);
 
   // Real Time Updeat Baki..... ?
   const { data: wishlistCount } = useQuery({
@@ -66,7 +78,6 @@ export default function Navbar() {
       return res.data;
     },
   });
-
 
   return (
     <nav
@@ -201,11 +212,15 @@ export default function Navbar() {
 
             {/* Theme Toggle */}
             <button
-              onClick={() => setDarkMode(!darkMode)}
+              onClick={handleThemeToggle}
               className={`p-2 rounded-lg ${hoverBg} ${textSecondary} hover:text-orange-500 transition-all duration-200`}
-              title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              title={
+                theme === "dark"
+                  ? "Switch to Light Mode"
+                  : "Switch to Dark Mode"
+              }
             >
-              {darkMode ? (
+              {theme === "dark" ? (
                 <Sun className="w-5 h-5" />
               ) : (
                 <Moon className="w-5 h-5" />
