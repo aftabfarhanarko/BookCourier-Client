@@ -41,7 +41,7 @@ const Home = () => {
         <section className=" w-11/12 mx-auto mt-30">
           <WhyChooseBook></WhyChooseBook>
         </section>
-        <section className=" mt-30">
+        <section className=" ">
           <MapNow></MapNow>
         </section>
         <section className=" mt-30 ">

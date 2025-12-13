@@ -13,6 +13,12 @@ import bnner2 from "/public/newfullbanner2.jpg";
 import bnner3 from "/public/newbanner3.jpg";
 import bnner4 from "/public/bannernew4.jpg";
 import { Link } from "react-router";
+import { GiBookmarklet, GiSpellBook } from "react-icons/gi";
+import { GiBookPile } from "react-icons/gi";
+import { GiBookAura } from "react-icons/gi";
+
+
+
 
 const Banner = () => {
   return (
@@ -64,9 +70,9 @@ const Banner = () => {
 
                   <Link
                     to="/books"
-                    className="px-12 p-2.5 mt-4 md:py-2.5 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl"
+                    className="px-12 max-w-[300px] mx-auto flex items-center gap-3 p-2.5 mt-4 md:py-2.5 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl "
                   >
-                    Shop Library Books →
+                    Shop Library Books <GiBookmarklet className=" w-4 h-4 animate-bounce"/>
                   </Link>
                 </div>
               </div>
@@ -104,9 +110,10 @@ const Banner = () => {
 
                   <Link
                     to="/books"
-                    className="px-12 p-2.5 mt-4 md:py-2.5 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl"
+                    className="px-12 p-2.5 mt-4 max-w-[300px] mx-auto flex items-center gap-3 md:py-2.5 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl"
                   >
-                    Explore Rare Books →
+
+                    Explore Rare Books <GiSpellBook  className=" w-4 h-4 animate-bounce"/>
                   </Link>
                 </div>
               </div>
@@ -144,9 +151,9 @@ const Banner = () => {
 
                   <Link
                     to="/books"
-                    className="px-12 p-2.5 mt-4 md:py-2.5 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl"
+                    className="px-12 p-2.5 max-w-[300px] mx-auto flex items-center gap-3 mt-4 md:py-2.5 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl"
                   >
-                  Order Books Now  →
+                  Order Books Now  <GiBookPile  className=" w-4 h-4 animate-bounce"/>
                   </Link>
                 </div>
               </div>
@@ -184,9 +191,9 @@ const Banner = () => {
 
                   <Link
                     to="/books"
-                    className="px-12 p-2.5 mt-4 md:py-2.5 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl"
+                    className="px-12 p-2.5 mt-4 max-w-[300px] mx-auto flex items-center gap-3 md:py-2.5 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl shadow-lg text-white font-semibold text-lg tracking-wide transition-transform transform hover:scale-105 hover:shadow-xl"
                   >
-                 View Discount Deals  →
+                 View Discount   <GiBookAura  className=" w-4 h-4 animate-bounce"/>
                   </Link>
                 </div>
               </div>
