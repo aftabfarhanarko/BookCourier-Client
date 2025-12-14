@@ -924,6 +924,7 @@ const DetlicesPages = () => {
                 Order Now
               </button>
             </form>
+            
           </div>
         </div>
       )}

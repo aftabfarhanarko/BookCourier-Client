@@ -1,14 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
 import TextType from "../../../utils/TextType";
-import Swal from "sweetalert2";
-import { toast } from "sonner";
-import { useForm } from "react-hook-form";
-import { imagesBB } from "../../../features/imagesUp";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import EditeForm from "./EditeForm";
 
 const MyBooks = () => {
   const { user } = useAuth();
@@ -21,7 +18,7 @@ const MyBooks = () => {
   const skip = (page - 1) * limit;
   const totalPage = Math.ceil(allUser / limit);
 
-  const { data, isLoading, isFetching } = useQuery({
+  const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: [user?.email, page],
     queryFn: async () => {
       const res = await axioscehore.get(
@@ -31,41 +28,11 @@ const MyBooks = () => {
       return res.data.result;
     },
   });
-
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues: data, // data object যেটা তোমার আগের ডেটা
-  });
-
-  // console.log(data);
-  const handelEditNow = () => {
+  const [edit, setEdit] = useState({});
+  const handelEditNow = (items) => {
+    setEdit(items);
     reafernc.current.showModal();
   };
-
-  const handelEditesForm = async (newItem) => {
-    // const photo = newItem.images[0];
-    // const imagesLink = await imagesBB(photo);
-
-    // const updeatBookInfo = {
-    //   title: newItem.title || data.title,
-    //   availability_status:
-    //     newItem.availability_status || data.availability_status,
-    //   description: newItem.description || data.description,
-    //   image: imagesLink || data.image,
-    //   price_mrp: newItem.price_mrp || data.price_mrp,
-    //   price_sell: newItem.price_sell || data.price_sell,
-    //   publisher: newItem.publisher || data.publisher,
-    //   stock_qty: newItem.stock_qty || data.stock_qty,
-    //   updeateTime: new Date().toISOString(),
-    // };
-
-    console.log(newItem);
-  };
-
-  useEffect(() => {
-    reset(data);
-  }, [data, reset]);
-
-  console.log(data);
 
   if (isLoading || isFetching || !user?.email)
     return <LoadingSpinner></LoadingSpinner>;
@@ -246,7 +213,7 @@ const MyBooks = () => {
                     <div className=" flex  items-center gap-2">
                       {/* Edit Button */}
                       <button
-                        onClick={handelEditNow}
+                        onClick={() => handelEditNow(item)}
                         className="bg-gradient-to-br from-orange-400 to-orange-600 text-white font-semibold px-3 py-2 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition duration-300"
                       >
                         <svg
@@ -294,167 +261,29 @@ const MyBooks = () => {
 
       {/* Edite Er kaj Baki */}
       <dialog ref={reafernc} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <form
-            onSubmit={handleSubmit(handelEditesForm)}
-            encType="multipart/form-data"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* ===== Left Section ===== */}
-              <div className="space-y-8">
-                {/* Book Title */}
-                <div>
-                  <label className="font-medium text-gray-800">
-                    Book Title <span className="text-red-600">*</span>
-                  </label>
-                  <input
-                    {...register("title")}
-                    // defaultValue={data.title}
-                    type="text"
-                    defaultValue={data?.title}
-                    className="w-full mt-2 px-6 py-2 rounded-2xl border-2 border-orange-400 focus:outline-none"
-                  />
-                </div>
-
-                {/* Publisher */}
-                <div>
-                  <label className="font-medium text-gray-800">Publisher</label>
-                  <select
-                    {...register("publisher")}
-                    className="w-full mt-2 px-6 py-2 rounded-2xl border-2 border-orange-400 focus:outline-none"
-                    defaultValue={data.publisher}
-                  >
-                    <option value="" disabled>
-                      Select Book Status
-                    </option>
-                    <option value="Publish">Publish</option>
-                    <option value="UnPublish">UnPublish</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="font-medium text-gray-800">
-                    Availability Status <span className="text-red-600">*</span>
-                  </label>
-                  <select
-                    {...register("availability_status")}
-                    className="w-full mt-2 px-6 py-2 rounded-2xl border-2 border-orange-400 focus:outline-none"
-                    defaultValue={data.availability_status}
-                  >
-                    <option value="" disabled>
-                      Select Status
-                    </option>
-                    <option value="In Stock">In Stock</option>
-                    <option value="Out of Stock">Out of Stock</option>
-                  </select>
-                </div>
-
-                {/* Description */}
-                <div>
-                  <label className="font-medium text-gray-800">
-                    Description <span className="text-red-600">*</span>
-                  </label>
-                  <textarea
-                    {...register("description")}
-                    defaultValue={data.description}
-                    placeholder="Short summary about the book....."
-                    className="w-full mt-2 px-6 py-2 rounded-2xl border-2 border-orange-400 focus:outline-none min-h-[140px]"
-                  ></textarea>
-                </div>
-              </div>
-
-              {/* ===== Right Section ===== */}
-              <div className="space-y-8">
-                {/* Price MRP */}
-                <div>
-                  <label className="font-medium text-gray-800">
-                    Price <span className="text-red-600">*</span>
-                  </label>
-                  <input
-                    {...register("price_mrp")}
-                    type="number"
-                    min={0}
-                    defaultValue={data.price_mrp}
-                    placeholder="$ Set Price..."
-                    className="w-full mt-2 px-6 py-2 rounded-2xl border-2 border-orange-400 focus:outline-none"
-                  />
-                </div>
-
-                {/* Selling Price */}
-                <div>
-                  <label className="font-medium text-gray-800">
-                    Selling Price <span className="text-red-600">*</span>
-                  </label>
-                  <input
-                    {...register("price_sell")}
-                    type="number"
-                    min={0}
-                    defaultValue={data.price_sell}
-                    placeholder="$ Selling price...."
-                    className="w-full mt-2 px-6 py-2 rounded-2xl border-2 border-orange-400 focus:outline-none"
-                  />
-                </div>
-
-                {/* Stock Quantity */}
-                <div>
-                  <label className="font-medium text-gray-800">
-                    Stock Quantity <span className="text-red-600">*</span>
-                  </label>
-                  <input
-                    {...register("stock_qty")}
-                    type="number"
-                    min={0}
-                    defaultValue={data.stock_qty}
-                    placeholder="edit now"
-                    className="w-full mt-2 px-6 py-2 rounded-2xl border-2 border-orange-400 focus:outline-none"
-                  />
-                </div>
-
-                {/* Images Upload */}
-                <div className="border-2 border-dashed border-[#C2410C] rounded-2xl p-4 text-center bg-yellow-50 cursor-pointer hover:scale-105 transition">
-                  <label className="cursor-pointer w-full block">
-                    <input
-                      {...register("images")}
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      className="hidden"
-                    />
-                    <p className="font-semibold hover:underline text-[#C2410C] text-xs">
-                      Click here to Edit book images (minimum 1)
-                    </p>
-                  </label>
-                </div>
-
-                {/* Current Image Preview */}
-                {data.image && (
-                  <div className="mt-4">
-                    <label className="font-medium text-gray-800 block mb-2">
-                      Current Image
-                    </label>
-                    <img
-                      src={data.image}
-                      alt={data.title}
-                      className="w-32 h-32 object-cover rounded-lg border-2 border-orange-400"
-                    />
-                  </div>
-                )}
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="w-full py-2 rounded-full font-bold text-md text-white bg-gradient-to-r from-[#C2410C] to-[#FDBA74] shadow-xl hover:shadow-2xl active:scale-95 transition"
-                >
-                  Edit Book Complete
-                </button>
-              </div>
-            </div>
-          </form>
-
+        <div className="modal-box max-w-6xl">
+          <EditeForm edit={edit} refetch={refetch} />
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button className="bg-red-500 ml-4 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-xl">
+              <button
+                className="flex items-center gap-2 bg-gradient-to-br from-orange-400 to-orange-600 
+             text-white font-semibold px-6 py-2 rounded-xl hover:opacity-90"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
                 Close
               </button>
             </form>
@@ -463,51 +292,80 @@ const MyBooks = () => {
       </dialog>
 
       {/* Pasitions */}
-     
-        <div className="flex justify-between items-center px-6 py-4 mt-7 bg-white  border-t border-gray-200 dark:border-gray-300 rounded-b-2xl">
-          <button
-            disabled={page === 1}
-            onClick={() => setPage(page - 1)}
-            className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
-              page === 1
-                ? "text-gray-400 cursor-not-allowed bg-base-300"
-                : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
-            }`}
-          >
-            <FaArrowLeftLong /> Previous
-          </button>
+      <div className="flex justify-between items-center px-6 py-4 mt-7 bg-white  border-t border-gray-200 dark:border-gray-300 rounded-b-2xl">
+        <button
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+            page === 1
+              ? "text-gray-400 cursor-not-allowed bg-base-300"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+          }`}
+        >
+          <FaArrowLeftLong /> Previous
+        </button>
 
-          <div className="flex gap-2">
-            {Array.from({ length: totalPage }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setPage(i + 1)}
-                className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold transition ${
-                  page === i + 1
-                    ? "bg-gradient-to-br from-orange-400 to-orange-600 text-white"
-                    : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-pink-50 hover:via-purple-50 hover:to-blue-50"
-                }`}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
-
-          <button
-            disabled={page === totalPage}
-            onClick={() => setPage(page + 1)}
-            className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
-              page === totalPage
-                ? "text-gray-400 cursor-not-allowed bg-base-300"
-                : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
-            }`}
-          >
-            Next <FaArrowRightLong />
-          </button>
+        <div className="flex gap-2">
+          {Array.from({ length: totalPage }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold transition ${
+                page === i + 1
+                  ? "bg-gradient-to-br from-orange-400 to-orange-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gradient-to-r hover:from-pink-50 hover:via-purple-50 hover:to-blue-50"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
         </div>
-     
+
+        <button
+          disabled={page === totalPage}
+          onClick={() => setPage(page + 1)}
+          className={`flex items-center gap-2 px-4 py-1 rounded-lg font-medium transition ${
+            page === totalPage
+              ? "text-gray-400 cursor-not-allowed bg-base-300"
+              : "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90"
+          }`}
+        >
+          Next <FaArrowRightLong />
+        </button>
+      </div>
     </div>
   );
 };
 
 export default MyBooks;
+{
+  /* Images Upload */
+}
+// <div className="border-2 border-dashed border-[#C2410C] rounded-2xl p-4 text-center bg-yellow-50 cursor-pointer hover:scale-105 transition">
+//   <label className="cursor-pointer w-full block">
+//     <input
+//       {...register("images")}
+//       type="file"
+//       accept="image/*"
+//       multiple
+//       className="hidden"
+//     />
+//     <p className="font-semibold hover:underline text-[#C2410C] text-xs">
+//       Click here to Edit book images (minimum 1)
+//     </p>
+//   </label>
+// </div>
+
+// {/* Current Image Preview */}
+// {data.image && (
+//   <div className="mt-4">
+//     <label className="font-medium text-gray-800 block mb-2">
+//       Current Image
+//     </label>
+//     <img
+//       src={data.image}
+//       alt={data.title}
+//       className="w-32 h-32 object-cover rounded-lg border-2 border-orange-400"
+//     />
+//   </div>
+// )}

@@ -39,7 +39,7 @@ export default function Footer() {
 
   return (
     <footer
-      className={`mt-10 ${
+      className={`mt-10 relative ${
         isDark ? "bg-gray-800" : "bg-orange-50"
       } border-t ${isDark ? "border-gray-700" : "border-base-300"}`}
     >
@@ -138,7 +138,7 @@ export default function Footer() {
                 isDark ? "text-white" : "text-gray-900"
               }`}
             >
-              Bookland ?
+              Bookland 
             </h3>
             <ul className={`space-y-3 ${isDark ? "text-white" : "text-gray-600"}`}>
               {[
@@ -230,9 +230,9 @@ export default function Footer() {
 
       {/* Bottom Right Scroll To Top */}
       <button
-        aria-label="Scroll to top"
+        // aria-label="Scroll to top"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-20 right-6 w-12 h-12 bg-orange-400 rounded-full flex items-center justify-center shadow-lg hover:bg-orange-500 transition"
+        className=" absolute bottom-10 right-10 w-12 h-12 bg-orange-400 rounded-full flex items-center justify-center shadow-lg hover:bg-orange-500 transition"
       >
         <FaArrowUp className="text-white" />
       </button>

@@ -29,7 +29,7 @@ import LoadingSpinner from "../../shared/LoadingSpinner ";
 import { IoIosLogOut } from "react-icons/io";
 
 export default function Navbar() {
-  const { user, userLogOut } = useAuth();
+  const { user, userLogOut ,loding} = useAuth();
   const axioscehore = useAxiosSchore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdown, setProfileDropdown] = useState(false);
@@ -79,6 +79,9 @@ export default function Navbar() {
     },
   });
 
+  if(loding){
+    return <LoadingSpinner/>
+  }
   return (
     <nav
       className={`${bgPrimary} border-b ${borderColor} shadow-sm transition-colors duration-300 sticky top-0 z-50    fixed `}
@@ -132,8 +135,28 @@ export default function Navbar() {
                     className="w-11 h-11 rounded-full"
                   ></img>
                 ) : (
-                  <div className="w-11 h-11 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                    <FiUser></FiUser>
+                  <div className=" flex text-center gap-6 ">
+                    <Link
+                      to="/auth/login"
+                      className="px-5 py-1.5 rounded-xl font-semibold text-[#e85d04]
+                            border-2 hover:border flex items-center gap-3 border-[#e85d04]
+                            transition-all duration-300
+                            hover:bg-gradient-to-r from-[#C2410C] to-[#e85d04]
+                            hover:text-white hover:scale-105"
+                    >
+                      <FaUserCheck className=" w-4 h-4" /> Login
+                    </Link>
+
+                    {/* REGISTER */}
+                    <Link
+                      to="/auth/rigester"
+                      className="px-5 py-1.5 gap-3 rounded-xl text-white font-semibold
+                            bg-gradient-to-r from-[#C2410C] to-[#e85d04]
+                            shadow-lg transition-all flex items-center duration-300
+                            hover:scale-105"
+                    >
+                      <FaUserCog className=" w-4 h-4" /> Register
+                    </Link>
                   </div>
                 )}
                 <ChevronDown
@@ -142,15 +165,13 @@ export default function Navbar() {
                   }`}
                 />
               </button>
-
-              {/* Dropdown Menu */}
-              {profileDropdown && (
+              {user && profileDropdown && (
                 <div
                   className={`absolute right-0 mt-2 w-56 ${bgPrimary} rounded-xl shadow-xl border ${borderColor} py-2 transition-all duration-200`}
                 >
-                  {usersas ? (
+                  {usersas && (
                     <>
-                      <div className={`px-5 py-5 border-b  ${borderColor}`}>
+                      <div className={`px-5 py-5 border-b ${borderColor}`}>
                         <p className={`font-semibold ${textPrimary}`}>
                           {usersas?.displayName}
                         </p>
@@ -158,6 +179,7 @@ export default function Navbar() {
                           {usersas?.email}
                         </p>
                       </div>
+
                       <Link
                         to="/profile2"
                         className={`flex items-center gap-3 px-5 py-2 ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all`}
@@ -165,6 +187,7 @@ export default function Navbar() {
                         <User className="w-4 h-4" />
                         <span>Profile</span>
                       </Link>
+
                       <Link
                         to="/settingse"
                         className={`flex items-center gap-3 px-5 py-2 ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all`}
@@ -172,39 +195,17 @@ export default function Navbar() {
                         <Settings className="w-4 h-4" />
                         <span>Settings</span>
                       </Link>
-                      <div className={`border-t ${borderColor} mt-2 pt-2 `}>
+
+                      <div className={`border-t ${borderColor} mt-2 pt-2`}>
                         <button
-                          onClick={() => userLogOut()}
-                          className={`w-full rounded-lg  text-left flex items-center gap-3 px-4 py-2 text-orange-500 bg-orange-50 ${hoverBg} transition-all`}
+                          onClick={userLogOut}
+                          className={`w-full rounded-lg text-left flex items-center gap-3 px-4 py-2 text-orange-500 bg-orange-50 ${hoverBg} transition-all`}
                         >
-                          <PiSignOutLight className=" w-5 h-5" /> Logout
+                          <PiSignOutLight className="w-5 h-5" />
+                          Logout
                         </button>
                       </div>
                     </>
-                  ) : (
-                    <div className=" flex flex-col p-6 text-center gap-6 ">
-                      <Link
-                        to="/auth/login"
-                        className="px-6 py-1.5 rounded-xl font-semibold text-[#e85d04]
-                            border-2 hover:border flex items-center gap-3 border-[#e85d04]
-                            transition-all duration-300
-                            hover:bg-gradient-to-r from-[#C2410C] to-[#e85d04]
-                            hover:text-white hover:scale-105"
-                      >
-                        <FaUserCheck className=" w-4 h-4" /> Login
-                      </Link>
-
-                      {/* REGISTER */}
-                      <Link
-                        to="/auth/rigester"
-                        className="px-6 py-1.5 gap-3 rounded-xl text-white font-semibold
-                            bg-gradient-to-r from-[#C2410C] to-[#e85d04]
-                            shadow-lg transition-all flex items-center duration-300
-                            hover:scale-105"
-                      >
-                        <FaUserCog className=" w-4 h-4" /> Register
-                      </Link>
-                    </div>
                   )}
                 </div>
               )}
@@ -272,7 +273,6 @@ export default function Navbar() {
               )}
             </button>
           </div>
-          
         </div>
 
         {/* Mobile Menu */}

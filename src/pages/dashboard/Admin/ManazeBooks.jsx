@@ -51,7 +51,7 @@ const ManazeBooks = () => {
         confirmButton:
           "bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-xl",
         cancelButton:
-          "bg-red-500 ml-4 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-xl",
+          "bg-gradient-to-br from-orange-400 to-orange-600 text-white hover:opacity-90 font-semibold px-6 py-2 rounded-xl",
       },
 
       buttonsStyling: false,
