@@ -28,12 +28,12 @@ import AdminDashBord from "../pages/dashboard/Admin/AdminDashBord";
 import LibrarianDashBord from "../pages/dashboard/Librarian/LibrarianDashBord";
 import UserDashBord from "../pages/dashboard/User/UserDashBord";
 import AutoRedirectDashboard from "../pages/dashboard/AutoRedirectDashboard/AutoRedirectDashboard";
+import LoadingSpinner from "../shared/LoadingSpinner ";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayOut,
-    hydrateFallbackElement: <h1>Loding</h1>,
     children: [
       {
         index: true,
