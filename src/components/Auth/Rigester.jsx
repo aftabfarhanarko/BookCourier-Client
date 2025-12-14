@@ -65,7 +65,7 @@ const Rigester = () => {
 
     rigersterNow(email, password)
       .then((res) => {
-        console.log(res.user);
+        // console.log(res.user);
         const savedDatabase = {
           email,
           displayName,
@@ -73,7 +73,7 @@ const Rigester = () => {
           photoURL,
         };
         axioShore.post(`ucustomer`, savedDatabase).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
         });
         updetUserInfo(userInfoUpdet).then(() => {
           navigate(from, { replace: true });
@@ -84,7 +84,7 @@ const Rigester = () => {
       .catch((err) => {
         toast.warning(err.code);
       });
-    console.log(email, password, photoURL);
+    // console.log(email, password, photoURL);
   };
 
   const handelGoogleRigester = () => {
@@ -98,11 +98,11 @@ const Rigester = () => {
         };
 
         axioShore.post(`ucustomer`, savedDatabase).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
         });
         toast.success("Rigester Successfully");
         navigate(from, { replace: true });
-        console.log(res.user);
+        // console.log(res.user);
       })
       .catch((err) => {
         toast.warning(err.code);

@@ -1,7 +1,7 @@
 import React from "react";
 
 const ReviewCard = ({ review }) => {
-  console.log(review);
+  // console.log(review);
 
   return (
     <div className="bg-gradient-to-br from-white to-amber-50 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-orange-200 hover:scale-105">

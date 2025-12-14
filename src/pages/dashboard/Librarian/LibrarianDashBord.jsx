@@ -104,7 +104,6 @@ const LibrarianDashboard = () => {
     },
   });
   // dailyPayments
-  console.log();
   const chartTaka = (earninges?.dailyPayments || []).map((item) => ({
     month: item?.date,
     earnings: item?.dailyAmount,
@@ -117,7 +116,7 @@ const LibrarianDashboard = () => {
     earnings: 2400,
   }));
 
-  console.log("Total Books", booksAddedData);
+  // console.log("Total Books", booksAddedData);
 
   // Recent activities
   // const recentActivities = [

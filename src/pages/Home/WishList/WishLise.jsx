@@ -23,7 +23,7 @@ export default function WishlistCard() {
       const res = await axioscehore.get(
         `customeraddyourwhishlist?email=${user?.email}`
       );
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
     },
   });
@@ -66,7 +66,7 @@ export default function WishlistCard() {
           .then((res) => {
             // task query propley refetch delet data
             refetch();
-            console.log("Propley Delet Now", res);
+            // console.log("Propley Delet Now", res);
             // toast.success("Delet Now");
           })
           .catch((err) => {

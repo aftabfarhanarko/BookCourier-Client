@@ -54,7 +54,7 @@ const Login = () => {
     const password = data.password;
     signUpUser(email, password)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         toast.success("Login Successfully");
         navigate(from, { replace: true });
       })
@@ -62,7 +62,7 @@ const Login = () => {
         toast.warning(err.code);
       });
 
-    console.log(email, password);
+    // console.log(email, password);
   };
 
   const handelGoogleLogin = () => {
@@ -74,14 +74,14 @@ const Login = () => {
           password: res?.user?.password || "12453hgfgyusf%44hgv",
           photoURL: res?.user?.photoURL,
         };
-        console.log(savedDatabase);
+        // console.log(savedDatabase);
 
         axioShore.post(`ucustomer`, savedDatabase).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
         });
         toast.success("Login Successfully");
         navigate(from, { replace: true });
-        console.log(res.user);
+        // console.log(res.user);
       })
       .catch((err) => {
         toast.warning(err.code);

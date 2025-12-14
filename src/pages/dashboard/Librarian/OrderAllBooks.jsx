@@ -28,24 +28,24 @@ const OrderAllBooks = () => {
     },
   });
 
-  console.log(data);
+  // console.log(data);
 
   const handelUpdetNow = (status, id) => {
     axioscehore.patch(`updetOrder/${id}?status=${status}`).then((res) => {
       refetch();
-      console.log(res.data);
+      // console.log(res.data);
     });
   };
 
   const handelDeliveryNow = (id) => {
-    console.log(id);
+    // console.log(id);
 
     handelUpdetNow("delivered", id);
     toast.success("Book Deliverd Successfully");
   };
 
   const handelShipedNow = (id) => {
-    console.log(id);
+    // console.log(id);
 
     handelUpdetNow("shipped", id);
     toast.success("Book Shipped Successfully");

@@ -85,9 +85,9 @@ const Profile = () => {
       toast.success("Your Profile Updeat Successfully");
     }
 
-    console.log(res.data);
+    // console.log(res.data);
 
-    console.log(updetProdileUser);
+    // console.log(updetProdileUser);
   };
 
   // console.log(usersas?._id);

@@ -67,7 +67,7 @@ const DetlicesPages = () => {
     };
 
     axioscehore.post("ordernow", orderInfo).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.insertedId) {
         toast.success("Order Successfully ");
         setIsOpen(false);
@@ -93,7 +93,7 @@ const DetlicesPages = () => {
         reviewerRating: Number(reating),
         reviewDate: new Date().toISOString(),
       };
-      console.log(setReviewDataBase);
+      // console.log(setReviewDataBase);
       axioscehore.post("reviewUserNow", setReviewDataBase).then((res) => {
         refetch();
         // console.log(res.data);

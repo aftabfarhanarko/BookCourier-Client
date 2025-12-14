@@ -31,15 +31,15 @@ const UserOrderTable = () => {
       const res = await axioscehore.get(
         `orderlist?email=${user?.email}&limit=${limit}&skip=${skip}`
       );
-      console.log(res.data);
+      // console.log(res.data);
 
       setAllUser(res.data.counts || []);
       return res?.data?.result || [];
     },
   });
 
-  console.log(orders);
-  console.log(user?.email);
+  // console.log(orders);
+  // console.log(user?.email);
 
   const handelcancel = (id) => {
     Swal.fire({
@@ -95,7 +95,7 @@ const UserOrderTable = () => {
   };
 
   const handelPaymentSession = (orderData) => {
-    console.log("Order Books", orderData);
+    // console.log("Order Books", orderData);
     
     const bookInfo = {
       customerName: orderData.name,

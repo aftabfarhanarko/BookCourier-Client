@@ -113,7 +113,7 @@ const AdminDashboard = () => {
     },
   });
 
-  console.log(paymentAmount);
+  // console.log(paymentAmount);
 
   const StatCard = ({
     icon: Icon,

@@ -14,25 +14,7 @@ const EditeForm = ({ edit, refetch }) => {
     formState: { errors },
   } = useForm({});
   const handelEditesForm = async (newItem) => {
-    console.log(newItem);
-
-    // const photo = newItem.images[0];
-    // const imagesLink = await imagesBB(photo);
-
-    // const updeatBookInfo = {
-    //   title: newItem.title || data.title,
-    //   availability_status:
-    //     newItem.availability_status || data.availability_status,
-    //   description: newItem.description || data.description,
-    //   image: imagesLink || data.image,
-    //   price_mrp: newItem.price_mrp || data.price_mrp,
-    //   price_sell: newItem.price_sell || data.price_sell,
-    //   publisher: newItem.publisher || data.publisher,
-    //   stock_qty: newItem.stock_qty || data.stock_qty,
-    //   updeateTime: new Date().toISOString(),
-    // };
-
-    console.log(newItem);
+    // console.log(newItem);
   };
   const { user } = useAuth();
   const axioscehore = useAxiosSchore();
@@ -101,13 +83,10 @@ const EditeForm = ({ edit, refetch }) => {
           if (res.data.acknowledged) {
             toast.success("Updeat Bookes Now");
             refetch();
-            // console.log(res.data);
           }
         });
-      //   console.log("Not Updeat Images", savedDatabase);
     }
   };
-  //  console.log(edit.image);
 
   return (
     <form

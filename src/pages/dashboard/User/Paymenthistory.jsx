@@ -27,7 +27,7 @@ const PaymentHistory = () => {
       return res?.data?.result || [];
     },
   });
-  console.log(data);
+  // console.log(data);
 
   if (isLoading || isFetching || !user?.email)
     return <LoadingSpinner></LoadingSpinner>;

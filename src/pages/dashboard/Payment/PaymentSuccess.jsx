@@ -16,14 +16,14 @@ const PaymentSuccess = () => {
   const [data, setData] = useState({});
   const [searchParems] = useSearchParams();
   const sessionId = searchParems.get("session_id");
-  console.log(searchParems.get("session_id"));
+  // console.log(searchParems.get("session_id"));
 
   useEffect(() => {
     if (sessionId) {
       axioscehore
         .patch(`success-payment?sessionID=${sessionId}`)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setData(res.data);
         });
     }

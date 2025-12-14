@@ -33,7 +33,7 @@ const AlluserData = () => {
       const res = await axioShore.get(
         `alluser-data?email=${user?.email}&limit=${limit}&skip=${skip}`
       );
-      console.log(res.data);
+      // console.log(res.data);
       setAllUser(res.data.counts);
       return res?.data?.result || [];
     },
@@ -98,25 +98,25 @@ const AlluserData = () => {
       toast.success(`Ubdet Role in ${role}`);
       refetch();
     }
-    console.log(res.data);
+    // console.log(res.data);
   };
 
   const handleMakeAdmin = (id) => {
-    console.log(id);
+    // console.log(id);
     handelUpdetRole("admin", id);
   };
 
   const userHandelNow = (id) => {
-    console.log(id);
+    // console.log(id);
     handelUpdetRole("user", id);
   };
 
   const handleMakeUser = (id) => {
-    console.log(id);
+    // console.log(id);
     handelUpdetRole("librarian", id);
   };
 
-  console.log(allUser);
+  // console.log(allUser);
 
   if (isFetching || isLoading) return <LoadingSpinner></LoadingSpinner>;
   return (

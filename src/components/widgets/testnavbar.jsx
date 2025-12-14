@@ -27,7 +27,7 @@ const Navbar = () => {
     setTheme(checked ? "dark" : "light");
   };
 
-  console.log(user);
+  // console.log(user);
 
   const logoutNow = () => {
     userLogOut();
