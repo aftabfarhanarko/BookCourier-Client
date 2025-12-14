@@ -12,6 +12,7 @@ import Marqey from "./Marqey";
 // import { Typed } from 'react-typed';
 
 const Home = () => {
+  
   return (
     <div>
       <section className=" mt-6">

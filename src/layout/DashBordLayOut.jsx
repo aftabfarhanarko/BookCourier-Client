@@ -16,6 +16,7 @@ import { IoClose } from "react-icons/io5";
 import { CreditCard } from "lucide-react";
 import LoadingSpinner from "../shared/LoadingSpinner ";
 import useRole from "../hooks/useRole";
+import { HiMenuAlt3 } from "react-icons/hi";
 
 const DashBordLayOut = () => {
   const { user, loding, userLogOut } = useAuth();
@@ -37,14 +38,17 @@ const DashBordLayOut = () => {
       <div className="drawer-content flex flex-col h-screen">
         {/* ✅ FIXED NAVBAR */}
         <nav className="navbar fixed top-0  py-3 right-0 z-50 md:z-10 bg-base-300 px-4 shadow-md flex justify-between">
-          <div className="flex items-center gap-3 md:pl-60">
+          <div className="flex items-center gap-1 md:gap-3 md:pl-60">
             {/* Toggle Button */}
-            <label
-              htmlFor="my-drawer-4"
-              className="btn btn-ghost btn-square lg:hidden"
+            <NavLink
+              to="/"
+              className={() =>
+                `flex gap-3 items-center px-4 py-1.5 
+                  `
+              }
             >
-              <Logs />
-            </label>
+              <HiOutlineHome className="w-6 h-6" />
+            </NavLink>
 
             {/* LOGO */}
             <div className="flex items-center gap-2 text-primary">
@@ -54,7 +58,7 @@ const DashBordLayOut = () => {
           </div>
 
           {/* Avatar */}
-          <div className=" pr-7">
+          <div className=" md:pr-7 flex items-center gap-2">
             <div className="w-12 h-12 rounded-full ring ring-orange-500 flex items-center justify-center">
               {user ? (
                 <img
@@ -65,6 +69,12 @@ const DashBordLayOut = () => {
                 <CiUser className="w-7 h-7 text-orange-500" />
               )}
             </div>
+            <label
+              htmlFor="my-drawer-4"
+              className="btn btn-ghost btn-square lg:hidden"
+            >
+              <Logs />
+            </label>
           </div>
         </nav>
 
@@ -79,20 +89,22 @@ const DashBordLayOut = () => {
         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
 
         {/* ✅ FULL HEIGHT SIDEBAR */}
-        <div className="w-55 md:z-60 md:pt-2 bg-gray-900 text-white flex flex-col h-full">
+        <div className=" w-50 md:w-55 md:z-60 md:pt-2 bg-gray-900 text-white flex flex-col h-full">
           {/* MAIN MENU */}
           <ul className="menu px-4 py-4 flex-grow gap-6">
-            <li>
-              <NavLink
-                to="/"
-                className={() =>
-                  `flex gap-3 items-center px-4 py-1.5 bg-orange-500 text-white md:mt-0 mt-18 rounded-xl
+            <div className=" hidden md:block">
+              <li>
+                <NavLink
+                  to="/"
+                  className={() =>
+                    `flex gap-3 items-center px-4 py-1.5 bg-orange-500 text-white md:mt-0 mt-18 rounded-xl
                   `
-                }
-              >
-                <HiOutlineHome className="w-6 h-6" /> Home
-              </NavLink>
-            </li>
+                  }
+                >
+                  <HiOutlineHome className="w-6 h-6" /> Home
+                </NavLink>
+              </li>
+            </div>
             {/* ADMIN */}
             {role === "admin" && (
               <>

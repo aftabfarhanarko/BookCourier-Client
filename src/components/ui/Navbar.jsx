@@ -29,7 +29,7 @@ import LoadingSpinner from "../../shared/LoadingSpinner ";
 import { IoIosLogOut } from "react-icons/io";
 
 export default function Navbar() {
-  const { user, userLogOut ,loding} = useAuth();
+  const { user, userLogOut } = useAuth();
   const axioscehore = useAxiosSchore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdown, setProfileDropdown] = useState(false);
@@ -79,9 +79,7 @@ export default function Navbar() {
     },
   });
 
-  if(loding){
-    return <LoadingSpinner/>
-  }
+
   return (
     <nav
       className={`${bgPrimary} border-b ${borderColor} shadow-sm transition-colors duration-300 sticky top-0 z-50    fixed `}

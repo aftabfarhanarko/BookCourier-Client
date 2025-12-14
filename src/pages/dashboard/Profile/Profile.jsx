@@ -84,13 +84,8 @@ const Profile = () => {
       references.current.close();
       toast.success("Your Profile Updeat Successfully");
     }
-
-    // console.log(res.data);
-
-    // console.log(updetProdileUser);
   };
 
-  // console.log(usersas?._id);
 
   if (isLoading || isFetching) return <LoadingSpinner />;
 
@@ -125,7 +120,7 @@ const Profile = () => {
           {/* Content */}
           <div className="pt-20 px-8 pb-8">
             {/* Header */}
-            <div className="flex justify-between items-start gap-4">
+            <div className="flex justify-between items-start gap-1.5 md:gap-4">
               <div>
                 <h1 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-gray-100">
                   <TextType
@@ -146,7 +141,7 @@ const Profile = () => {
 
               {/* Role */}
               <span
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full
+                className={`inline-flex items-center gap-2 px-4 py-2 text-[14px] rounded-full
                 text-sm font-medium border
                 ${
                   usersas?.role === "admin"
@@ -210,7 +205,7 @@ const Profile = () => {
             <div className="mt-8 flex gap-4">
               <button
                 onClick={handelUpdeatProfile}
-                className="flex-1 rounded-xl flex items-center justify-center gap-2 py-2 font-semibold text-white
+                className="flex-1 text-[14px] md:text-[16px] rounded-xl flex items-center justify-center gap-2 py-2 md:font-semibold text-white
                 bg-gradient-to-r from-[#C2410C] to-orange-500
                 shadow-md hover:shadow-lg hover:scale-[1.03]
                 transition-all duration-200"
@@ -220,7 +215,7 @@ const Profile = () => {
 
               <Link
                 to="/deshbord/settings"
-                className="px-6 rounded-xl py-2 font-semibold
+                className="px-6 rounded-xl text-[14px] md:text-[16px] py-2 md:font-semibold
                 border border-orange-300 dark:border-[#5a3a26]
                 text-[#C2410C] dark:text-orange-400
                 hover:bg-orange-50 dark:hover:bg-[#2f2f2f]
@@ -337,14 +332,14 @@ const Profile = () => {
             <div className="modal-action">
               <button
                 type="submit"
-                className="  py-2  rounded-lg px-4  text-md text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2"
+                className="  py-2 text-[15px] md:text-[16px]  rounded-lg px-4  text-md text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2"
               >
                 <CgProfile /> Update Now
               </button>
               <button
                 onClick={() => references.current.close()}
                 type="button"
-                className="  py-2  rounded-lg px-4  text-md text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2"
+                className="  py-2  text-[15px] md:text-[16px] rounded-lg px-4  text-md text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2"
               >
                 <IoCloseCircleOutline /> Cancel
               </button>
