@@ -40,16 +40,17 @@ const DashBordLayOut = () => {
         <nav className="navbar fixed top-0  py-3 right-0 z-50 md:z-10 bg-base-300 px-4 shadow-md flex justify-between">
           <div className="flex items-center gap-1 md:gap-3 md:pl-60">
             {/* Toggle Button */}
-            <NavLink
-              to="/"
-              className={() =>
-                `flex gap-3 items-center px-4 py-1.5 
+            <div className=" block md:hidden">
+              <NavLink
+                to="/"
+                className={() =>
+                  `flex gap-3 items-center px-4 py-1.5 
                   `
-              }
-            >
-              <HiOutlineHome className="w-6 h-6" />
-            </NavLink>
-
+                }
+              >
+                <HiOutlineHome className="w-6 h-6" />
+              </NavLink>
+            </div>
             {/* LOGO */}
             <div className="flex items-center gap-2 text-primary">
               <FaBookReader className="w-6 h-6" />

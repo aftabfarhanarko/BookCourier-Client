@@ -53,7 +53,7 @@ const Login = () => {
     const email = data?.email;
     const password = data.password;
     signUpUser(email, password)
-      .then((res) => {
+      .then(() => {
         // console.log(res);
         toast.success("Login Successfully");
         navigate(from, { replace: true });
@@ -76,7 +76,7 @@ const Login = () => {
         };
         // console.log(savedDatabase);
 
-        axioShore.post(`ucustomer`, savedDatabase).then((res) => {
+        axioShore.post(`ucustomer`, savedDatabase).then(() => {
           // console.log(res.data);
         });
         toast.success("Login Successfully");
