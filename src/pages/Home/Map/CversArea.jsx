@@ -87,7 +87,7 @@ const createCustomIcon = (color, isActive) => {
   });
 };
 
-const CversArea = () => {
+const CoverageMap = () => {
   const position = [23.685, 90.3563];
   const mapRef = useRef(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
@@ -104,7 +104,7 @@ const CversArea = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/warehouses.json")
+    fetch("/weaerhouse.json")
       .then((res) => res.json())
       .then((data) => {
         const enhancedData = data.map((item, index) => ({
@@ -210,7 +210,7 @@ const CversArea = () => {
   };
 
   return (
-    <div className="h-screen w-full mt-15 bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col overflow-hidden relative">
+    <div className="h-screen w-full mt-10 pb-15 bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col overflow-hidden relative">
       {loading && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
           <div className="flex flex-col items-center gap-4">
@@ -313,17 +313,13 @@ const CversArea = () => {
               onClick={() => setShowSidebar(!showSidebar)}
               className="p-2 bg-slate-200 rounded-lg hover:bg-slate-300 transition-colors"
             >
-              {showSidebar ? (
-                <ChevronLeft className="w-5 h-5" />
-              ) : (
-                <ChevronRight className="w-5 h-5" />
-              )}
+              {showSidebar ? <> Close Side </> : <> Open Side </>}
             </button>
           </div>
         </div>
 
         {/* Enhanced Stats Cards */}
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mt-4">
+        <div className="max-w-11/12 mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mt-4">
           {[
             {
               icon: Package,
@@ -595,6 +591,58 @@ const CversArea = () => {
                       </div>
                     </div>
                   </div>
+
+                  {/* Covered Areas */}
+                  {selectedDistrict.covered_area && (
+                    <div className="bg-white p-3 rounded-lg">
+                      <div className="text-xs text-slate-600 mb-2 flex items-center gap-1 font-medium">
+                        <MapPin className="w-3 h-3 text-purple-600" /> Covered
+                        Areas
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedDistrict.covered_area.map((area, idx) => (
+                          <span
+                            key={idx}
+                            className="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-medium rounded-md border border-slate-200 hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200 transition-colors cursor-default"
+                          >
+                            {area}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Flowchart */}
+                  {selectedDistrict.flowchart && (
+                    <div className="bg-white p-3 rounded-lg overflow-hidden">
+                      <div className="text-xs text-slate-600 mb-2 flex items-center gap-1 font-medium">
+                        <BarChart3 className="w-3 h-3 text-purple-600" />{" "}
+                        Workflow Chart
+                      </div>
+                      <div
+                        className="relative group overflow-hidden rounded-lg border border-slate-200 cursor-pointer"
+                        onClick={() =>
+                          window.open(selectedDistrict.flowchart, "_blank")
+                        }
+                      >
+                        <img
+                          src={selectedDistrict.flowchart}
+                          alt="Workflow Chart"
+                          className="w-full h-32 object-cover transition-transform duration-500 group-hover:scale-110"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src =
+                              "https://placehold.co/600x400?text=No+Chart+Available";
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+                          <span className="text-white text-xs font-semibold px-3 py-1 bg-white/20 backdrop-blur-md rounded-full border border-white/50 flex items-center gap-1">
+                            <TrendingUp className="w-3 h-3" /> View Details
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -683,4 +731,4 @@ const CversArea = () => {
   );
 };
 
-export default CversArea;
+export default CoverageMap;

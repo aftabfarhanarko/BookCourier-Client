@@ -6,7 +6,7 @@ import { customMarker } from "../../utils/customMarker";
 import { motion } from "framer-motion";
 import Ptext from "../../utils/Ptext";
 
-const data = fetch("/weaerhouse.json").then((res) => res.json());
+const data = fetch("/warehouse.json").then((res) => res.json());
 
 const HomeMap = () => {
   const weaerhouse = use(data);
@@ -120,6 +120,17 @@ const HomeMap = () => {
                         >
                           Status: {item.status ? "✓ Open" : "✗ Closed"}
                         </p>
+                        {item.flowchart && (
+                          <div className="mt-2 pt-2 border-t border-gray-200">
+                            <p className="font-semibold text-xs text-gray-500 mb-1">Workflow:</p>
+                            <img 
+                              src={item.flowchart} 
+                              alt="Flowchart" 
+                              className="w-full h-20 object-cover rounded cursor-pointer hover:opacity-90"
+                              onClick={() => window.open(item.flowchart, '_blank')}
+                            />
+                          </div>
+                        )}
                       </div>
                     </Popup>
                   </Marker>

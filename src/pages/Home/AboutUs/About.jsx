@@ -445,7 +445,11 @@ const About = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className={`${isDark ? "bg-gray-800 border border-gray-700" : "bg-gradient-to-r from-orange-600 to-red-600"} rounded-3xl p-10 md:p-14 shadow-2xl text-white relative overflow-hidden`}
+            className={`${
+              isDark
+                ? "bg-gray-800 border border-gray-700"
+                : "bg-gradient-to-r from-orange-600 to-red-600"
+            } rounded-3xl p-10 md:p-14 shadow-2xl text-white relative overflow-hidden`}
           >
             {/* Decorative Circles */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
