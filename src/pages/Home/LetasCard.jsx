@@ -93,7 +93,7 @@ const LetasCard = () => {
     <div className="max-w-11/12 mx-auto px-4 font-sans">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-primary dark:text-white">
+        <h2 className={`text-3xl md:text-4xl text-primary font-bold `}>
           Bookle Top Books
         </h2>
         <Link to="/books">
@@ -112,10 +112,16 @@ const LetasCard = () => {
         {books.map((book) => (
           <div
             key={book.id}
-            className="group bg-white dark:bg-gray-800 rounded-xl p-4 transition-all hover:shadow-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 flex flex-col"
+            className={`group rounded-xl p-4  shadow-md transition-all hover:shadow-lg border flex flex-col ${
+              isDark 
+                ? "bg-gray-800 border-gray-700 hover:border-gray-600" 
+                : "bg-white border-transparent hover:border-gray-200"
+            }`}
           >
             {/* Image Container */}
-            <div className="relative mb-4 bg-gray-50 dark:bg-gray-700 rounded-lg p-4 h-64 flex items-center justify-center">
+            <div className={`relative mb-4 rounded-lg p-4 h-64 flex items-center justify-center ${
+              isDark ? "bg-gray-700" : "bg-gray-50"
+            }`}>
               <img
                 src={book.image}
                 alt={book.title}
@@ -132,8 +138,10 @@ const LetasCard = () => {
 
             {/* Content */}
             <div className="flex-grow">
-              <p className="text-gray-500 text-xs mb-1">{book.category}</p>
-              <h3 className="font-bold text-gray-900 dark:text-white text-lg leading-tight mb-2 line-clamp-2">
+              <p className={`text-xs mb-1 ${isDark ? "text-gray-400" : "text-gray-500"}`}>{book.category}</p>
+              <h3 className={`font-bold text-lg leading-tight mb-2 line-clamp-2 ${
+                isDark ? "text-white" : "text-gray-900"
+              }`}>
                 {book.title}
               </h3>
 
@@ -141,7 +149,7 @@ const LetasCard = () => {
                 <span className="text-orange-500 font-bold text-lg">
                   ${book.price.toFixed(2)}
                 </span>
-                <span className="text-gray-400 text-sm line-through">
+                <span className={`text-sm line-through ${isDark ? "text-gray-500" : "text-gray-400"}`}>
                   ${book.originalPrice.toFixed(2)}
                 </span>
               </div>
@@ -154,7 +162,7 @@ const LetasCard = () => {
                     alt={book.author}
                     className="w-6 h-6 rounded-full"
                   />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
+                  <span className={`text-sm ${isDark ? "text-gray-300" : "text-gray-600"}`}>
                     {book.author}
                   </span>
                 </div>
@@ -172,7 +180,9 @@ const LetasCard = () => {
             </div>
 
             {/* Add to Cart Button */}
-            <button className="w-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white py-2.5 rounded-full font-semibold text-sm hover:bg-teal-600 hover:text-white transition-all flex items-center justify-center gap-2 mt-auto">
+            <button className={`w-full py-2.5 rounded-full font-semibold text-sm hover:bg-teal-600 hover:text-white transition-all flex items-center justify-center gap-2 mt-auto ${
+              isDark ? "bg-gray-700 text-white" : "bg-gray-100 text-gray-800"
+            }`}>
               <FaShoppingCart /> Add To Cart
             </button>
           </div>
