@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { FaStar, FaShoppingCart, FaArrowRight } from "react-icons/fa";
 import H1text from "../../utils/H1text";
 
 const LetasCard = () => {
+      const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+    
+      useEffect(() => {
+       
+    
+        // Listen for theme changes from localStorage
+        const handleStorageChange = () => {
+          setTheme(localStorage.getItem("theme") || "light");
+        };
+    
+        // Check for theme changes
+        const interval = setInterval(() => {
+          const currentTheme = localStorage.getItem("theme") || "light";
+          if (currentTheme !== theme) {
+            setTheme(currentTheme);
+          }
+        }, 100);
+    
+        window.addEventListener("storage", handleStorageChange);
+    
+        return () => {
+          clearInterval(interval);
+          window.removeEventListener("storage", handleStorageChange);
+        };
+      }, [theme]);
+    
+      const isDark = theme === "dark";
+    
   const books = [
     {
       id: 1,

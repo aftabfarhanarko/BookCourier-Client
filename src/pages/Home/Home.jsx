@@ -8,43 +8,78 @@ import LetasCard from "./LetasCard";
 // import MapNow from "./MapNow";
 import Cousebooksconires from "./Cousebooksconires";
 import Marqey from "./Marqey";
+import CategoriesGrid from "./CategoriesGrid";
+import ReadingChallenge from "./ReadingChallenge";
+import AuthorSpotlight from "./AuthorSpotlight";
+import EventsCalendar from "./EventsCalendar";
+import ReaderTestimonials from "./ReaderTestimonials";
+import NewsletterSignup from "./NewsletterSignup";
 // import MewSections from "./NewSections/MewSections";
 // import { Typed } from 'react-typed';
 
 const Home = () => {
-  
   return (
     <div>
       <section className=" mt-6">
         <Banner></Banner>
       </section>
+
       <div className=" w-11/12 mx-auto">
-        <section className=" mt-30">
+        {/* New Section: Categories */}
+        <section className=" mt-20">
+          <CategoriesGrid />
+        </section>
+
+        <section className=" mt-20">
           <PremiumBook></PremiumBook>
         </section>
 
-        <section className=" w-10/12 mx-auto mt-30">
+        {/* New Section: Reading Challenge */}
+        <section className=" mt-20">
+          <ReadingChallenge />
+        </section>
+
+        <section className=" w-10/12 mx-auto mt-20">
           <BookFeatureSection></BookFeatureSection>
         </section>
 
-        <section className=" w-11/12 mx-auto mt-30">
+        <section className=" w-11/12 mx-auto mt-20">
           <LetasCard></LetasCard>
         </section>
-        <section className=" mt-30">
+
+        {/* New Section: Author Spotlight */}
+        <section className=" mt-20">
+          <AuthorSpotlight />
+        </section>
+
+        <section className=" mt-20">
           <BookFicher></BookFicher>
         </section>
 
-        <section className=" mt-30">
+        {/* New Section: Events */}
+        <section className=" mt-20">
+          <EventsCalendar />
+        </section>
+
+        <section className=" mt-20">
           <Cousebooksconires></Cousebooksconires>
         </section>
 
-        <section className=" w-11/12 mx-auto mt-30">
+        {/* New Section: Testimonials */}
+        <section className=" mt-20">
+          <ReaderTestimonials />
+        </section>
+
+        <section className=" w-11/12 mx-auto mt-20">
           <WhyChooseBook></WhyChooseBook>
         </section>
-        {/* <section className=" ">
-          <MapNow></MapNow>
-        </section> */}
-        <section className=" mt-30 ">
+        
+        {/* New Section: Newsletter */}
+        <section className=" mt-20">
+          <NewsletterSignup />
+        </section>
+
+        <section className=" mt-20 ">
           <Marqey></Marqey>
         </section>
       </div>

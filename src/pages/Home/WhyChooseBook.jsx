@@ -285,8 +285,6 @@ const ModernFAQ = () => {
           </button>
         </div>
       </div>
-
-     
     </div>
   );
 };
