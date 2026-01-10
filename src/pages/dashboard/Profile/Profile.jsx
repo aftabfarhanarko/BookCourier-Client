@@ -8,6 +8,9 @@ import {
   FaUserShield,
   FaCalendarAlt,
   FaCheckCircle,
+  FaCamera,
+  FaEdit,
+  FaCog,
 } from "react-icons/fa";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import TextType from "../../../utils/TextType";
@@ -18,6 +21,7 @@ import { CgProfile } from "react-icons/cg";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import axios from "axios";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 const Profile = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -105,260 +109,301 @@ const Profile = () => {
   };
 
   if (isLoading || isFetching) return <LoadingSpinner />;
+
   return (
-    <div
-      className="min-h-screen flex items-center justify-center px-4 py-10">
-      <div className="w-full max-w-2xl">
-        {/* Card */}
-        <div
-          className="bg-white dark:bg-[#262626]
-          rounded-[28px]
-          border border-orange-100 dark:border-[#3a3a3a]
-          shadow-xl hover:shadow-2xl
-          transition-all duration-300 overflow-hidden"
-        >
-          {/* Cover */}
-          <div className="relative h-36 bg-gradient-to-r from-[#C2410C] to-orange-500">
-            <div className="absolute -bottom-16 left-8">
-              <img
-                src={usersas?.photoURL}
-                alt="Profile"
-                className="w-32 h-32 rounded-full object-cover
-                ring-4 ring-white dark:ring-[#262626]
-                shadow-lg transition hover:scale-105"
-              />
-            </div>
+    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-5xl mx-auto"
+      >
+        {/* Main Profile Card */}
+        <div className={`relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
+          
+          {/* Cover Image */}
+          <div className="h-48 md:h-64 w-full bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 relative overflow-hidden">
+            <div className="absolute inset-0 bg-black/10"></div>
+            <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+            <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
           </div>
 
-          {/* Content */}
-          <div className="pt-20 px-8 pb-8">
-            {/* Header */}
-            <div className="flex justify-between items-start gap-1.5 md:gap-4">
-              <div>
-                <h1 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-gray-100">
-                  <TextType
-                    text={usersas?.displayName || "User Name"}
-                    typingSpeed={70}
-                    deletingSpeed={40}
-                    pauseDuration={2000}
-                    loop={false}
-                    showCursor={false}
-                  />
-                </h1>
-
-                <p className="mt-2 text-sm flex items-center gap-2 text-slate-500 dark:text-gray-300">
-                  <FaEnvelope className="text-[#C2410C]" />
-                  {usersas?.email}
-                </p>
-              </div>
-
-              {/* Role */}
-              <span
-                className={`inline-flex items-center gap-2 px-4 py-2 text-[14px] rounded-full
-                text-sm font-medium border
-                ${
-                  usersas?.role === "admin"
-                    ? "bg-orange-100/70 text-[#C2410C] border-orange-300 dark:bg-[#3a2418] dark:border-[#5a3a26]"
-                    : usersas?.role === "librarian"
-                    ? "bg-amber-100/70 text-amber-700 border-amber-300 dark:bg-[#393116] dark:border-[#5a4d1f]"
-                    : "bg-green-100/70 text-green-700 border-green-300 dark:bg-[#1f3a2a] dark:border-[#29503a]"
-                }`}
+          {/* Profile Content */}
+          <div className="px-6 md:px-10 pb-10">
+            <div className="flex flex-col md:flex-row items-start md:items-end -mt-16 mb-6 gap-6">
+              
+              {/* Avatar */}
+              <motion.div 
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="relative"
               >
-                <FaUserShield />
-                {usersas?.role}
-              </span>
+                <img
+                  src={usersas?.photoURL}
+                  alt="Profile"
+                  className={`w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-[6px] shadow-xl ${isDark ? 'border-gray-800' : 'border-white'}`}
+                />
+                <button 
+                  onClick={handelUpdeatProfile}
+                  className="absolute bottom-2 right-2 p-2 rounded-full bg-orange-500 text-white shadow-lg hover:bg-orange-600 transition-colors cursor-pointer"
+                  title="Update Photo"
+                >
+                  <FaCamera size={14} />
+                </button>
+              </motion.div>
+
+              {/* Header Info */}
+              <div className="flex-1 w-full md:w-auto mt-2 md:mt-0 md:mb-4">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                  <div>
+                    <h1 className={`text-2xl md:text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <TextType
+                        text={usersas?.displayName || "User Name"}
+                        typingSpeed={70}
+                        deletingSpeed={40}
+                        pauseDuration={2000}
+                        loop={false}
+                        showCursor={false}
+                      />
+                    </h1>
+                    <p className={`flex items-center gap-2 mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      <FaEnvelope className="text-orange-500" />
+                      {usersas?.email}
+                    </p>
+                  </div>
+                  
+                  {/* Role Badge */}
+                  <span
+                    className={`px-4 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase shadow-sm flex items-center gap-2
+                    ${
+                      usersas?.role === "admin"
+                        ? "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400"
+                        : usersas?.role === "librarian"
+                        ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+                        : "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                    }`}
+                  >
+                    <FaUserShield /> {usersas?.role}
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <div className="my-6 border-t border-gray-200 dark:border-[#3a3a3a]" />
+            <div className={`h-px w-full my-8 ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}></div>
 
             {/* Info Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <InfoCard
-                icon={<FaCalendarAlt />}
-                iconBg="bg-orange-100 dark:bg-[#3a2418]"
-                iconColor="text-[#C2410C]"
-                label="Account Created"
-                value={new Date(usersas?.crestAt).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <InfoCard
+                  icon={<FaCalendarAlt />}
+                  iconBg={isDark ? "bg-orange-900/20" : "bg-orange-50"}
+                  iconColor="text-orange-600"
+                  label="Member Since"
+                  value={new Date(usersas?.crestAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                />
+              </motion.div>
 
-              <InfoCard
-                icon={<FaUser />}
-                iconBg="bg-amber-100 dark:bg-[#393116]"
-                iconColor="text-amber-700"
-                label="User ID"
-                value={`#${usersas?._id?.slice(-8)}`}
-              />
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <InfoCard
+                  icon={<FaUser />}
+                  iconBg={isDark ? "bg-amber-900/20" : "bg-amber-50"}
+                  iconColor="text-amber-600"
+                  label="User ID"
+                  value={`#${usersas?._id?.slice(-8).toUpperCase()}`}
+                />
+              </motion.div>
 
-              <InfoCard
-                icon={<FaUserShield />}
-                iconBg="bg-orange-100 dark:bg-[#3a2418]"
-                iconColor="text-[#C2410C]"
-                label="Last Profile Updeat Time"
-                value={
-                  usersas?.profileUpdeatTime
-                    ? new Date(usersas.profileUpdeatTime).toLocaleString()
-                    : `${usersas?.displayName} Not Update Profile`
-                }
-              />
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <InfoCard
+                  icon={<FaEdit />}
+                  iconBg={isDark ? "bg-blue-900/20" : "bg-blue-50"}
+                  iconColor="text-blue-600"
+                  label="Last Updated"
+                  value={
+                    usersas?.profileUpdeatTime
+                      ? new Date(usersas.profileUpdeatTime).toLocaleString()
+                      : "Not updated yet"
+                  }
+                />
+              </motion.div>
 
-              <InfoCard
-                icon={<FaCheckCircle />}
-                iconBg="bg-green-100 dark:bg-[#1f3a2a]"
-                iconColor="text-green-600"
-                label="Account Status"
-                value="Active"
-              />
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <InfoCard
+                  icon={<FaCheckCircle />}
+                  iconBg={isDark ? "bg-green-900/20" : "bg-green-50"}
+                  iconColor="text-green-600"
+                  label="Account Status"
+                  value="Active"
+                />
+              </motion.div>
             </div>
 
-            {/* Buttons */}
-            <div className="mt-8 flex gap-4">
-              <button
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={handelUpdeatProfile}
-                className="flex-1 text-[14px] md:text-[16px] rounded-xl flex items-center justify-center gap-2 py-2 md:font-semibold text-white
-                bg-gradient-to-r from-[#C2410C] to-orange-500
-                shadow-md hover:shadow-lg hover:scale-[1.03]
-                transition-all duration-200"
+                className="flex-1 py-3.5 px-6 rounded-xl text-white font-semibold shadow-lg shadow-orange-500/20 bg-gradient-to-r from-orange-600 to-orange-500 hover:to-orange-600 transition-all flex items-center justify-center gap-2"
               >
-                <CgProfile className="w-5 h-5" /> Update Profile
-              </button>
+                <FaEdit /> Edit Profile
+              </motion.button>
 
-              <Link
-                to="/deshbord/settings"
-                className="px-6 rounded-xl text-[14px] md:text-[16px] py-2 md:font-semibold
-                border border-orange-300 dark:border-[#5a3a26]
-                text-[#C2410C] dark:text-orange-400
-                hover:bg-orange-50 dark:hover:bg-[#2f2f2f]
-                transition"
-              >
-                Settings
+              <Link to="/deshbord/settings" className="flex-1">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`w-full py-3.5 px-6 rounded-xl font-semibold border-2 flex items-center justify-center gap-2 transition-all
+                  ${isDark 
+                    ? 'border-gray-700 text-gray-300 hover:bg-gray-700 hover:text-white' 
+                    : 'border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                  }`}
+                >
+                  <FaCog /> Settings
+                </motion.button>
               </Link>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Ipdeat Profile */}
-      <dialog ref={references} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box max-w-2xl ">
-          <h3 className="font-bold text-lg mb-4">Update Profile</h3>
+      {/* Update Profile Modal */}
+      <dialog ref={references} className="modal modal-bottom sm:modal-middle backdrop-blur-sm">
+        <div className={`modal-box max-w-2xl p-0 overflow-hidden ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
+          {/* Modal Header */}
+          <div className="bg-gradient-to-r from-orange-600 to-orange-500 p-6">
+            <h3 className="font-bold text-xl text-white flex items-center gap-2">
+              <CgProfile className="text-2xl" /> Update Profile
+            </h3>
+            <p className="text-orange-100 text-sm mt-1">Make changes to your public profile</p>
+          </div>
 
-          <form
-            onSubmit={handleSubmit(handelProfileUpdeat)}
-            className="space-y-4"
-          >
-            {/* Profile Image Preview */}
-            <div className="flex items-center gap-4">
-              <img
-                src={user?.photoURL}
-                className="w-20 h-20 rounded-full object-cover border-2 border-orange-500"
-              />
-            </div>
-
-            {/* Display Name */}
-            <div>
-              <label className="flex mb-3 items-center gap-2 font-semibold text-gray-700 text-sm">
-                <svg
-                  className="w-4 h-4 text-orange-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clipRule="evenodd"
+          <div className="p-8">
+            <form onSubmit={handleSubmit(handelProfileUpdeat)} className="space-y-6">
+              {/* Profile Image Preview */}
+              <div className="flex justify-center mb-6">
+                <div className="relative">
+                  <img
+                    src={user?.photoURL}
+                    className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
+                    alt="Current"
                   />
-                </svg>
-                Preview Your Name
-                <span className="text-red-500">*</span>
-              </label>
-
-              <input
-                {...register("displayName")}
-                type="text"
-                defaultValue={user?.displayName}
-                className="input focus:outline-none border-2 rounded-lg w-full focus:border-orange-500"
-                placeholder="Enter display name"
-              />
-            </div>
-
-            {/* Email (Read Only) */}
-            <div>
-              <label className="flex mb-3 items-center gap-2 font-semibold text-gray-700 text-sm">
-                <svg
-                  className="w-4 h-4 text-orange-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                </svg>
-                Preview Your Email
-                <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="email"
-                {...register("email")}
-                value={user?.email}
-                className="input focus:outline-none border-2 rounded-lg border-orange-500 w-full bg-gray-100"
-              />
-            </div>
-            {/* Image Upload Section */}
-            <div className="group">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Update Profile Picture (Optional)
-              </label>
-              <label className="flex flex-col items-center justify-center w-full md:h-48 border-2 border-dashed border-orange-300 rounded-xl cursor-pointer bg-gradient-to-br from-orange-50 to-amber-50 hover:bg-orange-100 transition-all">
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <svg
-                    className="w-12 h-12 mb-3 text-orange-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    />
-                  </svg>
-                  <p className="mb-2 text-sm text-orange-700 font-semibold">
-                    {" "}
-                    Click to upload profile picture
-                  </p>
-                  <p className="text-xs text-gray-500">PNG, JPG (Optional)</p>
+                  <div className="absolute bottom-0 right-0 bg-orange-500 text-white p-1.5 rounded-full shadow-md">
+                    <FaCamera size={12} />
+                  </div>
                 </div>
-                <input
-                  {...register("images")}
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  className="hidden"
-                />
-              </label>
-            </div>
+              </div>
 
-            <div className="modal-action">
-              <button
-                type="submit"
-                className="  py-2 text-[15px] md:text-[16px]  rounded-lg px-4  text-md text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2"
-              >
-                <CgProfile /> Update Now
-              </button>
-              <button
-                onClick={() => references.current.close()}
-                type="button"
-                className="  py-2  text-[15px] md:text-[16px] rounded-lg px-4  text-md text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2"
-              >
-                <IoCloseCircleOutline /> Cancel
-              </button>
-            </div>
-          </form>
+              {/* Display Name */}
+              <div>
+                <label className={`block mb-2 font-semibold text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Display Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  {...register("displayName")}
+                  type="text"
+                  defaultValue={user?.displayName}
+                  className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:border-orange-500 transition-colors
+                  ${isDark 
+                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                    : 'bg-white border-gray-200 text-gray-900'
+                  }`}
+                  placeholder="Enter your name"
+                />
+              </div>
+
+              {/* Email (Read Only) */}
+              <div>
+                <label className={`block mb-2 font-semibold text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  {...register("email")}
+                  value={user?.email}
+                  readOnly
+                  className={`w-full px-4 py-3 rounded-xl border-2 cursor-not-allowed
+                  ${isDark 
+                    ? 'bg-gray-900/50 border-gray-700 text-gray-400' 
+                    : 'bg-gray-100 border-gray-200 text-gray-500'
+                  }`}
+                />
+              </div>
+
+              {/* Image Upload Section */}
+              <div>
+                <label className={`block mb-2 font-semibold text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Update Photo (Optional)
+                </label>
+                <label className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-xl cursor-pointer transition-all
+                  ${isDark 
+                    ? 'border-gray-600 bg-gray-700/30 hover:bg-gray-700/50' 
+                    : 'border-orange-200 bg-orange-50/50 hover:bg-orange-50'
+                  }`}>
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <FaCamera className={`w-8 h-8 mb-2 ${isDark ? 'text-gray-400' : 'text-orange-400'}`} />
+                    <p className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                      Click to upload new picture
+                    </p>
+                    <p className={`text-xs mt-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>PNG, JPG up to 5MB</p>
+                  </div>
+                  <input
+                    {...register("images")}
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                  />
+                </label>
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={() => references.current.close()}
+                  type="button"
+                  className={`flex-1 py-3 px-4 rounded-xl font-semibold border-2 transition-colors
+                  ${isDark 
+                    ? 'border-gray-600 text-gray-300 hover:bg-gray-700' 
+                    : 'border-gray-200 text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-3 px-4 rounded-xl font-semibold text-white bg-gradient-to-r from-orange-600 to-orange-500 hover:to-orange-600 shadow-lg shadow-orange-500/20 transition-all transform active:scale-95"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
       </dialog>
     </div>
   );
