@@ -29,6 +29,7 @@ import LibrarianDashBord from "../pages/dashboard/Librarian/LibrarianDashBord";
 import UserDashBord from "../pages/dashboard/User/UserDashBord";
 import AutoRedirectDashboard from "../pages/dashboard/AutoRedirectDashboard/AutoRedirectDashboard";
 import LoadingSpinner from "../shared/LoadingSpinner ";
+import About from "../pages/Home/AboutUs/About";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home></Home>,
+      },
+      {
+        path: "/myaboutes",
+        element:<About></About>
       },
       {
         path: "/books",
@@ -59,6 +64,7 @@ export const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
+      
       {
         path: "/detlicesPages/:id",
         element: (

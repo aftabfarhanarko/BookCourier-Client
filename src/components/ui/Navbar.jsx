@@ -27,6 +27,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSchore from "../../hooks/useAxiosSchore";
 import LoadingSpinner from "../../shared/LoadingSpinner ";
 import { IoIosLogOut } from "react-icons/io";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 export default function Navbar() {
   const { user, userLogOut } = useAuth();
@@ -109,6 +110,13 @@ export default function Navbar() {
             >
               <GiSpellBook className="w-5 h-5" />
               <span className="font-medium">All Books</span>
+            </NavLink>
+            <NavLink
+              to="/myaboutes"
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
+            >
+              <IoArrowBackOutline className="w-5 h-5" />
+              <span className="font-medium">About</span>
             </NavLink>
             <NavLink
               to="/deshbord"
