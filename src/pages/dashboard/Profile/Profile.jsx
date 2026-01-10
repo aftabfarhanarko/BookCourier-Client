@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
@@ -20,6 +20,25 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const Profile = () => {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setTheme(localStorage.getItem("theme") || "light");
+    };
+    // Check for theme changes
+    const interval = setInterval(() => {
+      const currentTheme = localStorage.getItem("theme") || "light";
+      if (currentTheme !== theme) {
+        setTheme(currentTheme);
+      }
+    }, 100);
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [theme]);
+  const isDark = theme === "dark";
   const { user } = useAuth();
   const references = useRef();
   const axioscehore = useAxiosSchore();
@@ -40,7 +59,6 @@ const Profile = () => {
       return res.data;
     },
   });
-  
 
   const handelUpdeatProfile = () => {
     // console.log("Profile");
@@ -86,15 +104,10 @@ const Profile = () => {
     }
   };
 
-
   if (isLoading || isFetching) return <LoadingSpinner />;
-
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 py-10
-     
-      "
-    >
+      className="min-h-screen flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-2xl">
         {/* Card */}
         <div
