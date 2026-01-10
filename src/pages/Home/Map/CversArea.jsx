@@ -31,7 +31,9 @@ import {
   Clock,
   BarChart3,
   Star,
+  Book,
 } from "lucide-react";
+import { FaBookReader } from "react-icons/fa";
 
 // Enhanced warehouse data for Bangladesh
 // Data is now fetched from warehouses.json
@@ -268,17 +270,13 @@ const CoverageMap = () => {
       <div className="glass-effect shadow-lg p-4 z-10">
         <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-4">
-            <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-3 rounded-xl shadow-lg">
-              <Package className="w-6 h-6 text-white" />
+            <div className="flex items-center gap-3">
+              <FaBookReader className="h-6 w-6  text-primary" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                Smart Delivery Hub
-              </h1>
-              <p className="text-sm text-slate-600 flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                Real-time Network Monitoring
-              </p>
+              <span className=" text-xl text-primary mt-1">
+                BookCourier Delivery Map{" "}
+              </span>
             </div>
           </div>
 

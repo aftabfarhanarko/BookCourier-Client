@@ -271,7 +271,7 @@ const ModernFAQ = () => {
         </div>
 
         {/* Bottom CTA Section */}
-        <div
+        {/* <div
           className={`mt-16 text-center p-8 rounded-3xl ${
             isDark
               ? "bg-gradient-to-r from-gray-800 to-gray-700"
@@ -296,7 +296,7 @@ const ModernFAQ = () => {
             </span>
             <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-orange-400"></div>
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
