@@ -86,7 +86,7 @@ export default function Navbar() {
     <nav
       className={`${bgPrimary} border-b ${borderColor} shadow-sm transition-colors duration-300 sticky top-0 z-50    fixed `}
     >
-      <div className=" w-11/12 mx-auto py-0.5 px-4 sm:px-6 lg:px-8">
+      <div className=" w-11/12 mx-auto py-0.5  md:px-0 px-3  ">
         <div className="flex items-center justify-between h-16">
           {/* Logo Section */}
           <div className="flex items-center gap-3">
