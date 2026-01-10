@@ -39,11 +39,11 @@ export default function Footer() {
 
   return (
     <footer
-      className={`mt-10 relative ${
+      className={` relative ${
         isDark ? "bg-gray-800" : "bg-orange-50"
       } border-t ${isDark ? "border-gray-700" : "border-base-300"}`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-10">
+      <div className="max-w-11/12 mx-auto px-6 md:px-10 py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Logo & Description */}
           <div>
@@ -51,7 +51,9 @@ export default function Footer() {
               <FaBookReader className="h-6 w-6 text-primary" />
               <a className="text-xl text-primary">BookCourier</a>
             </div>
-            <p className={`${isDark ? "text-white" : "text-gray-600"} max-w-xs`}>
+            <p
+              className={`${isDark ? "text-white" : "text-gray-600"} max-w-xs`}
+            >
               BookCourier delivers your favorite books right to your doorstep,
               fast and hassle-free. Explore a vast collection of titles and
               enjoy easy online ordering anytime. Your next great read is just a
@@ -113,7 +115,9 @@ export default function Footer() {
             >
               Our Links
             </h3>
-            <ul className={`space-y-3 ${isDark ? "text-white" : "text-gray-600"}`}>
+            <ul
+              className={`space-y-3 ${isDark ? "text-white" : "text-gray-600"}`}
+            >
               {[
                 "Dashboard",
                 "All Book",
@@ -138,9 +142,11 @@ export default function Footer() {
                 isDark ? "text-white" : "text-gray-900"
               }`}
             >
-              Bookland 
+              Bookland
             </h3>
-            <ul className={`space-y-3 ${isDark ? "text-white" : "text-gray-600"}`}>
+            <ul
+              className={`space-y-3 ${isDark ? "text-white" : "text-gray-600"}`}
+            >
               {[
                 "Bookland",
                 "Services",
@@ -167,7 +173,9 @@ export default function Footer() {
             >
               Resources
             </h3>
-            <ul className={`space-y-3 ${isDark ? "text-white" : "text-gray-600"}`}>
+            <ul
+              className={`space-y-3 ${isDark ? "text-white" : "text-gray-600"}`}
+            >
               {["Download", "Help Center", "Shop Cart", "Login", "Partner"].map(
                 (link, i) => (
                   <li
@@ -204,15 +212,15 @@ export default function Footer() {
           <div className="flex items-start gap-3">
             <FaPhoneAlt className="text-orange-400 mt-1" />
             <div>
-              <p>+123 345123 556</p>
-              <p>+123 345123 556</p>
+              <p>01613410880</p>
+              <p>01577006071</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <FaEnvelope className="text-orange-400 mt-1" />
             <div>
-              <p>support@bookland.id</p>
-              <p>info@bookland.id</p>
+              <p>aftabfarhan324@gmail.com</p>
+              <p>aftabarkofarhan@gmail.com</p>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   FaInfoCircle,
@@ -17,12 +17,36 @@ import {
 import { CheckCircle, Rocket, Shield, Users } from "lucide-react";
 
 // Using high-quality library images from Unsplash
-const libraryImg1 =
-  "https://i.ibb.co.com/nqXT5Tmk/image.png";
-const libraryImg2 =
-  "https://i.ibb.co.com/ynbFbR3K/image.png";
+const libraryImg1 = "https://i.ibb.co.com/nqXT5Tmk/image.png";
+const libraryImg2 = "https://i.ibb.co.com/ynbFbR3K/image.png";
 
 const About = () => {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    // Listen for theme changes from localStorage
+    const handleStorageChange = () => {
+      setTheme(localStorage.getItem("theme") || "light");
+    };
+
+    // Check for theme changes
+    const interval = setInterval(() => {
+      const currentTheme = localStorage.getItem("theme") || "light";
+      if (currentTheme !== theme) {
+        setTheme(currentTheme);
+      }
+    }, 100);
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [theme]);
+
+  const isDark = theme === "dark";
+
   const features = [
     {
       id: 1,
@@ -111,7 +135,11 @@ const About = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+    <div
+      className={` min-h-screen ${
+        isDark ? "bg-gray-800" : "bg-gradient-to-b from-gray-50 to-white"
+      } border-t ${isDark ? "border-gray-700" : "border-base-300"}`}
+    >
       <div className="w-11/12 mx-auto py-16">
         {/* Hero Section */}
         <div className="flex flex-col lg:flex-row items-center gap-16 mb-28">
@@ -161,13 +189,13 @@ const About = () => {
             </h1>
             <div className="w-24 h-1.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mb-8"></div>
 
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed font-medium">
+            <p className="text-lg text-gray-600 dark:text-white mb-6 leading-relaxed font-medium">
               We are more than just a delivery service; we are a
               technology-driven logistics company dedicated to bringing the joy
               of reading to your doorstep.
             </p>
 
-            <p className="text-gray-500 dark:text-gray-400 mb-10 leading-relaxed">
+            <p className="text-gray-500 dark:text-gray-200 mb-10 leading-relaxed">
               Explore our massive library and experience the future of book
               delivery, where tradition meets innovation. Our AI-powered
               recommendations help you find exactly what you're looking for,
@@ -205,7 +233,11 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -10 }}
-                className="group relative bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 overflow-hidden"
+                className={`group relative ${
+                  isDark ? "bg-gray-800" : "bg-white"
+                } p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border ${
+                  isDark ? "border-gray-700" : "border-gray-100"
+                } overflow-hidden`}
               >
                 {/* Hover Gradient Border Effect */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-red-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
@@ -216,7 +248,7 @@ const About = () => {
                 <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white group-hover:text-primary transition-colors duration-300">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-200 leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
@@ -234,12 +266,14 @@ const About = () => {
           ].map((stat, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center shadow-lg"
+              className={`${
+                isDark ? "bg-gray-800" : "bg-white"
+              } rounded-2xl p-8 text-center shadow-lg`}
             >
               <div className="text-4xl font-bold text-orange-500 mb-2">
                 {stat.value}
               </div>
-              <div className="text-gray-600 dark:text-gray-300 font-medium">
+              <div className="text-gray-600 dark:text-white font-medium">
                 {stat.label}
               </div>
             </div>
@@ -249,114 +283,173 @@ const About = () => {
         {/* Additional 7 Sections */}
         <div id="Add New  Sectionns" className="space-y-20 mb-24">
           {/* Section 1: Our Story */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white dark:bg-gray-800 rounded-3xl p-10 md:p-14 shadow-xl border border-gray-100 dark:border-gray-700"
+            className={`${
+              isDark ? "bg-gray-800" : "bg-white"
+            } rounded-3xl p-10 md:p-14 shadow-xl border ${
+              isDark ? "border-gray-700" : "border-gray-100"
+            }`}
           >
             <div className="flex flex-col md:flex-row items-center gap-10">
-                <div className="md:w-1/3">
-                    <div className="w-full h-full min-h-[200px] bg-orange-100 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center">
-                        <FaBook className="text-6xl text-primary opacity-80" />
-                    </div>
+              <div className="md:w-1/3">
+                <div className="w-full h-full min-h-[200px] bg-orange-100 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center">
+                  <FaBook className="text-6xl text-primary opacity-80" />
                 </div>
-                <div className="md:w-2/3">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-6">
-                    Our Story
-                    </h2>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
-                    Founded with a vision to revolutionize library management, our
-                    platform emerged from the need to digitize and streamline
-                    traditional library operations. We understand the challenges faced
-                    by librarians and have created a solution that combines simplicity
-                    with powerful features. Our journey began with a simple question:
-                    <span className="text-primary font-semibold italic"> "How can we make library management effortless?"</span> Today, we serve
-                    hundreds of libraries worldwide, helping them manage millions of
-                    books efficiently.
-                    </p>
-                </div>
+              </div>
+              <div className="md:w-2/3">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-6">
+                  Our Story
+                </h2>
+                <p className="text-gray-600 dark:text-white leading-relaxed text-lg">
+                  Founded with a vision to revolutionize library management, our
+                  platform emerged from the need to digitize and streamline
+                  traditional library operations. We understand the challenges
+                  faced by librarians and have created a solution that combines
+                  simplicity with powerful features. Our journey began with a
+                  simple question:
+                  <span className="text-primary font-semibold italic">
+                    {" "}
+                    "How can we make library management effortless?"
+                  </span>{" "}
+                  Today, we serve hundreds of libraries worldwide, helping them
+                  manage millions of books efficiently.
+                </p>
+              </div>
             </div>
           </motion.div>
 
           {/* Section 2: Why Choose Us */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-gradient-to-br from-orange-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-3xl p-10 md:p-14 shadow-lg border border-orange-100 dark:border-gray-700"
+            className={`${
+              isDark
+                ? "bg-gray-800"
+                : "bg-gradient-to-br from-orange-50 to-white"
+            } rounded-3xl p-10 md:p-14 shadow-lg border ${
+              isDark ? "border-gray-700" : "border-orange-100"
+            }`}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-10 text-center">
               Why Choose Us?
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               {[
-                  { id: 1, title: "Easy to Use", desc: "Intuitive interface designed for users of all technical levels." },
-                  { id: 2, title: "Cost Effective", desc: "Affordable pricing plans suitable for all library sizes." },
-                  { id: 3, title: "24/7 Support", desc: "Round-the-clock customer support to help you anytime." },
-                  { id: 4, title: "Regular Updates", desc: "Continuous improvements and new features added regularly." }
+                {
+                  id: 1,
+                  title: "Easy to Use",
+                  desc: "Intuitive interface designed for users of all technical levels.",
+                },
+                {
+                  id: 2,
+                  title: "Cost Effective",
+                  desc: "Affordable pricing plans suitable for all library sizes.",
+                },
+                {
+                  id: 3,
+                  title: "24/7 Support",
+                  desc: "Round-the-clock customer support to help you anytime.",
+                },
+                {
+                  id: 4,
+                  title: "Regular Updates",
+                  desc: "Continuous improvements and new features added regularly.",
+                },
               ].map((item) => (
-                <div key={item.id} className="flex items-start space-x-5 p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                    <div className="bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0 text-lg font-bold shadow-lg shadow-orange-500/30">
+                <div
+                  key={item.id}
+                  className={`flex items-start space-x-5 p-6 ${
+                    isDark ? "bg-gray-800" : "bg-white"
+                  } rounded-2xl shadow-sm hover:shadow-md transition-shadow`}
+                >
+                  <div className="bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0 text-lg font-bold shadow-lg shadow-orange-500/30">
                     {item.id}
-                    </div>
-                    <div>
+                  </div>
+                  <div>
                     <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-                        {item.title}
+                      {item.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                        {item.desc}
+                    <p className="text-gray-600 dark:text-gray-200 leading-relaxed">
+                      {item.desc}
                     </p>
-                    </div>
+                  </div>
                 </div>
               ))}
             </div>
           </motion.div>
 
           {/* Section 3: How It Works */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white dark:bg-gray-800 rounded-3xl p-10 md:p-14 shadow-xl border border-gray-100 dark:border-gray-700"
+            className={`${
+              isDark ? "bg-gray-800" : "bg-white"
+            } rounded-3xl p-10 md:p-14 shadow-xl border ${
+              isDark ? "border-gray-700" : "border-gray-100"
+            }`}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-12 text-center">
               How It Works
             </h2>
             <div className="grid md:grid-cols-3 gap-10 relative">
-               {/* Connecting Line (Desktop) */}
-               <div className="hidden md:block absolute top-10 left-0 w-full h-1 bg-gradient-to-r from-orange-200 via-orange-400 to-orange-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 transform -translate-y-1/2 z-0"></div>
+              {/* Connecting Line (Desktop) */}
+              <div className="hidden md:block absolute top-10 left-0 w-full h-1 bg-gradient-to-r from-orange-200 via-orange-400 to-orange-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 transform -translate-y-1/2 z-0"></div>
 
               {[
-                  { step: "1", title: "Sign Up", desc: "Create your library account in minutes with simple registration." },
-                  { step: "2", title: "Add Books", desc: "Import or manually add your book collection to the system." },
-                  { step: "3", title: "Manage", desc: "Start managing borrows, returns, and inventory effortlessly." }
+                {
+                  step: "1",
+                  title: "Sign Up",
+                  desc: "Create your library account in minutes with simple registration.",
+                },
+                {
+                  step: "2",
+                  title: "Add Books",
+                  desc: "Import or manually add your book collection to the system.",
+                },
+                {
+                  step: "3",
+                  title: "Manage",
+                  desc: "Start managing borrows, returns, and inventory effortlessly.",
+                },
               ].map((item, index) => (
                 <div key={index} className="text-center relative z-10">
-                    <div className="bg-white dark:bg-gray-800 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg border-4 border-orange-100 dark:border-gray-700">
-                        <span className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-500 to-red-600">{item.step}</span>
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">
+                  <div
+                    className={`${
+                      isDark ? "bg-gray-800" : "bg-white"
+                    } w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg border-4 ${
+                      isDark ? "border-gray-700" : "border-orange-100"
+                    }`}
+                  >
+                    <span className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-50 to-red-600">
+                      {item.step}
+                    </span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">
                     {item.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300">
                     {item.desc}
-                    </p>
+                  </p>
                 </div>
               ))}
             </div>
           </motion.div>
 
           {/* Section 4: Success Stories */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-gradient-to-r from-orange-600 to-red-600 rounded-3xl p-10 md:p-14 shadow-2xl text-white relative overflow-hidden"
+            className={`${isDark ? "bg-gray-800 border border-gray-700" : "bg-gradient-to-r from-orange-600 to-red-600"} rounded-3xl p-10 md:p-14 shadow-2xl text-white relative overflow-hidden`}
           >
-             {/* Decorative Circles */}
-             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-             <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+            {/* Decorative Circles */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
             <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center relative z-10">
               Success Stories
@@ -365,16 +458,18 @@ const About = () => {
               <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-colors">
                 <div className="mb-6 text-orange-200 text-5xl">"</div>
                 <p className="text-white/90 italic mb-6 text-lg leading-relaxed">
-                  This system transformed how we manage our school library.
-                  Book tracking is now instant, and students love the easy
-                  borrowing process!
+                  This system transformed how we manage our school library. Book
+                  tracking is now instant, and students love the easy borrowing
+                  process!
                 </p>
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">S</div>
-                    <div>
-                        <p className="font-bold text-white">Sarah Johnson</p>
-                        <p className="text-orange-200 text-sm">School Librarian</p>
-                    </div>
+                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">
+                    S
+                  </div>
+                  <div>
+                    <p className="font-bold text-white">Sarah Johnson</p>
+                    <p className="text-orange-200 text-sm">School Librarian</p>
+                  </div>
                 </div>
               </div>
               <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-colors">
@@ -385,105 +480,190 @@ const About = () => {
                   use.
                 </p>
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">M</div>
-                    <div>
-                        <p className="font-bold text-white">Michael Chen</p>
-                        <p className="text-orange-200 text-sm">Public Library Manager</p>
-                    </div>
+                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">
+                    M
+                  </div>
+                  <div>
+                    <p className="font-bold text-white">Michael Chen</p>
+                    <p className="text-orange-200 text-sm">
+                      Public Library Manager
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </motion.div>
 
           {/* Section 5: Team & Values */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white dark:bg-gray-800 rounded-3xl p-10 md:p-14 shadow-xl border border-gray-100 dark:border-gray-700"
+            className={`${
+              isDark ? "bg-gray-800" : "bg-white"
+            } rounded-3xl p-10 md:p-14 shadow-xl border ${
+              isDark ? "border-gray-700" : "border-gray-100"
+            }`}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-12 text-center">
               Our Core Values
             </h2>
             <div className="grid md:grid-cols-4 gap-8">
               {[
-                  { icon: <CheckCircle className="w-8 h-8" />, title: "Innovation", desc: "Constantly improving with new features", color: "bg-blue-500" },
-                  { icon: <Shield className="w-8 h-8" />, title: "Security", desc: "Your data is always protected", color: "bg-green-500" },
-                  { icon: <Users className="w-8 h-8" />, title: "Community", desc: "Building together with users", color: "bg-purple-500" },
-                  { icon: <Rocket className="w-8 h-8" />, title: "Excellence", desc: "Striving for the best quality", color: "bg-orange-500" }
+                {
+                  icon: <CheckCircle className="w-8 h-8" />,
+                  title: "Innovation",
+                  desc: "Constantly improving with new features",
+                  color: "bg-blue-500",
+                },
+                {
+                  icon: <Shield className="w-8 h-8" />,
+                  title: "Security",
+                  desc: "Your data is always protected",
+                  color: "bg-green-500",
+                },
+                {
+                  icon: <Users className="w-8 h-8" />,
+                  title: "Community",
+                  desc: "Building together with users",
+                  color: "bg-purple-500",
+                },
+                {
+                  icon: <Rocket className="w-8 h-8" />,
+                  title: "Excellence",
+                  desc: "Striving for the best quality",
+                  color: "bg-orange-500",
+                },
               ].map((item, index) => (
-                <div key={index} className="text-center group p-6 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                    <div className={`${item.color} text-white w-20 h-20 rounded-2xl rotate-3 group-hover:rotate-6 transition-transform flex items-center justify-center mx-auto mb-6 shadow-lg`}>
-                        {item.icon}
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
+                <div
+                  key={index}
+                  className="text-center group p-6 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                >
+                  <div
+                    className={`${item.color} text-white w-20 h-20 rounded-2xl rotate-3 group-hover:rotate-6 transition-transform flex items-center justify-center mx-auto mb-6 shadow-lg`}
+                  >
+                    {item.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
                     {item.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-200 text-sm">
                     {item.desc}
-                    </p>
+                  </p>
                 </div>
               ))}
             </div>
           </motion.div>
 
           {/* Section 6: FAQ */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-gray-50 dark:bg-gray-800/50 rounded-3xl p-10 md:p-14"
+            className={`${
+              isDark ? "bg-gray-800" : "bg-gray-50"
+            } rounded-3xl p-10 md:p-14`}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-10 text-center">
               Frequently Asked Questions
             </h2>
             <div className="space-y-6 max-w-4xl mx-auto">
               {[
-                  { q: "Is this suitable for small libraries?", a: "Yes! Our system is designed to work for libraries of all sizes, from small personal collections to large institutional libraries." },
-                  { q: "Can I import existing book data?", a: "Absolutely! We support bulk import from Excel, CSV, and other common formats to make migration easy." },
-                  { q: "What about mobile access?", a: "Our platform is fully responsive and works perfectly on smartphones, tablets, and desktop computers." }
+                {
+                  q: "Is this suitable for small libraries?",
+                  a: "Yes! Our system is designed to work for libraries of all sizes, from small personal collections to large institutional libraries.",
+                },
+                {
+                  q: "Can I import existing book data?",
+                  a: "Absolutely! We support bulk import from Excel, CSV, and other common formats to make migration easy.",
+                },
+                {
+                  q: "What about mobile access?",
+                  a: "Our platform is fully responsive and works perfectly on smartphones, tablets, and desktop computers.",
+                },
               ].map((item, index) => (
-                <div key={index} className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 dark:border-gray-700">
-                    <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-3 flex items-center gap-3">
-                        <span className="text-primary">Q.</span> {item.q}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300 pl-8 border-l-2 border-orange-100 dark:border-gray-700">
-                        {item.a}
-                    </p>
+                <div
+                  key={index}
+                  className={`${
+                    isDark ? "bg-gray-800" : "bg-white"
+                  } p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border ${
+                    isDark ? "border-gray-700" : "border-gray-100"
+                  }`}
+                >
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-3 flex items-center gap-3">
+                    <span className="text-primary">Q.</span> {item.q}
+                  </h3>
+                  <p
+                    className={`text-gray-600 dark:text-gray-200 pl-8 border-l-2 ${
+                      isDark ? "border-gray-700" : "border-orange-100"
+                    }`}
+                  >
+                    {item.a}
+                  </p>
                 </div>
               ))}
             </div>
           </motion.div>
 
           {/* Section 7: Contact & Support */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white dark:bg-gray-800 rounded-3xl p-10 md:p-14 shadow-xl border border-gray-100 dark:border-gray-700 text-center"
+            className={`${
+              isDark ? "bg-gray-800" : "bg-white"
+            } rounded-3xl p-10 md:p-14 shadow-xl border ${
+              isDark ? "border-gray-700" : "border-gray-100"
+            } text-center`}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-12">
               Get in Touch
             </h2>
             <div className="grid md:grid-cols-3 gap-10">
               {[
-                  { icon: "📧", title: "Email Support", info: "support@library.com", sub: "Response within 24h" },
-                  { icon: "📞", title: "Phone Support", info: "+1 (800) 123-4567", sub: "Mon-Fri 9am-6pm" },
-                  { icon: "💬", title: "Live Chat", info: "Available 24/7", sub: "Instant response" }
+                {
+                  icon: "📧",
+                  title: "Email Support",
+                  info: "support@library.com",
+                  sub: "Response within 24h",
+                },
+                {
+                  icon: "📞",
+                  title: "Phone Support",
+                  info: "+1 (800) 123-4567",
+                  sub: "Mon-Fri 9am-6pm",
+                },
+                {
+                  icon: "💬",
+                  title: "Live Chat",
+                  info: "Available 24/7",
+                  sub: "Instant response",
+                },
               ].map((item, index) => (
-                <div key={index} className="p-8 rounded-2xl bg-gray-50 dark:bg-gray-700/30 hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-colors group">
-                    <div className="bg-white dark:bg-gray-800 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md group-hover:scale-110 transition-transform text-3xl">
-                        {item.icon}
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-                        {item.title}
-                    </h3>
-                    <p className="text-primary font-semibold text-lg mb-1">
-                        {item.info}
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {item.sub}
-                    </p>
+                <div
+                  key={index}
+                  className={`p-8 rounded-2xl ${
+                    isDark
+                      ? "bg-gray-800 border text-white border-gray-700"
+                      : "bg-gray-50"
+                  } hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-colors group`}
+                >
+                  <div
+                    className={`${
+                      isDark ? "bg-gray-800" : "bg-white"
+                    } w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md group-hover:scale-110 transition-transform text-3xl`}
+                  >
+                    {item.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-primary font-semibold text-lg mb-1">
+                    {item.info}
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-300">
+                    {item.sub}
+                  </p>
                 </div>
               ))}
             </div>
