@@ -5,7 +5,7 @@ import BookFicher from "./BookFicher";
 import PremiumBook from "./PremiumBook";
 import BookFeatureSection from "./BookFeatureSection";
 import LetasCard from "./LetasCard";
-import MapNow from "./MapNow";
+// import MapNow from "./MapNow";
 import Cousebooksconires from "./Cousebooksconires";
 import Marqey from "./Marqey";
 // import MewSections from "./NewSections/MewSections";
@@ -19,15 +19,14 @@ const Home = () => {
         <Banner></Banner>
       </section>
       <div className=" w-11/12 mx-auto">
-        {/* <section className=" mt-30">
-          <MewSections></MewSections>
-        </section> */}
         <section className=" mt-30">
           <PremiumBook></PremiumBook>
         </section>
+
         <section className=" w-10/12 mx-auto mt-30">
           <BookFeatureSection></BookFeatureSection>
         </section>
+
         <section className=" w-11/12 mx-auto mt-30">
           <LetasCard></LetasCard>
         </section>
@@ -42,9 +41,9 @@ const Home = () => {
         <section className=" w-11/12 mx-auto mt-30">
           <WhyChooseBook></WhyChooseBook>
         </section>
-        <section className=" ">
+        {/* <section className=" ">
           <MapNow></MapNow>
-        </section>
+        </section> */}
         <section className=" mt-30 ">
           <Marqey></Marqey>
         </section>

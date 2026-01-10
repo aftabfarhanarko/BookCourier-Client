@@ -202,9 +202,9 @@ const About = () => {
               even if you don't know it yet.
             </p>
 
-            <button className="group relative px-8 py-3.5 rounded-full bg-primary text-white font-bold tracking-wide shadow-lg hover:shadow-orange-500/40 transition-all duration-300 overflow-hidden">
+            <button className="group relative px-8 py-2.5 rounded-full bg-orange-500 text-white font-bold tracking-wide shadow-lg hover:shadow-orange-500/40 transition-all duration-300 overflow-hidden">
               <span className="relative z-10">Explore Services</span>
-              <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-orange-600"></div>
+              <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-orange-400"></div>
             </button>
           </motion.div>
         </div>

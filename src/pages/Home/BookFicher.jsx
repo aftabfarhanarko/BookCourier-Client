@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Star, ShoppingCart, TrendingUp, Eye, BadgeCheck } from "lucide-react";
+import { TrendingUp, Award, BookOpen, Users, Sparkles } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import CountUp from "react-countup";
-const PremiumBookShowcase = () => {
-  const [hoveredCard, setHoveredCard] = useState(null);
+
+const TopSellingBooksSection = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
-    // Listen for theme changes from localStorage
     const handleStorageChange = () => {
       setTheme(localStorage.getItem("theme") || "light");
     };
 
-    // Check for theme changes
     const interval = setInterval(() => {
       const currentTheme = localStorage.getItem("theme") || "light";
       if (currentTheme !== theme) {
@@ -28,6 +26,7 @@ const PremiumBookShowcase = () => {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, [theme]);
+
   const isDark = theme === "dark";
 
   useEffect(() => {
@@ -37,268 +36,246 @@ const PremiumBookShowcase = () => {
     });
   }, []);
 
-  const books = [
-    {
-      id: 1,
-      name: "Old Man The Say",
-      price: "$249",
-      rating: 5,
-      sold: "12,090",
-      image:
-        "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=600&fit=crop",
-      badge: "Bestseller",
-    },
-    {
-      id: 2,
-      name: "The More",
-      price: "$899",
-      rating: 4,
-      sold: "3,090",
-      image:
-        "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop",
-      badge: "Popular",
-    },
-    {
-      id: 3,
-      name: "The Best Novels",
-      price: "$399",
-      rating: 3,
-      sold: "7,090",
-      image:
-        "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=600&fit=crop",
-      badge: "Trending",
-    },
-    {
-      id: 4,
-      name: "Old Man",
-      price: "$249",
-      rating: 5,
-      sold: "12,090",
-      image:
-        "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=600&fit=crop",
-      badge: "Hot Deal",
-    },
-  ];
-
-  const renderStars = (rating) => {
-    return [...Array(5)].map((_, i) => (
-      <Star
-        key={i}
-        className={`w-4 h-4 ${
-          i < rating ? "fill-orange-400 text-orange-400" : "text-gray-300"
-        }`}
-      />
-    ));
-  };
-
   return (
-    <div className={`min-h-screen px-4 sm:px-6 lg:px-8 ${isDark ? "" : ""}`}>
-      <div className="md:max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 mb-16">
-          {/* Left Content */}
-          <div className="flex-1 max-w-xl space-y-6">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 to-amber-100 px-4 py-2 rounded-full">
-              <TrendingUp className="w-4 h-4 text-orange-600" />
-              <span className="text-orange-700 text-xs font-bold uppercase tracking-wider">
-                Welcome
+    <div
+      className={` px-4 sm:px-6 lg:px-8 relative overflow-hidden ${
+        isDark ? "" : ""
+      }`}
+    >
+      {/* Animated Background Elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-orange-200 dark:bg-orange-900 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-20 animate-blob"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-200 dark:bg-amber-900 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+
+      <div className="max-w-11/12 mx-auto relative z-10">
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left Side - Text Content */}
+          <div className="space-y-8" data-aos="fade-right">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-2.5 rounded-full shadow-lg">
+              <Sparkles className="w-5 h-5 text-white animate-pulse" />
+              <span className="text-white text-sm font-bold uppercase tracking-wider">
+                Top Selling Collection
               </span>
             </div>
 
-            <h2 className="text-3xl font-bold text-primary leading-tight">
-              Top Selling Books in BookCourier Library
-            </h2>
+            {/* Main Heading */}
+            <div className="space-y-4">
+              <h2
+                className={`text-3xl md:text-4xl font-extrabold leading-tight ${
+                  isDark ? "text-white" : "text-primary"
+                }`}
+              >
+                Discover Our Most
+                <span className="block mt-2 bg-gradient-to-r from-orange-600 via-amber-600 to-yellow-600 bg-clip-text text-transparent">
+                  Loved Books
+                </span>
+              </h2>
 
+              <div className="w-24 h-1.5 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full"></div>
+            </div>
+
+            {/* Description */}
             <p
-              className={`text-lg ${
-                isDark ? "text-gray-300" : "text-gray-600"
-              } leading-relaxed`}
+              className={`text-lg md:text-xl leading-relaxed ${
+                isDark ? "text-gray-300" : "text-gray-700"
+              }`}
             >
-              Explore the books that our readers enjoy the most. These top picks
-              have been loved and bought again and again. Find your next great
-              read from the crowd's favorites!
+              Join thousands of happy readers who have discovered their next
+              favorite book with
+              <span className="font-bold text-orange-600"> BookCourier</span>.
+              Our top-selling collection features the most sought-after titles
+              that readers can't stop talking about. From timeless classics to
+              contemporary bestsellers, find the books that everyone is reading.
             </p>
 
-            {/* Stats */}
-            <div className="flex gap-8 pt-4">
-              <div className="space-y-1">
-                <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-                   <CountUp start={0} end={1000} duration={5} /> +
+            {/* Feature Points */}
+            <div className="space-y-4 pt-4">
+              {[
+                {
+                  icon: Award,
+                  text: "Award-winning bestsellers from top authors",
+                },
+                { icon: BookOpen, text: "Curated selection across all genres" },
+                { icon: Users, text: "Trusted by thousands of book lovers" },
+              ].map((item, index) => (
+                <div key={index} className="flex items-start gap-4 group">
+                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <item.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <p
+                    className={`text-base md:text-lg pt-2 ${
+                      isDark ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Stats Row */}
+            <div className="grid grid-cols-3 gap-6 pt-8">
+              <div className="text-center space-y-2">
+                <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  <CountUp start={0} end={1000} duration={3} />+
                 </div>
                 <div
-                  className={`text-sm ${
-                    isDark ? "text-gray-400" : "text-gray-500"
+                  className={`text-xs md:text-sm font-medium ${
+                    isDark ? "text-gray-400" : "text-gray-600"
                   }`}
                 >
                   Happy Readers
                 </div>
               </div>
-              <div className="space-y-1">
-                <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-                     <CountUp start={0} end={ 50} duration={5} /> K+
+
+              <div className="text-center space-y-2">
+                <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  <CountUp start={0} end={50} duration={3} />
+                  K+
                 </div>
                 <div
-                  className={`text-sm ${
-                    isDark ? "text-gray-400" : "text-gray-500"
+                  className={`text-xs md:text-sm font-medium ${
+                    isDark ? "text-gray-400" : "text-gray-600"
                   }`}
                 >
                   Books Sold
                 </div>
               </div>
-              <div className="space-y-1">
-                <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-                   <CountUp start={0} end={4} duration={5} /> .9★
+
+              <div className="text-center space-y-2">
+                <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  <CountUp start={0} end={4.9} decimals={1} duration={3} />★
                 </div>
                 <div
-                  className={`text-sm ${
-                    isDark ? "text-gray-400" : "text-gray-500"
+                  className={`text-xs md:text-sm font-medium ${
+                    isDark ? "text-gray-400" : "text-gray-600"
                   }`}
                 >
-                  Average Rating
+                  Avg Rating
                 </div>
               </div>
             </div>
+
+            {/* CTA Button */}
+            <div className="pt-6">
+              <button className="group relative px-8 py-4 bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                <span className="relative z-10 flex items-center gap-2">
+                  Explore Collection
+                  <TrendingUp className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </button>
+            </div>
           </div>
 
-          {/* Right Content - Book Cards */}
-          <div className="flex-1 w-full">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
-              {books.map((book, index) => (
-                <div
-                  key={book.id}
-                  onMouseEnter={() => setHoveredCard(book.id)}
-                  onMouseLeave={() => setHoveredCard(null)}
-                  className={`group relative ${
-                    isDark ? "bg-gray-800" : "bg-white"
-                  } rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2`}
-                  style={{
-                    animation: `fadeInUp 0.6s ease-out ${index * 0.15}s both`,
-                  }}
-                >
-                  {/* Gradient Border Effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl blur-xl -z-10"></div>
+          {/* Right Side - Image Content */}
+          <div className="relative" data-aos="fade-left">
+            {/* Main Image Container */}
+            <div className="relative">
+              {/* Decorative Elements */}
+              <div className="absolute -top-6 -right-6 w-72 h-72 bg-gradient-to-br from-orange-400 to-amber-400 rounded-3xl blur-2xl opacity-30 animate-pulse"></div>
+              <div className="absolute -bottom-6 -left-6 w-72 h-72 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-3xl blur-2xl opacity-30 animate-pulse animation-delay-1000"></div>
 
-                  {/* Badge */}
-                  <div className="absolute top-4 left-4 z-20">
-                    <div className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
-                      <BadgeCheck className="w-3 h-3" />
-                      {book.badge}
-                    </div>
-                  </div>
-
-                  {/* Verified Badge */}
-                  <div className="absolute top-4 right-4 z-20">
-                    <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-full p-2.5 shadow-lg transform group-hover:rotate-12 transition-transform duration-300">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 text-white"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={3}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-
-                  {/* Image Container */}
-                  <div className="relative h-64 overflow-hidden bg-gradient-to-br from-orange-50 to-amber-50">
-                    <img
-                      src={book.image}
-                      alt={book.name}
-                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2"
-                    />
-
-                    {/* Overlay with Actions */}
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-center gap-3 transition-all duration-500 ${
-                        hoveredCard === book.id ? "opacity-100" : "opacity-0"
-                      }`}
-                    >
-                      <button className="bg-white text-orange-600 p-3 rounded-full shadow-lg hover:bg-orange-600 hover:text-white transition-all duration-300 transform hover:scale-110">
-                        <Eye className="w-5 h-5" />
-                      </button>
-                      <button className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 font-semibold flex items-center gap-2">
-                        <ShoppingCart className="w-5 h-5" />
-                        Buy Now
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6 space-y-3">
-                    <h3
-                      className={`text-xl font-bold ${
-                        isDark ? "text-white" : "text-gray-900"
-                      } group-hover:text-orange-600 transition-colors duration-300`}
-                    >
-                      {book.name}
+              {/* Image Grid */}
+              <div className="relative grid grid-cols-2 gap-6">
+                {/* Large Image */}
+                <div className="col-span-2 relative group overflow-hidden rounded-3xl shadow-2xl">
+                  <img
+                    src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&h=600&fit=crop"
+                    alt="Featured Book Collection"
+                    className="w-full h-80 object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <h3 className="text-white text-2xl font-bold mb-2">
+                      Featured Bestsellers
                     </h3>
-
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-1">
-                        <p className="text-2xl font-extrabold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-                          
-                          {book.price}
-                        </p>
-                        <div className="flex items-center gap-1">
-                          {renderStars(book.rating)}
-                        </div>
-                      </div>
-
-                      <div className="text-right">
-                        <div
-                          className={`text-xs ${
-                            isDark ? "text-gray-400" : "text-gray-500"
-                          } mb-1`}
-                        >
-                          Total Sold
-                        </div>
-                        <div className="text-lg font-bold text-orange-600">
-                          {book.sold}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="pt-2">
-                      <div
-                        className={`h-2 ${
-                          isDark ? "bg-gray-700" : "bg-gray-200"
-                        } rounded-full overflow-hidden`}
-                      >
-                        <div
-                          className="h-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-full transition-all duration-1000"
-                          style={{ width: `${(book.rating / 5) * 100}%` }}
-                        ></div>
-                      </div>
-                    </div>
+                    <p className="text-gray-200 text-sm">
+                      The books everyone's talking about
+                    </p>
                   </div>
                 </div>
-              ))}
+
+                {/* Small Image 1 */}
+                <div className="relative group overflow-hidden rounded-2xl shadow-xl">
+                  <img
+                    src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=300&fit=crop"
+                    alt="Popular Books"
+                    className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-orange-600/80 to-transparent flex items-end p-4">
+                    <span className="text-white font-bold text-lg">
+                      Classics
+                    </span>
+                  </div>
+                </div>
+
+                {/* Small Image 2 */}
+                <div className="relative group overflow-hidden rounded-2xl shadow-xl">
+                  <img
+                    src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=300&fit=crop"
+                    alt="New Releases"
+                    className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-amber-600/80 to-transparent flex items-end p-4">
+                    <span className="text-white font-bold text-lg">
+                      New Arrivals
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Badge */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full shadow-2xl p-6 animate-bounce-slow">
+                <div className="text-center">
+                  <div className="text-4xl font-extrabold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                    #1
+                  </div>
+                  <div
+                    className={`text-xs font-semibold ${
+                      isDark ? "text-gray-300" : "text-gray-700"
+                    } mt-1`}
+                  >
+                    Bookstore
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        @keyframes blob {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        @keyframes bounce-slow {
+          0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+          50% { transform: translate(-50%, -50%) translateY(-10px); }
+        }
+
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+
+        .animate-bounce-slow {
+          animation: bounce-slow 3s ease-in-out infinite;
+        }
+
+        .animation-delay-1000 {
+          animation-delay: 1s;
+        }
+
+        .animation-delay-2000 {
+          animation-delay: 2s;
         }
       `}</style>
     </div>
   );
 };
 
-export default PremiumBookShowcase;
+export default TopSellingBooksSection;
