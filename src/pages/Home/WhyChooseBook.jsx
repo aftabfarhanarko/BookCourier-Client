@@ -41,6 +41,7 @@ const ModernFAQ = () => {
         "Click the Sign Up button in the top right corner and follow the registration process. You'll need to provide your email, create a password, and verify your account through the email we send you.",
       icon: HelpCircle,
       color: "from-blue-500 to-cyan-500",
+      hoverColor: "group-hover:from-blue-500 group-hover:to-cyan-500",
     },
     {
       question: "I forgot my password. What should I do?",
@@ -48,6 +49,7 @@ const ModernFAQ = () => {
         "Click on Forgot Password on the login page and follow the instructions sent to your email. You'll receive a secure link to reset your password within minutes.",
       icon: MessageCircle,
       color: "from-purple-500 to-pink-500",
+      hoverColor: "group-hover:from-purple-500 group-hover:to-pink-500",
     },
     {
       question: "How do I update my profile information?",
@@ -55,6 +57,7 @@ const ModernFAQ = () => {
         "Go to My Account settings and select Edit Profile to make changes. You can update your name, email, phone number, delivery address, and preferences anytime.",
       icon: CheckCircle,
       color: "from-green-500 to-emerald-500",
+      hoverColor: "group-hover:from-green-500 group-hover:to-emerald-500",
     },
     {
       question: "What types of books can I order through BookCourier?",
@@ -62,6 +65,7 @@ const ModernFAQ = () => {
         "You can order a wide range of books including fiction, non-fiction, academic textbooks, children's books, and popular novels available in our collection. We have over 50,000+ titles from various genres and publishers.",
       icon: HelpCircle,
       color: "from-orange-500 to-amber-500",
+      hoverColor: "group-hover:from-orange-500 group-hover:to-amber-500",
     },
     {
       question: "How long does delivery take?",
@@ -69,6 +73,7 @@ const ModernFAQ = () => {
         "Delivery usually takes 2-5 business days depending on your location within Bangladesh. We aim to deliver your books as quickly as possible. Express delivery options are also available for urgent orders.",
       icon: Clock,
       color: "from-red-500 to-rose-500",
+      hoverColor: "group-hover:from-red-500 group-hover:to-rose-500",
     },
     {
       question: "Is there a delivery fee?",
@@ -76,6 +81,7 @@ const ModernFAQ = () => {
         "Delivery fees may vary based on your location and the size of your order. Please check the checkout page for exact shipping costs before placing your order. Free shipping is available on orders above ৳500.",
       icon: MessageCircle,
       color: "from-indigo-500 to-blue-500",
+      hoverColor: "group-hover:from-indigo-500 group-hover:to-blue-500",
     },
     {
       question: "Can I return or exchange a book?",
@@ -83,15 +89,22 @@ const ModernFAQ = () => {
         "Yes, you can request a return or exchange within 7 days of receiving the book if it is damaged or incorrect. Contact our support team for assistance. We ensure 100% customer satisfaction.",
       icon: CheckCircle,
       color: "from-teal-500 to-cyan-500",
+      hoverColor: "group-hover:from-teal-500 group-hover:to-cyan-500",
     },
   ];
 
   return (
     <div
-      className={`relative  px-4 sm:px-6 lg:px-8 overflow-hidden ${
-        isDark ? "" : ""
+      className={`relative px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300 ${
+        isDark ? "" : "bg-transparent"
       }`}
     >
+      <style>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
       <div className="max-w-11/12 mx-auto relative z-10">
         {/* Header Section */}
         <div className="text-center mb-16 space-y-6">
@@ -200,8 +213,8 @@ const ModernFAQ = () => {
                     <h3
                       className={`font-bold text-lg mb-1 ${
                         isDark ? "text-white" : "text-gray-900"
-                      } group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:${
-                        faq.color
+                      } group-hover:text-transparent group-hover:bg-gradient-to-r ${
+                        faq.hoverColor
                       } group-hover:bg-clip-text transition-all duration-300`}
                     >
                       {faq.question}
