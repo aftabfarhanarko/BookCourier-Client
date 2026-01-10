@@ -11,6 +11,8 @@ import {
   Search,
   ChevronDown,
   Heart,
+  Info,
+  Globe,
 } from "lucide-react";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { GiSpellBook } from "react-icons/gi";
@@ -80,7 +82,6 @@ export default function Navbar() {
     },
   });
 
-
   return (
     <nav
       className={`${bgPrimary} border-b ${borderColor} shadow-sm transition-colors duration-300 sticky top-0 z-50    fixed `}
@@ -112,11 +113,18 @@ export default function Navbar() {
               <span className="font-medium">All Books</span>
             </NavLink>
             <NavLink
-              to="/myaboutes"
+              to="/about"
               className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
             >
-              <IoArrowBackOutline className="w-5 h-5" />
+              <Info className="w-5 h-5" />
               <span className="font-medium">About</span>
+            </NavLink>
+            <NavLink
+              to="/coverage"
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
+            >
+              <Globe className="w-5 h-5" />
+              <span className="font-medium">Coverage</span>
             </NavLink>
             <NavLink
               to="/deshbord"

@@ -30,6 +30,7 @@ import UserDashBord from "../pages/dashboard/User/UserDashBord";
 import AutoRedirectDashboard from "../pages/dashboard/AutoRedirectDashboard/AutoRedirectDashboard";
 import LoadingSpinner from "../shared/LoadingSpinner ";
 import About from "../pages/Home/AboutUs/About";
+import CversArea from "../pages/Home/Map/CversArea";
 
 export const router = createBrowserRouter([
   {
@@ -41,8 +42,12 @@ export const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: "/myaboutes",
+        path: "/about",
         element:<About></About>
+      },
+      {
+        path: "/coverage",
+        element:<CversArea ></CversArea>
       },
       {
         path: "/books",
