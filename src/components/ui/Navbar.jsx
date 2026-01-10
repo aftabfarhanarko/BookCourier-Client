@@ -332,6 +332,21 @@ export default function Navbar() {
                 <span className="font-medium">Home</span>
               </NavLink>
               <NavLink
+                to="/about"
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
+              >
+                <Info className="w-5 h-5" />
+                <span className="font-medium">About</span>
+              </NavLink>
+              <NavLink
+                to="/coverage"
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
+              >
+                <Globe className="w-5 h-5" />
+                <span className="font-medium">Coverage</span>
+              </NavLink>
+
+              <NavLink
                 to="/books"
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg ${textSecondary} ${hoverBg} hover:text-orange-500 transition-all duration-200`}
               >

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSchore from "../../../hooks/useAxiosSchore";
@@ -11,7 +11,19 @@ import {
   FaCamera,
   FaEdit,
   FaCog,
+  FaReact,
+  FaJs,
+  FaHtml5,
+  FaCss3,
+  FaNode,
+  FaJava,
+  FaPython,
+  FaPhp,
+  FaSwift,
+  FaRust,
+  FaDocker,
 } from "react-icons/fa";
+import { SiCplusplus, SiTypescript, SiGo, SiKotlin, SiMongodb } from "react-icons/si";
 import LoadingSpinner from "../../../shared/LoadingSpinner ";
 import TextType from "../../../utils/TextType";
 import { Link } from "react-router";
@@ -47,6 +59,23 @@ const Profile = () => {
   const references = useRef();
   const axioscehore = useAxiosSchore();
   const { handleSubmit, register, reset } = useForm();
+
+  // Floating Icons Configuration
+  const floatingIcons = useMemo(() => {
+    const icons = [
+      FaReact, FaJs, FaHtml5, FaCss3, FaNode, FaJava, FaPython, FaPhp, FaSwift, FaRust, FaDocker,
+      SiCplusplus, SiTypescript, SiGo, SiKotlin, SiMongodb
+    ];
+    return icons.map((Icon, index) => ({
+      Icon,
+      id: index,
+      initialX: Math.random() * 100, // percentage
+      initialY: Math.random() * 100, // percentage
+      duration: 15 + Math.random() * 20,
+      delay: Math.random() * 5,
+      size: 20 + Math.random() * 30,
+    }));
+  }, []);
 
   const {
     data: usersas,
@@ -111,7 +140,7 @@ const Profile = () => {
   if (isLoading || isFetching) return <LoadingSpinner />;
 
   return (
-    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen flex justify-center items-center py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -119,13 +148,40 @@ const Profile = () => {
         className="max-w-5xl mx-auto"
       >
         {/* Main Profile Card */}
-        <div className={`relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
+        <div className={`relative rounded-2xl overflow-hidden shadow-xl transition-all duration-300 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
           
-          {/* Cover Image */}
-          <div className="h-48 md:h-64 w-full bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 relative overflow-hidden">
-            <div className="absolute inset-0 bg-black/10"></div>
-            <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-            <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+          {/* Animated Cover Image */}
+          <div className="h-38 md:h-44 w-full bg-orange-600 relative overflow-hidden">
+            {floatingIcons.map(({ Icon, id, initialX, initialY, duration, delay, size }) => (
+              <motion.div
+                key={id}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{
+                  y: [0, -20, 0],
+                  x: [0, 10, 0],
+                  opacity: [0.3, 0.6, 0.3],
+                  rotate: [0, 10, -10, 0],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: duration,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: delay,
+                }}
+                className="absolute text-white/30"
+                style={{ 
+                  left: `${initialX}%`, 
+                  top: `${initialY}%`,
+                  fontSize: `${size}px` 
+                }}
+              >
+                <Icon />
+              </motion.div>
+            ))}
+            
+            {/* Overlay Gradient for depth (optional, keeping it subtle as requested) */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 pointer-events-none"></div>
           </div>
 
           {/* Profile Content */}
