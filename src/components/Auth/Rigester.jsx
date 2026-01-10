@@ -114,7 +114,7 @@ const Rigester = () => {
       <div className="grid gap-8">
         <section
           id="back-div"
-          className="bg-gradient-to-r from-orange-500 to-amber-500 rounded-3xl"
+          className="bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl"
         >
           <div className={`border-8 border-transparent rounded-xl ${
             isDark ? 'bg-gray-800' : 'bg-white'
